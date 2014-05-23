@@ -7,7 +7,7 @@
 using MonoMac.Foundation;
 using System.CodeDom.Compiler;
 
-namespace CIt
+namespace Radish
 {
 	[Register ("MainWindowController")]
 	partial class MainWindowController

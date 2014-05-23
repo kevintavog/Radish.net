@@ -2,7 +2,7 @@
 using ExifLib;
 using NLog;
 
-namespace CIt.Models
+namespace Radish.Models
 {
 	public class FileMetadata
 	{

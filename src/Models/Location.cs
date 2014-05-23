@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CIt.Models
+namespace Radish.Models
 {
 	public class Location
 	{

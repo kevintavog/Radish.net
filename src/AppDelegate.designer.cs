@@ -1,5 +1,5 @@
 ﻿
-namespace CIt
+namespace Radish
 {
 	// Should subclass MonoMac.AppKit.NSResponder
 	[MonoMac.Foundation.Register("AppDelegate")]

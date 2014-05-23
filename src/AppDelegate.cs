@@ -5,7 +5,7 @@ using MonoMac.AppKit;
 using MonoMac.ObjCRuntime;
 using NLog;
 
-namespace CIt
+namespace Radish
 {
 	public partial class AppDelegate : NSApplicationDelegate
 	{

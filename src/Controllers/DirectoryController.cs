@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using CIt.Models;
+using Radish.Models;
 using System.IO;
 using MonoMac.ImageIO;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 using System.Collections;
 
-namespace CIt.Controllers
+namespace Radish.Controllers
 {
 	public class DirectoryController
 	{

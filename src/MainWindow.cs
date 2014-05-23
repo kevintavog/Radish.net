@@ -4,7 +4,7 @@ using System.Linq;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
-namespace CIt
+namespace Radish
 {
 	public partial class MainWindow : MonoMac.AppKit.NSWindow
 	{

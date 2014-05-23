@@ -4,11 +4,11 @@ using System.Linq;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 using NLog;
-using CIt.Models;
-using CIt.Controllers;
+using Radish.Models;
+using Radish.Controllers;
 using System.IO;
 
-namespace CIt
+namespace Radish
 {
 	public partial class MainWindowController : MonoMac.AppKit.NSWindowController
 	{
