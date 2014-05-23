@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIt", "CIt.csproj", "{06ACDB4D-2077-4A46-AB50-E1E2F730BE82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radish", "Radish.csproj", "{06ACDB4D-2077-4A46-AB50-E1E2F730BE82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +18,6 @@ Global
 		{06ACDB4D-2077-4A46-AB50-E1E2F730BE82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = CIt.csproj
+		StartupItem = Radish.csproj
 	EndGlobalSection
 EndGlobal

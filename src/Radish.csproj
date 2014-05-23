@@ -6,9 +6,9 @@
     <ProjectGuid>{06ACDB4D-2077-4A46-AB50-E1E2F730BE82}</ProjectGuid>
     <ProjectTypeGuids>{948B3504-5B70-4649-8FE4-BDE1FB46EC69};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>CIt</RootNamespace>
+    <RootNamespace>Radish</RootNamespace>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-    <AssemblyName>CIt</AssemblyName>
+    <AssemblyName>Radish</AssemblyName>
     <SuppressXamMacUpsell>True</SuppressXamMacUpsell>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
