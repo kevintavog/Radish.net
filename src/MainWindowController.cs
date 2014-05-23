@@ -75,6 +75,7 @@ namespace Radish
 				image.Release();
 			}
 
+			Window.Title = Path.GetFileName(fi.FullPath);
 			UpdateStatusBar();
 		}
 
