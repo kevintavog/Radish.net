@@ -50,7 +50,7 @@ namespace Radish.Utilities
 				foreach (var child in info[0].Children())
 				{
 					var prop = child as JProperty;
-					if (prop != null && !ExcludedCategories.Contains(prop.Name))
+					if (prop != null)
 					{
 						foreach (var grandchild in child.Children())
 						{
@@ -70,6 +70,11 @@ namespace Radish.Utilities
 									if (IncludeInProperties.Contains(path))
 									{
 										AddProperty(list, kv);
+									}
+
+									if (ExcludedCategories.Contains(prop.Name))
+									{
+										continue;
 									}
 
 									bool isExcluded = false;
