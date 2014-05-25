@@ -2,7 +2,6 @@
 using MonoMac.AppKit;
 using MonoMac.Foundation;
 using Radish.Models;
-using NLog;
 using System.Drawing;
 
 namespace Radish
@@ -10,7 +9,6 @@ namespace Radish
 	[MonoMac.Foundation.Register("FileInformationController")]
 	public partial class FileInformationController : NSViewController
 	{
-//		static private readonly Logger logger = LogManager.GetCurrentClassLogger();
 		private FileMetadata FileMetadata;
 
 		public FileInformationController(IntPtr handle) : base(handle)
@@ -38,6 +36,19 @@ namespace Radish
 		{
 			FileMetadata = fileMetadata;
 			tableView.ReloadData();
+
+			for (var column = 0; column < tableView.TableColumns().Length; ++column)
+			{
+				var biggestWidth = 0f;
+				for (int row = 0; row < tableView.RowCount; ++row)
+				{
+					var cellWidth = tableView.GetCell(column, row).CellSize.Width;
+					biggestWidth = Math.Max(biggestWidth, cellWidth);
+				}
+
+				var c = tableView.TableColumns()[column];
+				c.Width = c.MaxWidth = biggestWidth;
+			}
 		}
 
 		[Export("numberOfRowsInTableView:")]
