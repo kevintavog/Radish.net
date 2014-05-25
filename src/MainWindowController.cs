@@ -111,15 +111,7 @@ namespace Radish
 				directoryController.CurrentIndex + 1, 
 				directoryController.Count);
 
-			var location = fi.Location;
-			if (location != null)
-			{
-				statusGps.StringValue = String.Format("{0}, {1}", location.Latitude, location.Longitude);
-			}
-			else
-			{
-				statusGps.StringValue = "";
-			}
+			statusGps.StringValue = fi.ToDms();
 		}
 
 		uint AllModifiers = (uint) (NSEventModifierMask.CommandKeyMask 
