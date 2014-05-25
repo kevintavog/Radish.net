@@ -109,7 +109,11 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="biH-pr-r4l"/>
-                            <menuItem title="Information" keyEquivalent="i" id="Gnv-QE-X2N"/>
+                            <menuItem title="Information" keyEquivalent="i" id="Gnv-QE-X2N">
+                                <connections>
+                                    <action selector="toggleInformation:" target="-1" id="spE-wp-55S"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="eKd-Dv-ca6"/>
                             <menuItem title="Map" keyEquivalent="m" id="pUs-g4-8Kg"/>
                         </items>

@@ -22,6 +22,10 @@ namespace Radish.Controllers
 		public int Count { get { return FileList.Count; } }
 		public FileMetadata Current { get { return FileList[CurrentIndex]; } }
 
+		public DirectoryController()
+		{
+			FileList = new List<FileMetadata>();
+		}
 
 		public bool SelectFile(string filename)
 		{

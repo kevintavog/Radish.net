@@ -72,11 +72,15 @@
     <Reference Include="ExifLib">
       <HintPath>ExternalDependencies\ExifLib.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindow.cs" />
@@ -92,6 +96,13 @@
     <Compile Include="Models\FileMetadata.cs" />
     <Compile Include="Controllers\DirectoryController.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\MetadataEntry.cs" />
+    <Compile Include="Utilities\ReadExifMetadata.cs" />
+    <Compile Include="Utilities\ExifToolInvoker.cs" />
+    <Compile Include="FileInformationController.cs" />
+    <Compile Include="FileInformationController.designer.cs">
+      <DependentUpon>FileInformationController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />

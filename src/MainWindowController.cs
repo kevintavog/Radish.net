@@ -7,12 +7,14 @@ using NLog;
 using Radish.Models;
 using Radish.Controllers;
 using System.IO;
+using System.Drawing;
 
 namespace Radish
 {
 	public partial class MainWindowController : MonoMac.AppKit.NSWindowController
 	{
 		static private readonly Logger logger = LogManager.GetCurrentClassLogger();
+
 
 		private DirectoryController		directoryController = new DirectoryController();
 
@@ -43,13 +45,8 @@ namespace Radish
 #endregion
 
 		//strongly typed window accessor
-		public new MainWindow Window
-		{
-			get
-			{
-				return (MainWindow)base.Window;
-			}
-		}
+		public new MainWindow Window { get { return (MainWindow)base.Window; } }
+		public FileInformationController InformationController { get { return (FileInformationController)fileInformationController; } }
 
 		public override void AwakeFromNib()
 		{
@@ -77,6 +74,11 @@ namespace Radish
 
 			Window.Title = Path.GetFileName(fi.FullPath);
 			UpdateStatusBar();
+
+			if (informationPanel.IsVisible)
+			{
+				InformationController.SetFile(fi);
+			}
 		}
 
 		private void UpdateStatusBar()
@@ -162,6 +164,25 @@ namespace Radish
 			}
 
 			OpenFolderOrFile(openPanel.Url.Path);
+		}
+
+		[Export("toggleInformation:")]
+		public void ToggleInformation(NSObject sender)
+		{
+			if (directoryController.Count < 1)
+			{
+				return;
+			}
+
+			if (informationPanel.IsVisible)
+			{
+				informationPanel.OrderOut(this);
+			}
+			else
+			{
+				informationPanel.MakeKeyAndOrderFront(this);
+				InformationController.SetFile(directoryController.Current);
+			}
 		}
 
 		public bool OpenFolderOrFile(string path)

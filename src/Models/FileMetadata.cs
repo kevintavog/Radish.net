@@ -1,6 +1,9 @@
 ﻿using System;
 using ExifLib;
 using NLog;
+using System.Collections.Generic;
+using Radish.Utilities;
+using System.Linq;
 
 namespace Radish.Models
 {
@@ -12,11 +15,23 @@ namespace Radish.Models
 		public DateTime Timestamp { get; private set; }
 		public Location Location { get; private set; }
 
+		public IList<MetadataEntry> Metadata 
+		{
+			get
+			{
+				if (metadata == null)
+				{
+					metadata = GetAllMetadata();
+				}
+				return metadata;
+			}
+		}
+
+		private IList<MetadataEntry> metadata;
 
 		public FileMetadata(string fullPath)
 		{
 			FullPath = fullPath;
-
 			GetDetails();
 		}
 
@@ -64,6 +79,19 @@ namespace Radish.Models
 			catch (Exception ex)
 			{
 				logger.Info("Exception getting location: {0}", ex);
+			}
+		}
+
+		private IList<MetadataEntry> GetAllMetadata()
+		{
+			try
+			{
+				return ReadExifMetadata.GetMetadata(FullPath);
+			}
+			catch (Exception e)
+			{
+				logger.Info("Exception getting metadata: {0} ({1})", FullPath, e);
+				return new List<MetadataEntry>();
 			}
 		}
 

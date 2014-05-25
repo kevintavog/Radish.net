@@ -13,7 +13,13 @@ namespace Radish
 	partial class MainWindowController
 	{
 		[Outlet]
+		MonoMac.Foundation.NSObject fileInformationController { get; set; }
+
+		[Outlet]
 		MonoMac.AppKit.NSImageView imageView { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSPanel informationPanel { get; set; }
 
 		[Outlet]
 		MonoMac.AppKit.NSTextField statusFilename { get; set; }
@@ -32,14 +38,14 @@ namespace Radish
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (fileInformationController != null) {
+				fileInformationController.Dispose ();
+				fileInformationController = null;
+			}
+
 			if (imageView != null) {
 				imageView.Dispose ();
 				imageView = null;
-			}
-
-			if (statusView != null) {
-				statusView.Dispose ();
-				statusView = null;
 			}
 
 			if (statusFilename != null) {
@@ -47,9 +53,9 @@ namespace Radish
 				statusFilename = null;
 			}
 
-			if (statusTimestamp != null) {
-				statusTimestamp.Dispose ();
-				statusTimestamp = null;
+			if (statusGps != null) {
+				statusGps.Dispose ();
+				statusGps = null;
 			}
 
 			if (statusIndex != null) {
@@ -57,9 +63,19 @@ namespace Radish
 				statusIndex = null;
 			}
 
-			if (statusGps != null) {
-				statusGps.Dispose ();
-				statusGps = null;
+			if (statusTimestamp != null) {
+				statusTimestamp.Dispose ();
+				statusTimestamp = null;
+			}
+
+			if (statusView != null) {
+				statusView.Dispose ();
+				statusView = null;
+			}
+
+			if (informationPanel != null) {
+				informationPanel.Dispose ();
+				informationPanel = null;
 			}
 		}
 	}
