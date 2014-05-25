@@ -3,7 +3,7 @@ using MonoMac.Foundation;
 
 namespace Radish
 {
-	public class MetadataEntry : NSObject
+	public class MetadataEntry
 	{
 		public string Category { get; private set; }
 		public string Name { get; private set; }
@@ -17,4 +17,3 @@ namespace Radish
 		}
 	}
 }
-
