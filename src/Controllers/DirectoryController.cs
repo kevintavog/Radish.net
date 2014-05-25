@@ -96,7 +96,17 @@ namespace Radish.Controllers
 	{
 		public int Compare(FileMetadata x, FileMetadata y)
 		{
-			return DateTime.Compare(x.Timestamp, y.Timestamp);
+			if (x == y)
+			{
+				return 0;
+			}
+
+			var diff = DateTime.Compare(x.Timestamp, y.Timestamp);
+			if (diff == 0)
+			{
+				diff = String.Compare(Path.GetFileName(x.FullPath), Path.GetFileName(y.FullPath));
+			}
+			return diff;
 		}
 	}
 
