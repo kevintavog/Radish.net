@@ -8,6 +8,8 @@ using Radish.Models;
 using Radish.Controllers;
 using System.IO;
 using System.Drawing;
+using MonoMac.CoreText;
+using MonoMac.CoreGraphics;
 
 namespace Radish
 {
@@ -85,7 +87,25 @@ namespace Radish
 		{
 			var fi = directoryController.Current;
 			statusFilename.StringValue = Path.GetFileName(fi.FullPath);
-			statusTimestamp.StringValue = fi.Timestamp.ToString("yyyy/MM/dd HH:mm:ss");
+
+			var timestamp = fi.Timestamp.ToString("yyyy/MM/dd HH:mm:ss");
+			if (fi.FileAndExifTimestampMatch)
+			{
+				statusTimestamp.StringValue = timestamp;
+			}
+			else
+			{
+				var str = new NSMutableAttributedString(timestamp);
+				str.AddAttribute(
+					NSAttributedString.ForegroundColorAttributeName, 
+					NSColor.Yellow,
+					new NSRange(0, timestamp.Length));
+				str.AddAttribute(
+					NSAttributedString.UnderlineStyleAttributeName, 
+					new NSNumber((int) NSUnderlineStyle.Single), 
+					new NSRange(0, timestamp.Length));
+				statusTimestamp.AttributedStringValue = str;
+			}
 			statusIndex.StringValue = String.Format(
 				"{0} of {1}", 
 				directoryController.CurrentIndex + 1, 

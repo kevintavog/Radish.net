@@ -4,6 +4,7 @@ using NLog;
 using System.Collections.Generic;
 using Radish.Utilities;
 using System.Linq;
+using System.IO;
 
 namespace Radish.Models
 {
@@ -14,6 +15,7 @@ namespace Radish.Models
 		public string FullPath { get; private set; }
 		public DateTime Timestamp { get; private set; }
 		public Location Location { get; private set; }
+		public bool FileAndExifTimestampMatch { get; private set; }
 
 		public IList<MetadataEntry> Metadata 
 		{
@@ -33,11 +35,16 @@ namespace Radish.Models
 		{
 			FullPath = fullPath;
 			GetDetails();
+
+			var fileTimestamp = new FileInfo(FullPath).CreationTime;
+
+			// Some filesystems, such as FAT, don't have reasonable granularity. If it's close, it's good enough
+			FileAndExifTimestampMatch = Math.Abs((Timestamp - fileTimestamp).TotalSeconds) < 2;
 		}
 
 		private void GetDetails()
 		{
-			Timestamp = new System.IO.FileInfo(FullPath).CreationTime;
+			Timestamp = new FileInfo(FullPath).CreationTime;
 			try
 			{
 				using (var exif = new ExifLib.ExifReader(FullPath))
