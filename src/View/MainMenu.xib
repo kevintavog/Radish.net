@@ -66,7 +66,7 @@
                 <menuItem title="File" id="83">
                     <menu key="submenu" title="File" id="81">
                         <items>
-                            <menuItem title="Open…" keyEquivalent="o" id="72">
+                            <menuItem title="Open…" tag="1" keyEquivalent="o" id="72">
                                 <connections>
                                     <action selector="openFolderOrFile:" target="-1" id="oIU-Oo-rUe"/>
                                 </connections>
@@ -74,7 +74,7 @@
                             <menuItem title="Open Recent" id="124">
                                 <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="125">
                                     <items>
-                                        <menuItem title="Clear Menu" id="126">
+                                        <menuItem title="Clear Menu" tag="1" id="126">
                                             <connections>
                                                 <action selector="clearRecentDocuments:" target="-1" id="127"/>
                                             </connections>
@@ -85,13 +85,13 @@
                             <menuItem isSeparatorItem="YES" id="P1g-Bt-jTd">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Reveal in Finder" id="hxw-Ms-q3a">
+                            <menuItem title="Reveal in Finder" tag="2" id="hxw-Ms-q3a">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="revealInFinder:" target="-1" id="Lz4-bG-p1K"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Set File date to EXIF date" id="fds-n5-e30">
+                            <menuItem title="Set File date to EXIF date" tag="2" id="fds-n5-e30">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="setFileDateFromExifDate:" target="-1" id="m7f-sy-f7M"/>
@@ -100,7 +100,7 @@
                             <menuItem isSeparatorItem="YES" id="79">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Move to Trash" id="pZM-sa-pum">
+                            <menuItem title="Move to Trash" tag="2" id="pZM-sa-pum">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
@@ -111,7 +111,7 @@ CA
                             <menuItem isSeparatorItem="YES" id="p19-I9-Sp8">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Close" keyEquivalent="w" id="73">
+                            <menuItem title="Close" tag="1" keyEquivalent="w" id="73">
                                 <connections>
                                     <action selector="performClose:" target="-1" id="193"/>
                                 </connections>
@@ -122,38 +122,38 @@ CA
                 <menuItem title="View" id="295">
                     <menu key="submenu" title="View" id="296">
                         <items>
-                            <menuItem title="Next" keyEquivalent="" id="Xcw-nd-FEK">
+                            <menuItem title="Next" tag="2" keyEquivalent="" id="Xcw-nd-FEK">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="nextImage:" target="-1" id="IVp-M7-gyR"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Previous" keyEquivalent="" id="MiF-Ev-Qoa">
+                            <menuItem title="Previous" tag="2" keyEquivalent="" id="MiF-Ev-Qoa">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="previousImage:" target="-1" id="Uy3-0c-yAR"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="biH-pr-r4l"/>
-                            <menuItem title="Information" keyEquivalent="i" id="Gnv-QE-X2N">
+                            <menuItem title="Information" tag="2" keyEquivalent="i" id="Gnv-QE-X2N">
                                 <connections>
                                     <action selector="toggleInformation:" target="-1" id="spE-wp-55S"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="eKd-Dv-ca6"/>
-                            <menuItem title="Map" keyEquivalent="m" id="pUs-g4-8Kg"/>
+                            <menuItem title="Map" tag="2" keyEquivalent="m" id="pUs-g4-8Kg"/>
                         </items>
                     </menu>
                 </menuItem>
                 <menuItem title="Window" id="19">
                     <menu key="submenu" title="Window" systemMenu="window" id="24">
                         <items>
-                            <menuItem title="Minimize" keyEquivalent="m" id="23">
+                            <menuItem title="Minimize" tag="1" keyEquivalent="m" id="23">
                                 <connections>
                                     <action selector="performMiniaturize:" target="-1" id="37"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Zoom" keyEquivalent="m" id="239">
+                            <menuItem title="Zoom" tag="1" keyEquivalent="m" id="239">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="performZoom:" target="-1" id="240"/>
@@ -162,7 +162,7 @@ CA
                             <menuItem isSeparatorItem="YES" id="92">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Bring All to Front" id="5">
+                            <menuItem title="Bring All to Front" tag="1" id="5">
                                 <connections>
                                     <action selector="arrangeInFront:" target="-1" id="39"/>
                                 </connections>

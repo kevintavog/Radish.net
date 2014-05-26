@@ -7,6 +7,27 @@ namespace Radish
 {
 	public partial class MainWindowController : MonoMac.AppKit.NSWindowController
 	{
+		enum MenuTag
+		{
+			AlwaysEnable = 1,
+			RequiresFile = 2,
+		}
+
+		[Export("validateMenuItem:")]
+		public bool ValidateMenuItem(NSMenuItem menuItem)
+		{
+			switch ((MenuTag) menuItem.Tag)
+			{
+				case MenuTag.AlwaysEnable:
+					return true;
+				case MenuTag.RequiresFile:
+					return directoryController.Count > 0;
+			}
+
+			logger.Info("ValidateMenuItem: unexpected tag {0} for menu item '{1}'", menuItem.Tag, menuItem.Title);
+			return false;
+		}
+
 		[Export("nextImage:")]
 		public void NextImage(NSObject sender)
 		{
@@ -46,11 +67,6 @@ namespace Radish
 		[Export("toggleInformation:")]
 		public void ToggleInformation(NSObject sender)
 		{
-			if (directoryController.Count < 1)
-			{
-				return;
-			}
-
 			if (informationPanel.IsVisible)
 			{
 				informationPanel.OrderOut(this);
@@ -65,11 +81,6 @@ namespace Radish
 		[Export("moveToTrash:")]
 		public void MoveToTrash(NSObject sender)
 		{
-			if (directoryController.Count < 1)
-			{
-				return;
-			}
-
 			var fullPath = directoryController.Current.FullPath;
 			logger.Info("MoveToTrash: '{0}'", fullPath);
 
@@ -100,11 +111,6 @@ namespace Radish
 		[Export("setFileDateFromExifDate:")]
 		public void SetFileDateFromExifDate(NSObject sender)
 		{
-			if (directoryController.Count < 1)
-			{
-				return;
-			}
-
 			logger.Info("Set date of '{0}' to {1}", directoryController.Current.FullPath, directoryController.Current.Timestamp);
 			directoryController.Current.SetFileDateToExifDate();
 			ShowFile();
@@ -113,11 +119,6 @@ namespace Radish
 		[Export("revealInFinder:")]
 		public void RevealInFinder(NSObject sender)
 		{
-			if (directoryController.Count < 1)
-			{
-				return;
-			}
-
 			var fullPath = directoryController.Current.FullPath;
 			logger.Info("RevealInFinder '{0}'", fullPath);
 			NSWorkspace.SharedWorkspace.SelectFile(fullPath, "");

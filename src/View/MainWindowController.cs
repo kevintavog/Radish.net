@@ -96,13 +96,14 @@ namespace Radish
 
 		private void UpdateStatusBar()
 		{
-			var fi = directoryController.Current;
-			if (fi == null)
+			if (directoryController.Count < 1)
 			{
 				statusFilename.StringValue = statusTimestamp.StringValue = statusGps.StringValue = "";
 				statusIndex.StringValue = "No files";
 				return;
 			}
+
+			var fi = directoryController.Current;
 
 			statusFilename.StringValue = Path.GetFileName(fi.FullPath);
 
