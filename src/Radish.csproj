@@ -81,34 +81,35 @@
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
     <Folder Include="Utilities\" />
+    <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainWindow.cs" />
-    <Compile Include="MainWindowController.cs" />
-    <Compile Include="MainWindow.designer.cs">
-      <DependentUpon>MainWindow.cs</DependentUpon>
-    </Compile>
     <Compile Include="Main.cs" />
-    <Compile Include="AppDelegate.cs" />
-    <Compile Include="AppDelegate.designer.cs">
-      <DependentUpon>AppDelegate.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\FileMetadata.cs" />
     <Compile Include="Controllers\DirectoryController.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\MetadataEntry.cs" />
     <Compile Include="Utilities\ReadExifMetadata.cs" />
     <Compile Include="Utilities\ExifToolInvoker.cs" />
-    <Compile Include="FileInformationController.cs" />
-    <Compile Include="FileInformationController.designer.cs">
+    <Compile Include="View\AppDelegate.cs" />
+    <Compile Include="View\AppDelegate.designer.cs">
+      <DependentUpon>AppDelegate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FileInformationController.cs" />
+    <Compile Include="View\FileInformationController.designer.cs">
       <DependentUpon>FileInformationController.cs</DependentUpon>
     </Compile>
-    <Compile Include="IFileViewer.cs" />
-    <Compile Include="MenuHandlers.cs" />
+    <Compile Include="View\MainWindowController.cs" />
+    <Compile Include="View\MenuHandlers.cs" />
+    <Compile Include="View\MainWindow.cs" />
+    <Compile Include="View\MainWindow.designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\IFileViewer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="MainWindow.xib" />
-    <InterfaceDefinition Include="MainMenu.xib" />
+    <InterfaceDefinition Include="View\MainMenu.xib" />
+    <InterfaceDefinition Include="View\MainWindow.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

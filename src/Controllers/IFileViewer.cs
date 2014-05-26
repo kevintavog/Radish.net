@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Radish
+namespace Radish.Controllers
 {
 	public interface IFileViewer
 	{
