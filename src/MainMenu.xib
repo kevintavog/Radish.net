@@ -85,8 +85,14 @@
                             <menuItem isSeparatorItem="YES" id="P1g-Bt-jTd">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Set File date to EXIF date" keyEquivalent="d" id="fds-n5-e30">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                            <menuItem title="Reveal in Finder" id="hxw-Ms-q3a">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="revealInFinder:" target="-1" id="Lz4-bG-p1K"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Set File date to EXIF date" id="fds-n5-e30">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="setFileDateFromExifDate:" target="-1" id="m7f-sy-f7M"/>
                                 </connections>
@@ -147,7 +153,8 @@ CA
                                     <action selector="performMiniaturize:" target="-1" id="37"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Zoom" id="239">
+                            <menuItem title="Zoom" keyEquivalent="m" id="239">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="performZoom:" target="-1" id="240"/>
                                 </connections>

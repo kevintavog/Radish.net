@@ -104,6 +104,7 @@
       <DependentUpon>FileInformationController.cs</DependentUpon>
     </Compile>
     <Compile Include="IFileViewer.cs" />
+    <Compile Include="MenuHandlers.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />
