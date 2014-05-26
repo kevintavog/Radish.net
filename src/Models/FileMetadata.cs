@@ -17,6 +17,19 @@ namespace Radish.Models
 		public Location Location { get; private set; }
 		public bool FileAndExifTimestampMatch { get; private set; }
 
+
+		public void SetFileDateToExifDate()
+		{
+			if (!FileAndExifTimestampMatch)
+			{
+				File.SetCreationTime(FullPath, Timestamp);
+				File.SetLastWriteTime(FullPath, Timestamp);
+				UpdateTimestampMatch();
+
+				metadata = null;
+			}
+		}
+
 		public string ToDms()
 		{
 			if (Location == null)
@@ -60,11 +73,13 @@ namespace Radish.Models
 		{
 			FullPath = fullPath;
 			GetDetails();
+			UpdateTimestampMatch();
+		}
 
-			var fileTimestamp = new FileInfo(FullPath).CreationTime;
-
+		private void UpdateTimestampMatch()
+		{
 			// Some filesystems, such as FAT, don't have reasonable granularity. If it's close, it's good enough
-			FileAndExifTimestampMatch = Math.Abs((Timestamp - fileTimestamp).TotalSeconds) < 2;
+			FileAndExifTimestampMatch = Math.Abs((Timestamp - new FileInfo(FullPath).CreationTime).TotalSeconds) < 2;
 		}
 
 		private void GetDetails()

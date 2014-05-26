@@ -13,12 +13,14 @@ using MonoMac.CoreGraphics;
 
 namespace Radish
 {
-	public partial class MainWindowController : MonoMac.AppKit.NSWindowController
+	public partial class MainWindowController : MonoMac.AppKit.NSWindowController, IFileViewer
 	{
 		static private readonly Logger logger = LogManager.GetCurrentClassLogger();
+		private const string TrashSoundPath = @"/System/Library/Components/CoreAudio.component/Contents/SharedSupport/SystemSounds/dock/drag to trash.aif";
 
 
-		private DirectoryController		directoryController = new DirectoryController();
+		private DirectoryController		directoryController;
+		private string					currentlyDisplayedFile;
 
 
 #region Constructors
@@ -42,6 +44,7 @@ namespace Radish
 		// Shared initialization code
 		void Initialize()
 		{
+			directoryController = new DirectoryController(this, FileListUpdated);
 		}
 
 #endregion
@@ -62,16 +65,24 @@ namespace Radish
 		{
 			if (directoryController.Count < 1)
 			{
+				currentlyDisplayedFile = null;
+				imageView.Image = null;
+				Window.Title = "<No files>";
+				UpdateStatusBar();
 				return;
 			}
 
 			var fi = directoryController.Current;
-			logger.Info("ShowFile: {0}; {1}", directoryController.CurrentIndex, fi.FullPath);
-
-			using (var image = new NSImage(fi.FullPath))
+			if (fi.FullPath != currentlyDisplayedFile)
 			{
-				imageView.Image = image;
-				image.Release();
+				logger.Info("ShowFile: {0}; {1}", directoryController.CurrentIndex, fi.FullPath);
+				currentlyDisplayedFile = fi.FullPath;
+
+				using (var image = new NSImage(fi.FullPath))
+				{
+					imageView.Image = image;
+					image.Release();
+				}
 			}
 
 			Window.Title = Path.GetFileName(fi.FullPath);
@@ -86,6 +97,13 @@ namespace Radish
 		private void UpdateStatusBar()
 		{
 			var fi = directoryController.Current;
+			if (fi == null)
+			{
+				statusFilename.StringValue = statusTimestamp.StringValue = statusGps.StringValue = "";
+				statusIndex.StringValue = "No files";
+				return;
+			}
+
 			statusFilename.StringValue = Path.GetFileName(fi.FullPath);
 
 			var timestamp = fi.Timestamp.ToString("yyyy/MM/dd HH:mm:ss");
@@ -197,6 +215,54 @@ namespace Radish
 			}
 		}
 
+		[Export("moveToTrash:")]
+		public void MoveToTrash(NSObject sender)
+		{
+			if (directoryController.Count < 1)
+			{
+				return;
+			}
+
+			var fullPath = directoryController.Current.FullPath;
+			logger.Info("MoveToTrash: '{0}'", fullPath);
+
+			int tag;
+			var succeeded = NSWorkspace.SharedWorkspace.PerformFileOperation(
+				NSWorkspace.OperationRecycle,
+				Path.GetDirectoryName(fullPath),
+				"",
+				new string[] { Path.GetFileName(fullPath) },
+				out tag);
+
+			if (tag != 0)
+			{
+				logger.Info("PerformFileOperation {0}; tag={1}", succeeded, tag);
+			}
+
+			if (succeeded)
+			{
+				var message = String.Format("Failed moving '{0}' to trash.", fullPath);
+				var alert = NSAlert.WithMessage(message, "Close", "", "", "");
+				alert.RunSheetModal(Window);
+				return;
+			}
+
+			new NSSound(TrashSoundPath, false).Play();
+		}
+
+		[Export("setFileDateFromExifDate:")]
+		public void SetFileDateFromExifDate(NSObject sender)
+		{
+			if (directoryController.Count < 1)
+			{
+				return;
+			}
+
+			logger.Info("Set date of '{0}' to {1}", directoryController.Current.FullPath, directoryController.Current.Timestamp);
+			directoryController.Current.SetFileDateToExifDate();
+			ShowFile();
+		}
+
 		public bool OpenFolderOrFile(string path)
 		{
 			string filename = null;
@@ -212,6 +278,21 @@ namespace Radish
 			ShowFile();
 			return true;
 		}
+
+		private void FileListUpdated()
+		{
+			directoryController.SelectFile(currentlyDisplayedFile);
+			ShowFile();
+		}
+
+		#region IFileViewer implementation
+
+		public void InvokeOnMainThread(Action action)
+		{
+			BeginInvokeOnMainThread( () => { action(); } );
+		}
+
+		#endregion
 	}
 
 	public enum NsButtonId

@@ -103,6 +103,7 @@
     <Compile Include="FileInformationController.designer.cs">
       <DependentUpon>FileInformationController.cs</DependentUpon>
     </Compile>
+    <Compile Include="IFileViewer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />
