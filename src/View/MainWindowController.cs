@@ -174,6 +174,10 @@ namespace Radish
 			directoryController.Scan(path);
 			directoryController.SelectFile(filename);
 			ShowFile();
+
+			// That's gross - Mono exposes SharedDocumentController as NSObject rather than NSDocumentcontroller
+			(NSDocumentController.SharedDocumentController as NSDocumentController).NoteNewRecentDocumentURL(new NSUrl(path, false));
+
 			return true;
 		}
 
