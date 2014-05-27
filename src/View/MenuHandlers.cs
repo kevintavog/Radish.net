@@ -86,6 +86,16 @@ namespace Radish
 			}
 		}
 
+		[Export("toggleMap:")]
+		public void ToggleMap(NSObject sender)
+		{
+			var fm = directoryController.Current;
+			var url = new NSUrl(
+				String.Format("http://maps.google.com/maps?q={0},{1}", fm.Location.Latitude, fm.Location.Longitude));
+			NSWorkspace.SharedWorkspace.OpenUrl(url);
+
+		}
+
 		[Export("moveToTrash:")]
 		public void MoveToTrash(NSObject sender)
 		{
@@ -131,7 +141,6 @@ namespace Radish
 			logger.Info("RevealInFinder '{0}'", fullPath);
 			NSWorkspace.SharedWorkspace.SelectFile(fullPath, "");
 		}
-
 
 		uint AllModifiers = (uint) (NSEventModifierMask.CommandKeyMask 
 			| NSEventModifierMask.ControlKeyMask 

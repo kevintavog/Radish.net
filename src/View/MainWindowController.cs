@@ -67,6 +67,8 @@ namespace Radish
 			{
 				InvokeOnMainThread( () => HideNotification() );
 			};
+
+			imageView.ImageScaling = NSImageScale.ProportionallyDown;
 		}
 
 		private void ShowFile()
@@ -88,6 +90,11 @@ namespace Radish
 
 				using (var image = new NSImage(fi.FullPath))
 				{
+					// By getting the image representation & setting the image size, the imageView has
+					// good enough info to display a reasonable image. Otherwise, it may use way too
+					// small of a representation, not filling out the area it could otherwise.
+					var imageRep = image.BestRepresentationForDevice(null);
+					image.Size = new SizeF(imageRep.PixelsWide, imageRep.PixelsHigh);
 					imageView.Image = image;
 					image.Release();
 				}
@@ -184,9 +191,11 @@ namespace Radish
 
 		private void HideNotification()
 		{
-			((NSWindow) notificationWindow).OrderOut(this);
+			NotificationWindow.OrderOut(this);
 			hideNotificationTimer.Stop();
 		}
+
+
 
 		#region IFileViewer implementation
 

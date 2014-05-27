@@ -141,7 +141,11 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="eKd-Dv-ca6"/>
-                            <menuItem title="Map" tag="2" keyEquivalent="m" id="pUs-g4-8Kg"/>
+                            <menuItem title="Map" tag="2" keyEquivalent="m" id="pUs-g4-8Kg">
+                                <connections>
+                                    <action selector="toggleMap:" target="-1" id="Uq4-vA-7VG"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>

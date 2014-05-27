@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using Radish.Models;
 using System.IO;
-using MonoMac.ImageIO;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
 using System.Collections;
 using NLog;
+using MonoMac.AppKit;
+using MonoMac.Foundation;
+using MonoMac.ImageIO;
 
 namespace Radish.Controllers
 {
@@ -14,6 +14,11 @@ namespace Radish.Controllers
 	{
 		static private readonly Logger logger = LogManager.GetCurrentClassLogger();
 		static private HashSet<string> ImageTypes = new HashSet<string>(CGImageSource.TypeIdentifiers);
+
+		static DirectoryController()
+		{
+			ImageTypes.Add("com.adobe.pdf");
+		}
 
 		private List<FileMetadata> FileList { get; set; }
 
