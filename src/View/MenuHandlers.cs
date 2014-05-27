@@ -33,6 +33,10 @@ namespace Radish
 		{
 			directoryController.ChangeIndex(+1);
 			ShowFile();
+			if (directoryController.WrappedToStart)
+			{
+				ShowNotification(NotificationGraphic.WrappedToStart);
+			}
 		}
 
 		[Export("previousImage:")]
@@ -40,6 +44,10 @@ namespace Radish
 		{
 			directoryController.ChangeIndex(-1);
 			ShowFile();
+			if (directoryController.WrappedToEnd)
+			{
+				ShowNotification(NotificationGraphic.WrappedToEnd);
+			}
 		}
 
 		[Export("openFolderOrFile:")]
@@ -123,5 +131,35 @@ namespace Radish
 			logger.Info("RevealInFinder '{0}'", fullPath);
 			NSWorkspace.SharedWorkspace.SelectFile(fullPath, "");
 		}
+
+
+		uint AllModifiers = (uint) (NSEventModifierMask.CommandKeyMask 
+			| NSEventModifierMask.ControlKeyMask 
+			| NSEventModifierMask.AlternateKeyMask 
+			| NSEventModifierMask.ShiftKeyMask);
+
+		public override void KeyDown(NSEvent evt)
+		{
+			if (((uint)evt.ModifierFlags & AllModifiers) == 0)
+			{
+				if (evt.CharactersIgnoringModifiers.Length == 1)
+				{
+					NSKey key = (NSKey) evt.CharactersIgnoringModifiers[0];
+					logger.Info("char [{0}], key: {1:X} ({2})", evt.CharactersIgnoringModifiers[0], key, evt.Window.Title);
+					switch (evt.CharactersIgnoringModifiers[0])
+					{
+						case (char) NSKey.DownArrow:
+						case ' ':
+							NextImage(null);
+							return;
+						case (char) NSKey.UpArrow:
+							PreviousImage(null);
+							return;
+					}
+				}
+			}
+			base.KeyDown(evt);
+		}
+
 	}
 }

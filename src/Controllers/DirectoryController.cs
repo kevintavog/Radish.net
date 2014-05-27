@@ -18,6 +18,8 @@ namespace Radish.Controllers
 		private List<FileMetadata> FileList { get; set; }
 
 
+		public bool WrappedToStart { get; private set; }
+		public bool WrappedToEnd { get; private set; }
 		public int CurrentIndex { get; private set; }
 		public FileSort Sort { get; set; }
 
@@ -75,6 +77,7 @@ namespace Radish.Controllers
 
 		private int SetIndex(int index)
 		{
+			WrappedToEnd = WrappedToStart = false;
 			if (FileList.Count < 1)
 			{
 				return -1;
@@ -83,15 +86,22 @@ namespace Radish.Controllers
 			if (index < 0)
 			{
 				index = FileList.Count - 1;
+				WrappedToEnd = true;
 			}
 
-			var newIndex = index % FileList.Count;
-			if (newIndex == CurrentIndex)
+			if (index >= FileList.Count)
 			{
+				index = 0;
+				WrappedToStart = true;
+			}
+
+			if (index == CurrentIndex)
+			{
+				WrappedToEnd = WrappedToStart = false;
 				return CurrentIndex;
 			}
 
-			CurrentIndex = newIndex;
+			CurrentIndex = index;
 			return CurrentIndex;
 		}
 

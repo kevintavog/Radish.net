@@ -106,6 +106,8 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Controllers\IFileViewer.cs" />
+    <Compile Include="View\KTBorderlessWindow.cs" />
+    <Compile Include="View\KTRoundedView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="View\MainMenu.xib" />
@@ -121,6 +123,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <BundleResource Include="Resources\Radish.icns" />
+    <BundleResource Include="Resources\WrappedToStart.png" />
+    <BundleResource Include="Resources\WrappedToEnd.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Radish.icns" />

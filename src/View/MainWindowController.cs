@@ -10,6 +10,7 @@ using System.IO;
 using System.Drawing;
 using MonoMac.CoreText;
 using MonoMac.CoreGraphics;
+using System.Timers;
 
 namespace Radish
 {
@@ -21,6 +22,7 @@ namespace Radish
 
 		private DirectoryController		directoryController;
 		private string					currentlyDisplayedFile;
+		private Timer					hideNotificationTimer = new Timer(250);
 
 
 #region Constructors
@@ -51,6 +53,7 @@ namespace Radish
 
 		//strongly typed window accessor
 		public new MainWindow Window { get { return (MainWindow)base.Window; } }
+		public NSWindow NotificationWindow { get { return (NSWindow)notificationWindow; } }
 		public FileInformationController InformationController { get { return (FileInformationController)fileInformationController; } }
 
 		public override void AwakeFromNib()
@@ -59,6 +62,11 @@ namespace Radish
 
 			Window.BackgroundColor = NSColor.DarkGray;
 			imageView.ImageScaling = NSImageScale.ProportionallyUpOrDown;
+
+			hideNotificationTimer.Elapsed += (s, e) =>
+			{
+				InvokeOnMainThread( () => HideNotification() );
+			};
 		}
 
 		private void ShowFile()
@@ -133,34 +141,6 @@ namespace Radish
 			statusGps.StringValue = fi.ToDms();
 		}
 
-		uint AllModifiers = (uint) (NSEventModifierMask.CommandKeyMask 
-			| NSEventModifierMask.ControlKeyMask 
-			| NSEventModifierMask.AlternateKeyMask 
-			| NSEventModifierMask.ShiftKeyMask);
-
-		public override void KeyDown(NSEvent evt)
-		{
-			if (((uint)evt.ModifierFlags & AllModifiers) == 0)
-			{
-				if (evt.CharactersIgnoringModifiers.Length == 1)
-				{
-					NSKey key = (NSKey) evt.CharactersIgnoringModifiers[0];
-					logger.Info("char [{0}], key: {1:X}", evt.CharactersIgnoringModifiers[0], key);
-					switch (evt.CharactersIgnoringModifiers[0])
-					{
-						case (char) NSKey.DownArrow:
-						case ' ':
-							NextImage(null);
-							return;
-						case (char) NSKey.UpArrow:
-							PreviousImage(null);
-							return;
-					}
-				}
-			}
-			base.KeyDown(evt);
-		}
-
 		public bool OpenFolderOrFile(string path)
 		{
 			string filename = null;
@@ -187,6 +167,27 @@ namespace Radish
 			ShowFile();
 		}
 
+		private void ShowNotification(NotificationGraphic graphic)
+		{
+			notificationImage.Image = NSImage.ImageNamed(graphic.ToString());
+
+			var mainFrame = Window.Frame;
+			var origin = new PointF(
+				mainFrame.X + ((mainFrame.Width - NotificationWindow.Frame.Width) / 2),
+				mainFrame.Y + ((mainFrame.Height - NotificationWindow.Frame.Height) / 2));
+			NotificationWindow.SetFrameOrigin(origin);
+			NotificationWindow.MakeKeyAndOrderFront(this);
+
+			hideNotificationTimer.Stop();
+			hideNotificationTimer.Start();
+		}
+
+		private void HideNotification()
+		{
+			((NSWindow) notificationWindow).OrderOut(this);
+			hideNotificationTimer.Stop();
+		}
+
 		#region IFileViewer implementation
 
 		public void InvokeOnMainThread(Action action)
@@ -197,10 +198,15 @@ namespace Radish
 		#endregion
 	}
 
+	public enum NotificationGraphic
+	{
+		WrappedToStart,
+		WrappedToEnd,
+	}
+
 	public enum NsButtonId
 	{
 		Cancel = 0,
 		OK = 1
 	}
 }
-

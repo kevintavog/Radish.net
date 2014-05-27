@@ -9,6 +9,8 @@
                 <outlet property="fileInformationController" destination="7PC-Vb-hiO" id="WMb-Ha-nVv"/>
                 <outlet property="imageView" destination="HEj-HW-hqs" id="qVf-1R-tFa"/>
                 <outlet property="informationPanel" destination="XcY-Gj-53M" id="l1U-IQ-Ufb"/>
+                <outlet property="notificationImage" destination="jvR-0f-ENn" id="bTx-dW-3AX"/>
+                <outlet property="notificationWindow" destination="dSj-ey-L0L" id="3xf-ky-IbR"/>
                 <outlet property="statusFilename" destination="i8a-gV-kru" id="n4i-Hp-fnu"/>
                 <outlet property="statusGps" destination="eRi-3Y-hjm" id="yuB-3z-h4I"/>
                 <outlet property="statusIndex" destination="ICF-YS-360" id="5SB-ET-12H"/>
@@ -178,5 +180,24 @@
                 </subviews>
             </view>
         </window>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="dSj-ey-L0L" customClass="KTBorderlessWindow">
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="180" height="180"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
+            <view key="contentView" id="6Vf-WA-vuZ" customClass="KTRoundedView">
+                <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="jvR-0f-ENn">
+                        <rect key="frame" x="20" y="20" width="140" height="140"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="WrappedToStart" id="Rij-Qh-qvt"/>
+                    </imageView>
+                </subviews>
+            </view>
+        </window>
     </objects>
+    <resources>
+        <image name="WrappedToStart" width="256" height="256"/>
+    </resources>
 </document>

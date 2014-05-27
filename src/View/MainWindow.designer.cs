@@ -22,6 +22,12 @@ namespace Radish
 		MonoMac.AppKit.NSPanel informationPanel { get; set; }
 
 		[Outlet]
+		MonoMac.AppKit.NSImageView notificationImage { get; set; }
+
+		[Outlet]
+		MonoMac.Foundation.NSObject notificationWindow { get; set; }
+
+		[Outlet]
 		MonoMac.AppKit.NSTextField statusFilename { get; set; }
 
 		[Outlet]
@@ -46,6 +52,16 @@ namespace Radish
 			if (imageView != null) {
 				imageView.Dispose ();
 				imageView = null;
+			}
+
+			if (informationPanel != null) {
+				informationPanel.Dispose ();
+				informationPanel = null;
+			}
+
+			if (notificationWindow != null) {
+				notificationWindow.Dispose ();
+				notificationWindow = null;
 			}
 
 			if (statusFilename != null) {
@@ -73,9 +89,9 @@ namespace Radish
 				statusView = null;
 			}
 
-			if (informationPanel != null) {
-				informationPanel.Dispose ();
-				informationPanel = null;
+			if (notificationImage != null) {
+				notificationImage.Dispose ();
+				notificationImage = null;
 			}
 		}
 	}
