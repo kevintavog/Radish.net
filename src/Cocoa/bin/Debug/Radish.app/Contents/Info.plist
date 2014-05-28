@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>Radish</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.rangic.radish</string>
+	<key>CFBundleName</key>
+	<string>Radish</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.8</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.photography</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.image</string>
+				<string>public.folder</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleIconFile</key>
+	<string>Radish</string>
+	<key>BuildMachineOSBuild</key>
+	<string>13D65</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>MonoBundleExecutable</key>
+	<string>Radish.exe</string>
+	<key>CFBundleExecutable</key>
+	<string>Radish</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>DTCompiler</key>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
+	<key>DTPlatformBuild</key>
+	<string>5B1008</string>
+	<key>DTPlatformVersion</key>
+	<string>GM</string>
+	<key>DTSDKBuild</key>
+	<string>13D65</string>
+	<key>DTSDKName</key>
+	<string>macosx10.9</string>
+	<key>DTXcode</key>
+	<string>0510</string>
+	<key>DTXcodeBuild</key>
+	<string>5B1008</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © </string>
+</dict>
+</plist>

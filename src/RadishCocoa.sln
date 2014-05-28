@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radish", "Radish.csproj", "{06ACDB4D-2077-4A46-AB50-E1E2F730BE82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radish", "Cocoa\Radish.csproj", "{06ACDB4D-2077-4A46-AB50-E1E2F730BE82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radish.Support", "Radish.Support\Radish.Support.csproj", "{79CBB19E-D7BA-4B96-A785-34F326B16FBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,6 +18,12 @@ Global
 		{06ACDB4D-2077-4A46-AB50-E1E2F730BE82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06ACDB4D-2077-4A46-AB50-E1E2F730BE82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06ACDB4D-2077-4A46-AB50-E1E2F730BE82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79CBB19E-D7BA-4B96-A785-34F326B16FBF}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
+		{79CBB19E-D7BA-4B96-A785-34F326B16FBF}.AppStore|Any CPU.Build.0 = Release|Any CPU
+		{79CBB19E-D7BA-4B96-A785-34F326B16FBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79CBB19E-D7BA-4B96-A785-34F326B16FBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79CBB19E-D7BA-4B96-A785-34F326B16FBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79CBB19E-D7BA-4B96-A785-34F326B16FBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Radish.csproj

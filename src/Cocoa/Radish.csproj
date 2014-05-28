@@ -67,51 +67,37 @@
     <Reference Include="System.Drawing" />
     <Reference Include="MonoMac" />
     <Reference Include="NLog">
-      <HintPath>packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="ExifLib">
-      <HintPath>ExternalDependencies\ExifLib.dll</HintPath>
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-    <Folder Include="Utilities\" />
-    <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
-    <Compile Include="Models\FileMetadata.cs" />
-    <Compile Include="Controllers\DirectoryController.cs" />
-    <Compile Include="Models\Location.cs" />
-    <Compile Include="Models\MetadataEntry.cs" />
-    <Compile Include="Utilities\ReadExifMetadata.cs" />
-    <Compile Include="Utilities\ExifToolInvoker.cs" />
-    <Compile Include="View\AppDelegate.cs" />
-    <Compile Include="View\AppDelegate.designer.cs">
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="AppDelegate.designer.cs">
       <DependentUpon>AppDelegate.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\FileInformationController.cs" />
-    <Compile Include="View\FileInformationController.designer.cs">
+    <Compile Include="FileInformationController.cs" />
+    <Compile Include="FileInformationController.designer.cs">
       <DependentUpon>FileInformationController.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\MainWindowController.cs" />
-    <Compile Include="View\MenuHandlers.cs" />
-    <Compile Include="View\MainWindow.cs" />
-    <Compile Include="View\MainWindow.designer.cs">
+    <Compile Include="MainWindowController.cs" />
+    <Compile Include="MenuHandlers.cs" />
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="MainWindow.designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\IFileViewer.cs" />
-    <Compile Include="View\KTBorderlessWindow.cs" />
-    <Compile Include="View\KTRoundedView.cs" />
+    <Compile Include="KTBorderlessWindow.cs" />
+    <Compile Include="KTRoundedView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="View\MainMenu.xib" />
-    <InterfaceDefinition Include="View\MainWindow.xib" />
+    <InterfaceDefinition Include="MainMenu.xib" />
+    <InterfaceDefinition Include="MainWindow.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -128,5 +114,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Radish.icns" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Radish.Support\Radish.Support.csproj">
+      <Project>{79CBB19E-D7BA-4B96-A785-34F326B16FBF}</Project>
+      <Name>Radish.Support</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

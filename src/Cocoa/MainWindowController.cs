@@ -11,6 +11,7 @@ using System.Drawing;
 using MonoMac.CoreText;
 using MonoMac.CoreGraphics;
 using System.Timers;
+using MonoMac.ImageIO;
 
 namespace Radish
 {
@@ -18,6 +19,7 @@ namespace Radish
 	{
 		static private readonly Logger logger = LogManager.GetCurrentClassLogger();
 		private const string TrashSoundPath = @"/System/Library/Components/CoreAudio.component/Contents/SharedSupport/SystemSounds/dock/drag to trash.aif";
+		static private HashSet<string> SupportedFileTypes = new HashSet<string>(CGImageSource.TypeIdentifiers);
 
 
 		private DirectoryController		directoryController;
@@ -47,6 +49,7 @@ namespace Radish
 		void Initialize()
 		{
 			directoryController = new DirectoryController(this, FileListUpdated);
+			SupportedFileTypes.Add("com.adobe.pdf");
 		}
 
 #endregion
@@ -203,6 +206,14 @@ namespace Radish
 		{
 			BeginInvokeOnMainThread( () => { action(); } );
 		}
+
+		public bool IsFileSupported(string filePath)
+		{
+			NSError error;
+			var fileType = NSWorkspace.SharedWorkspace.TypeOfFile(filePath, out error);
+			return SupportedFileTypes.Contains(fileType);
+		}
+
 
 		#endregion
 	}

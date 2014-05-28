@@ -4,21 +4,13 @@ using Radish.Models;
 using System.IO;
 using System.Collections;
 using NLog;
-using MonoMac.AppKit;
-using MonoMac.Foundation;
-using MonoMac.ImageIO;
 
 namespace Radish.Controllers
 {
 	public class DirectoryController
 	{
 		static private readonly Logger logger = LogManager.GetCurrentClassLogger();
-		static private HashSet<string> ImageTypes = new HashSet<string>(CGImageSource.TypeIdentifiers);
 
-		static DirectoryController()
-		{
-			ImageTypes.Add("com.adobe.pdf");
-		}
 
 		private List<FileMetadata> FileList { get; set; }
 
@@ -137,7 +129,7 @@ namespace Radish.Controllers
 			var list = new List<FileMetadata>();
 			foreach (var f in Directory.EnumerateFiles(path))
 			{
-				if (IsSupportedFileType(f))
+				if (fileViewer.IsFileSupported(f))
 				{
 					list.Add(new FileMetadata(f));
 				}
@@ -147,20 +139,13 @@ namespace Radish.Controllers
 			FileList = list;
 		}
 
-		private bool IsSupportedFileType(string filePath)
-		{
-			NSError error;
-			var fileType = NSWorkspace.SharedWorkspace.TypeOfFile(filePath, out error);
-			return ImageTypes.Contains(fileType);
-		}
-
 		private void OnWatcherChanged(object source, FileSystemEventArgs evt)
 		{
 			fileViewer.InvokeOnMainThread( ()=>
 			{
 				logger.Info("Watcher: '{0}' - {1}", evt.FullPath, evt.ChangeType);
 
-				if (File.Exists(evt.FullPath) && !IsSupportedFileType(evt.FullPath))
+				if (File.Exists(evt.FullPath) && !fileViewer.IsFileSupported(evt.FullPath))
 				{
 					return;
 				}
