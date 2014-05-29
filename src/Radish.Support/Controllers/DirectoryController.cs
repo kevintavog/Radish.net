@@ -4,15 +4,67 @@ using Radish.Models;
 using System.IO;
 using System.Collections;
 using NLog;
+using System.ComponentModel;
+using Radish.Support.Utilities;
 
 namespace Radish.Controllers
 {
-	public class DirectoryController
+    public class DirectoryController : INotifyPropertyChanged
 	{
 		static private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
-		private List<FileMetadata> FileList { get; set; }
+        // Status bar helpers
+        public string StatusFilename 
+        {
+            get
+            {
+                if (FileList.Count < 1)
+                {
+                    return "";
+                }
+                return Path.GetFileName(Current.FullPath); 
+            }
+        }
+
+        public string StatusTimestamp
+        {
+            get
+            {
+                if (FileList.Count < 1)
+                {
+                    return "";
+                }
+                return Current.Timestamp.ToString("yyyy/MM/dd HH:mm:ss"); ;
+            }
+        }
+
+        public string StatusIndex
+        {
+            get
+            {
+                if (FileList.Count < 1)
+                {
+                    return "No files";
+                }
+                return String.Format("{0} of {1}", CurrentIndex + 1, Count);
+            }
+        }
+
+        public string StatusGps
+        {
+            get
+            {
+                if (FileList.Count < 1)
+                {
+                    return "";
+                }
+                return Current.ToDms();
+            }
+        }
+
+        private List<FileMetadata> FileList { get; set; }
 
 
 		public bool WrappedToStart { get; private set; }
@@ -99,7 +151,9 @@ namespace Radish.Controllers
 			}
 
 			CurrentIndex = index;
-			return CurrentIndex;
+
+            FirePropertyChanges();
+            return CurrentIndex;
 		}
 
 		public void Scan(string path)
@@ -122,7 +176,17 @@ namespace Radish.Controllers
 
 			InternalScan(path);
 			CurrentIndex = 0;
+
+            FirePropertyChanges();
 		}
+
+        private void FirePropertyChanges()
+        {
+            this.FirePropertyChanged<string>(PropertyChanged, () => StatusFilename);
+            this.FirePropertyChanged<string>(PropertyChanged, () => StatusTimestamp);
+            this.FirePropertyChanged<string>(PropertyChanged, () => StatusIndex);
+            this.FirePropertyChanged<string>(PropertyChanged, () => StatusGps);
+        }
 
 		private void InternalScan(string path)
 		{
@@ -192,7 +256,7 @@ namespace Radish.Controllers
 				listUpdated();
 			});
 		}
-	}
+    }
 
 	class TimestampComparer : IComparer<FileMetadata>
 	{

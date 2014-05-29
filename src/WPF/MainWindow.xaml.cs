@@ -1,7 +1,9 @@
 ﻿using NLog;
 using Radish.Controllers;
+using Radish.Support.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
@@ -9,11 +11,12 @@ using System.Windows.Media.Imaging;
 
 namespace Radish
 {
-    public partial class MainWindow : Window, IFileViewer
+    public partial class MainWindow : Window, IFileViewer, INotifyPropertyChanged
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private DirectoryController directoryController;
+        public event PropertyChangedEventHandler PropertyChanged;
+        public DirectoryController DirectoryController { get; private set; }
         private string lastAddedPath;
         private string currentlyDisplayedFile;
         private HashSet<string> supportedExtensions = new HashSet<string>()
@@ -25,16 +28,18 @@ namespace Radish
 
         public MainWindow()
         {
+            DirectoryController = new DirectoryController(this, FileListUpdated);
+
             InitializeComponent();
 
-            directoryController = new DirectoryController(this, FileListUpdated);
+            this.FirePropertyChanged(PropertyChanged, () => DirectoryController);
         }
 
         private void NextFile(object sender, ExecutedRoutedEventArgs e)
         {
-            directoryController.ChangeIndex(+1);
+            DirectoryController.ChangeIndex(+1);
             ShowFile();
-            if (directoryController.WrappedToStart)
+            if (DirectoryController.WrappedToStart)
             {
 //                ShowNotification(NotificationGraphic.WrappedToStart);
             }
@@ -60,17 +65,17 @@ namespace Radish
                     filename = lastAddedPath;
                     lastAddedPath = Path.GetDirectoryName(lastAddedPath);
                 }
-                directoryController.Scan(lastAddedPath);
-                directoryController.SelectFile(filename);
+                DirectoryController.Scan(lastAddedPath);
+                DirectoryController.SelectFile(filename);
                 ShowFile();
             }
         }
 
         private void PreviousFile(object sender, ExecutedRoutedEventArgs e)
         {
-            directoryController.ChangeIndex(-1);
+            DirectoryController.ChangeIndex(-1);
             ShowFile();
-            if (directoryController.WrappedToEnd)
+            if (DirectoryController.WrappedToEnd)
             {
 //                ShowNotification(NotificationGraphic.WrappedToEnd);
             }
@@ -78,7 +83,7 @@ namespace Radish
 
         private void ShowFile()
         {
-            if (directoryController.Count < 1)
+            if (DirectoryController.Count < 1)
             {
                 currentlyDisplayedFile = null;
                 Image.Source = null;
@@ -87,10 +92,10 @@ namespace Radish
                 return;
             }
 
-            var fi = directoryController.Current;
+            var fi = DirectoryController.Current;
             if (fi.FullPath != currentlyDisplayedFile)
             {
-                logger.Info("ShowFile: {0}; {1}", directoryController.CurrentIndex, fi.FullPath);
+                logger.Info("ShowFile: {0}; {1}", DirectoryController.CurrentIndex, fi.FullPath);
                 currentlyDisplayedFile = fi.FullPath;
 
                 var source = new BitmapImage();
@@ -116,7 +121,7 @@ namespace Radish
 
         private void FileListUpdated()
         {
-            directoryController.SelectFile(currentlyDisplayedFile);
+            DirectoryController.SelectFile(currentlyDisplayedFile);
             ShowFile();
         }
 
