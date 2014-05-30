@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
-using NLog;
-using Radish.Models;
-using Radish.Controllers;
-using System.IO;
 using System.Drawing;
-using MonoMac.CoreText;
-using MonoMac.CoreGraphics;
+using System.IO;
+using System.Linq;
 using System.Timers;
+using MonoMac.AppKit;
+using MonoMac.CoreGraphics;
+using MonoMac.CoreText;
+using MonoMac.Foundation;
 using MonoMac.ImageIO;
+using NLog;
+using Radish.Controllers;
+using Radish.Models;
 
 namespace Radish
 {
