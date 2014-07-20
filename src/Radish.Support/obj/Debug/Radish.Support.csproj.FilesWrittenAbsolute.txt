@@ -1,8 +1,0 @@
-/Users/goatboy/Documents/projects/src/Radish/src/Radish.Support/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
-/Users/goatboy/Documents/projects/src/Radish/src/Radish.Support/bin/Debug/Radish.Support.dll.mdb
-/Users/goatboy/Documents/projects/src/Radish/src/Radish.Support/bin/Debug/Radish.Support.dll
-/Users/goatboy/Documents/projects/src/Radish/src/Radish.Support/obj/Debug/Radish.Support.dll
-/Users/goatboy/Documents/projects/src/Radish/src/Radish.Support/obj/Debug/Radish.Support.dll.mdb
-/Users/goatboy/Documents/projects/src/Radish/src/Radish.Support/bin/Debug/Newtonsoft.Json.dll
-/Users/goatboy/Documents/projects/src/Radish/src/Radish.Support/bin/Debug/NLog.dll
-/Users/goatboy/Documents/projects/src/Radish/src/Radish.Support/bin/Debug/ExifLib.dll
