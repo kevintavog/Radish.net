@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1090" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
@@ -99,6 +99,11 @@
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="79">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Auto Rotate (Lossless)" tag="2" keyEquivalent="a" id="JlQ-Dv-IHT">
+                                <connections>
+                                    <action selector="autoRotate:" target="-1" id="m7f-sy-f8M"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Move to Trash" tag="2" id="pZM-sa-pum">
                                 <string key="keyEquivalent" base64-UTF8="YES">

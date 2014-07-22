@@ -2,6 +2,7 @@
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 using System.IO;
+using Radish.Utilities;
 
 namespace Radish
 {
@@ -27,6 +28,31 @@ namespace Radish
 			logger.Info("ValidateMenuItem: unexpected tag {0} for menu item '{1}'", menuItem.Tag, menuItem.Title);
 			return false;
 		}
+
+        [Export("autoRotate:")]
+        public void AutoRotate(NSObject sender)
+        {
+            var fullPath = directoryController.Current.FullPath;
+            logger.Info("AutoRotate '{0}'", fullPath);
+            try
+            {
+                NSError error;
+                var fileType = NSWorkspace.SharedWorkspace.TypeOfFile(directoryController.Current.FullPath, out error);
+                if (fileType == "public.jpeg")
+                {
+                    var jheadInvoker = new JheadInvoker();
+                    jheadInvoker.Run("-q -autorot -ft \"{0}\"", fullPath);
+                    ShowFile(forceRefresh:true);
+                }
+            }
+            catch (Exception e)
+            {
+                var message = String.Format("Auto rotate of '{0}' failed: {1}", fullPath, e.Message);
+                var alert = NSAlert.WithMessage(message, "Close", "", "", "");
+                alert.RunSheetModal(Window);
+                return;
+            }
+        }
 
 		[Export("nextImage:")]
 		public void NextImage(NSObject sender)
@@ -115,7 +141,7 @@ namespace Radish
 				logger.Info("PerformFileOperation {0}; tag={1}", succeeded, tag);
 			}
 
-			if (succeeded)
+			if (!succeeded)
 			{
 				var message = String.Format("Failed moving '{0}' to trash.", fullPath);
 				var alert = NSAlert.WithMessage(message, "Close", "", "", "");

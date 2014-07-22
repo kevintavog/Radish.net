@@ -74,7 +74,7 @@ namespace Radish
 			imageView.ImageScaling = NSImageScale.ProportionallyDown;
 		}
 
-		private void ShowFile()
+        private void ShowFile(bool forceRefresh = false)
 		{
 			if (directoryController.Count < 1)
 			{
@@ -85,22 +85,43 @@ namespace Radish
 				return;
 			}
 
+            if (forceRefresh)
+            {
+                currentlyDisplayedFile = null;
+            }
+
 			var fi = directoryController.Current;
 			if (fi.FullPath != currentlyDisplayedFile)
 			{
 				logger.Info("ShowFile: {0}; {1}", directoryController.CurrentIndex, fi.FullPath);
 				currentlyDisplayedFile = fi.FullPath;
 
-				using (var image = new NSImage(fi.FullPath))
-				{
-					// By getting the image representation & setting the image size, the imageView has
-					// good enough info to display a reasonable image. Otherwise, it may use way too
-					// small of a representation, not filling out the area it could otherwise.
-					var imageRep = image.BestRepresentationForDevice(null);
-					image.Size = new SizeF(imageRep.PixelsWide, imageRep.PixelsHigh);
-					imageView.Image = image;
-					image.Release();
-				}
+
+                // In order to see the current orientation (to see if the image needs to be rotated), load the image 
+                // as a CGImage rather than directly via NSImage
+                using (var cgImage = CGImage.FromJPEG(CGDataProvider.FromFile(fi.FullPath), null, false, CGColorRenderingIntent.Default))
+                {
+                    NSImage image;
+                    if (cgImage == null)
+                    {
+                        image = new NSImage(fi.FullPath);
+                    }
+                    else
+                    {
+                        image = new NSImage(cgImage, new SizeF(cgImage.Width, cgImage.Height));
+                    }
+
+                    using (image)
+    				{
+    					// By getting the image representation & setting the image size, the imageView has
+    					// good enough info to display a reasonable image. Otherwise, it may use way too
+    					// small of a representation, not filling out the area it could otherwise.
+    					var imageRep = image.BestRepresentationForDevice(null);
+    					image.Size = new SizeF(imageRep.PixelsWide, imageRep.PixelsHigh);
+    					imageView.Image = image;
+    					image.Release();
+    				}
+                }
 			}
 
 			Window.Title = Path.GetFileName(fi.FullPath);

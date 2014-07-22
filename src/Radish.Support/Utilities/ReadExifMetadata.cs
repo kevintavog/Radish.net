@@ -40,8 +40,9 @@ namespace Radish.Utilities
 
 		static public IList<MetadataEntry> GetMetadata(string file)
 		{
-			var exifOutput = ExifToolInvoker.Run("-a -j -g \"{0}\"", file);
-			var info = JArray.Parse(exifOutput.OutputString);
+            var exifInvoker = new ExifToolInvoker();
+			exifInvoker.Run("-a -j -g \"{0}\"", file);
+			var info = JArray.Parse(exifInvoker.OutputString);
 
 			var list = new List<MetadataEntry>();
 

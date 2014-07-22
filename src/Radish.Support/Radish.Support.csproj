@@ -50,6 +50,8 @@
     <Compile Include="Models\MetadataEntry.cs" />
     <Compile Include="Controllers\DirectoryController.cs" />
     <Compile Include="Controllers\IFileViewer.cs" />
+    <Compile Include="Utilities\JheadInvoker.cs" />
+    <Compile Include="Utilities\ProcessInvoker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

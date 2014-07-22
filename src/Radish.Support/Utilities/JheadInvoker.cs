@@ -2,15 +2,15 @@
 
 namespace Radish.Utilities
 {
-    public class ExifToolInvoker : ProcessInvoker
+    public class JheadInvoker : ProcessInvoker
     {
-        override protected string ProcessName { get { return "ExifTool"; } }
+        override protected string ProcessName { get { return "jhead"; } }
         override protected string ProcessPath 
         { 
             get 
             { 
                 // Mac specific path to exiftool
-                return "/usr/bin/exiftool";
+                return "/users/goatboy/tools/jhead";
             }
         }
 
@@ -21,7 +21,7 @@ namespace Radish.Utilities
                 return false;
             }
 
-            Invoke("-ver");
+            Invoke("-V");
             return true;
         }
     }
