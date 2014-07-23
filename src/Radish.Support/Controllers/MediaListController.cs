@@ -157,6 +157,7 @@ namespace Radish.Controllers
         protected void SetList(IList<MediaMetadata> list)
         {
             MediaList = list as List<MediaMetadata>;
+            SetIndex(0);
         }
     }
 
