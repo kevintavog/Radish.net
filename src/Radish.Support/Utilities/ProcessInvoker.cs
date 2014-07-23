@@ -4,6 +4,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Threading;
 using System.IO;
+using System.Reflection;
 
 namespace Radish.Utilities
 {
@@ -37,9 +38,6 @@ namespace Radish.Utilities
                 {
                     throw new InvalidOperationException("Unable to run " + ProcessName);
                 }
-
-                outputBuffer.Clear();
-                errorBuffer.Clear();
             }
 
             Invoke(commandLine, args);
@@ -55,6 +53,9 @@ namespace Radish.Utilities
 
         protected void Invoke(string commandLine, params object[] args)
         {
+            outputBuffer.Clear();
+            errorBuffer.Clear();
+
             // Arbitrary timeout for now...
             const int timeout = 10 * 1000;
 
@@ -68,8 +69,7 @@ namespace Radish.Utilities
                 UseShellExecute = false,
             };
 
-            // Mac specific...
-            psi.EnvironmentVariables["PATH"] = Environment.GetEnvironmentVariable("PATH") + ":/usr/local/bin";
+            psi.EnvironmentVariables["PATH"] = Environment.GetEnvironmentVariable("PATH") + Path.PathSeparator + Path.GetDirectoryName(ProcessPath);
 
             logger.Info("Running {0}: {1} {2}", ProcessName, psi.FileName, psi.Arguments);
 
@@ -124,6 +124,15 @@ namespace Radish.Utilities
                         }
                     }
                 }
+            }
+        }
+
+        static public string BaseAppFolder
+        {
+            get
+            {
+                var uri = new UriBuilder(Assembly.GetExecutingAssembly().CodeBase);
+                return Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
             }
         }
     }

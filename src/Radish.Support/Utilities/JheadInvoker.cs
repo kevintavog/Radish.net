@@ -1,16 +1,18 @@
 ﻿using System.IO;
+using NLog;
 
 namespace Radish.Utilities
 {
     public class JheadInvoker : ProcessInvoker
     {
+        static private readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         override protected string ProcessName { get { return "jhead"; } }
         override protected string ProcessPath 
         { 
             get 
             { 
-                // Mac specific path to exiftool
-                return "/users/goatboy/tools/jhead";
+                return Path.Combine(BaseAppFolder, "Dependencies", "jhead");
             }
         }
 
@@ -18,6 +20,7 @@ namespace Radish.Utilities
         {
             if (!File.Exists(path))
             {
+                logger.Info("File does not exist: {0}", path);
                 return false;
             }
 

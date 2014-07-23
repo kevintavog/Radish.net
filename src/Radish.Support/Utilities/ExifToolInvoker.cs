@@ -8,7 +8,7 @@ namespace Radish.Utilities
         override protected string ProcessPath 
         { 
             get 
-            { 
+            {
                 // Mac specific path to exiftool
                 return "/usr/bin/exiftool";
             }

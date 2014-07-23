@@ -24,7 +24,6 @@
     <UseSGen>false</UseSGen>
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <EnablePackageSigning>false</EnablePackageSigning>
-    <CodeSigningKey>Mac Developer</CodeSigningKey>
     <EnableCodeSigning>false</EnableCodeSigning>
     <CreatePackage>false</CreatePackage>
   </PropertyGroup>
@@ -75,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Dependencies\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -105,6 +105,12 @@
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Dependencies\jhead">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Dependencies\jpegtran">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -116,7 +122,7 @@
     <Content Include="Radish.icns" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Radish.Support\Radish.Support.csproj">
+    <ProjectReference Include="..\Radish.Support\Radish.Support.csproj">
       <Project>{79CBB19E-D7BA-4B96-A785-34F326B16FBF}</Project>
       <Name>Radish.Support</Name>
     </ProjectReference>
