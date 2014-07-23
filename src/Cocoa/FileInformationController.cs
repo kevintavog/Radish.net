@@ -9,7 +9,7 @@ namespace Radish
 	[MonoMac.Foundation.Register("FileInformationController")]
 	public partial class FileInformationController : NSViewController
 	{
-		private FileMetadata FileMetadata;
+		private MediaMetadata MediaMetadata;
 
 		public FileInformationController(IntPtr handle) : base(handle)
 		{
@@ -32,9 +32,9 @@ namespace Radish
 			tableView.BackgroundColor = NSColor.Clear;
 		}
 
-		public void SetFile(FileMetadata fileMetadata)
+		public void SetFile(MediaMetadata mediaMetadata)
 		{
-			FileMetadata = fileMetadata;
+			MediaMetadata = mediaMetadata;
 			tableView.ReloadData();
 
 			for (var column = 0; column < tableView.TableColumns().Length; ++column)
@@ -54,17 +54,17 @@ namespace Radish
 		[Export("numberOfRowsInTableView:")]
 		public int numberOfRowsInTableView(NSTableView tv)
 		{
-			if (FileMetadata == null)
+			if (MediaMetadata == null)
 			{
 				return 0;
 			}
-			return FileMetadata.Metadata.Count;
+			return MediaMetadata.Metadata.Count;
 		}
 
 		[Export("tableView:objectValueForTableColumn:row:")]
 		public string objectValueForTableColumn(NSTableView table, NSTableColumn column, int rowIndex)
 		{
-			var info = FileMetadata.Metadata[rowIndex];
+			var info = MediaMetadata.Metadata[rowIndex];
 			switch (column.DataCell.Tag)
 			{
 				case 1:
@@ -81,7 +81,7 @@ namespace Radish
 		[Export("tableView:isGroupRow:")]
 		public bool isGroupRow(NSTableView table, int row)
 		{
-			return FileMetadata.Metadata[row].Category != null;
+			return MediaMetadata.Metadata[row].Category != null;
 		}
 
 		[Export("tableView:willDisplayCell:forTableColumn:row:")]

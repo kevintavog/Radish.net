@@ -38,6 +38,9 @@
     <Reference Include="ExifLib">
       <HintPath>..\ExternalDependencies\ExifLib.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -52,6 +55,12 @@
     <Compile Include="Controllers\IFileViewer.cs" />
     <Compile Include="Utilities\JheadInvoker.cs" />
     <Compile Include="Utilities\ProcessInvoker.cs" />
+    <Compile Include="FindAPhotoClient.cs" />
+    <Compile Include="Preferences.cs" />
+    <Compile Include="Controllers\MediaListController.cs" />
+    <Compile Include="Models\MediaMetadata.cs" />
+    <Compile Include="Models\FIndAPhotoMetadata.cs" />
+    <Compile Include="Controllers\FindAPhotoController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

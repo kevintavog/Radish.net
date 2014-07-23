@@ -11,6 +11,8 @@
                 <outlet property="informationPanel" destination="XcY-Gj-53M" id="l1U-IQ-Ufb"/>
                 <outlet property="notificationImage" destination="jvR-0f-ENn" id="bTx-dW-3AX"/>
                 <outlet property="notificationWindow" destination="dSj-ey-L0L" id="3xf-ky-IbR"/>
+                <outlet property="searchController" destination="S2L-gN-NOu" id="Wla-Vy-RUe"/>
+                <outlet property="searchWindow" destination="nAg-yx-nmQ" id="kzO-0E-VaV"/>
                 <outlet property="statusFilename" destination="i8a-gV-kru" id="n4i-Hp-fnu"/>
                 <outlet property="statusGps" destination="eRi-3Y-hjm" id="yuB-3z-h4I"/>
                 <outlet property="statusIndex" destination="ICF-YS-360" id="5SB-ET-12H"/>
@@ -196,6 +198,116 @@
                 </subviews>
             </view>
         </window>
+        <window title="Search" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="Search" animationBehavior="default" id="nAg-yx-nmQ">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="537" height="206"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
+            <view key="contentView" id="wTH-lf-Ics">
+                <rect key="frame" x="0.0" y="0.0" width="537" height="206"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="DSg-pZ-2Qr">
+                        <rect key="frame" x="63" y="164" width="126" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Find A Photo host:" id="Xqc-Me-Ryi">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Hkt-Cq-vOG">
+                        <rect key="frame" x="18" y="124" width="113" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Search string:" id="xwv-Jq-Uw1">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" id="M9J-oA-jfw">
+                        <rect key="frame" x="195" y="164" width="244" height="22"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Rox-rw-SqI">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="Qiy-aW-XP8">
+                        <rect key="frame" x="20" y="45" width="497" height="81"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="k5p-zC-mAg">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" id="L0M-Gm-INc">
+                        <rect key="frame" x="441" y="158" width="82" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Test" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0cU-hP-SgI">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="testHost:" target="S2L-gN-NOu" id="k0I-qd-tIk"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" id="rId-HB-PFk">
+                        <rect key="frame" x="441" y="3" width="82" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="push" title="Search" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2ab-aJ-Llt">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="startSearch:" target="S2L-gN-NOu" id="nHG-4P-lZz"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" id="ZlO-Ff-0hb">
+                        <rect key="frame" x="350" y="3" width="82" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mW9-bl-y3J">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="S2L-gN-NOu" id="xOQ-9J-9Hd"/>
+                        </connections>
+                    </button>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="SmQ-pp-x4U">
+                        <rect key="frame" x="15" y="154" width="42" height="42"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="ndT-FZ-oPj"/>
+                    </imageView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="wqA-qc-ebp">
+                        <rect key="frame" x="75" y="146" width="444" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Error text goes here" id="zGy-yM-3NU">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+        </window>
+        <viewController id="S2L-gN-NOu" customClass="SearchController">
+            <connections>
+                <outlet property="connectionImage" destination="SmQ-pp-x4U" id="heT-ES-PNe"/>
+                <outlet property="errorLabel" destination="wqA-qc-ebp" id="NWf-fj-SvH"/>
+                <outlet property="hostName" destination="M9J-oA-jfw" id="rpr-HX-YUO"/>
+                <outlet property="searchButton" destination="rId-HB-PFk" id="xtm-b9-k0t"/>
+                <outlet property="searchText" destination="Qiy-aW-XP8" id="3UT-pR-d7M"/>
+            </connections>
+        </viewController>
     </objects>
     <resources>
         <image name="WrappedToStart" width="256" height="256"/>

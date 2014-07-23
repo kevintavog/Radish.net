@@ -94,6 +94,10 @@
     </Compile>
     <Compile Include="KTBorderlessWindow.cs" />
     <Compile Include="KTRoundedView.cs" />
+    <Compile Include="SearchController.cs" />
+    <Compile Include="SearchController.designer.cs">
+      <DependentUpon>SearchController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainMenu.xib" />
@@ -117,6 +121,8 @@
     <BundleResource Include="Resources\Radish.icns" />
     <BundleResource Include="Resources\WrappedToStart.png" />
     <BundleResource Include="Resources\WrappedToEnd.png" />
+    <BundleResource Include="Resources\FailedCheck.png" />
+    <BundleResource Include="Resources\SucceededCheck.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Radish.icns" />

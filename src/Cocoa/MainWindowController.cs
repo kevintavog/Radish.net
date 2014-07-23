@@ -22,7 +22,7 @@ namespace Radish
 		static private HashSet<string> SupportedFileTypes = new HashSet<string>(CGImageSource.TypeIdentifiers);
 
 
-		private DirectoryController		directoryController;
+		private MediaListController		mediaListController;
 		private string					currentlyDisplayedFile;
 		private Timer					hideNotificationTimer = new Timer(250);
 
@@ -48,23 +48,23 @@ namespace Radish
 		// Shared initialization code
 		void Initialize()
 		{
-			directoryController = new DirectoryController(this, FileListUpdated);
+			mediaListController = new DirectoryController(this, FileListUpdated);
 			SupportedFileTypes.Add("com.adobe.pdf");
 		}
 
 #endregion
 
-		//strongly typed window accessor
-		public new MainWindow Window { get { return (MainWindow)base.Window; } }
+
+        public new MainWindow Window { get { return (MainWindow)base.Window; } }
 		public NSWindow NotificationWindow { get { return (NSWindow)notificationWindow; } }
 		public FileInformationController InformationController { get { return (FileInformationController)fileInformationController; } }
+        public SearchController SearchController { get { return (SearchController)searchController; } }
 
 		public override void AwakeFromNib()
 		{
 			base.AwakeFromNib();
 
 			Window.BackgroundColor = NSColor.DarkGray;
-			imageView.ImageScaling = NSImageScale.ProportionallyUpOrDown;
 
 			hideNotificationTimer.Elapsed += (s, e) =>
 			{
@@ -76,7 +76,7 @@ namespace Radish
 
         private void ShowFile(bool forceRefresh = false)
 		{
-			if (directoryController.Count < 1)
+			if (mediaListController.Count < 1)
 			{
 				currentlyDisplayedFile = null;
 				imageView.Image = null;
@@ -90,21 +90,22 @@ namespace Radish
                 currentlyDisplayedFile = null;
             }
 
-			var fi = directoryController.Current;
-			if (fi.FullPath != currentlyDisplayedFile)
+			var mm = mediaListController.Current;
+			if (mm.FullPath != currentlyDisplayedFile)
 			{
-				logger.Info("ShowFile: {0}; {1}", directoryController.CurrentIndex, fi.FullPath);
-				currentlyDisplayedFile = fi.FullPath;
+				logger.Info("ShowFile: {0}; {1}", mediaListController.CurrentIndex, mm.FullPath);
+				currentlyDisplayedFile = mm.FullPath;
 
 
                 // In order to see the current orientation (to see if the image needs to be rotated), load the image 
                 // as a CGImage rather than directly via NSImage
-                using (var cgImage = CGImage.FromJPEG(CGDataProvider.FromFile(fi.FullPath), null, false, CGColorRenderingIntent.Default))
+                var data = mm.GetData();
+                using (var cgImage = CGImage.FromJPEG(new CGDataProvider(data, 0, data.Length), null, false, CGColorRenderingIntent.Default))
                 {
                     NSImage image;
                     if (cgImage == null)
                     {
-                        image = new NSImage(fi.FullPath);
+                        image = new NSImage(mm.FullPath);
                     }
                     else
                     {
@@ -124,30 +125,30 @@ namespace Radish
                 }
 			}
 
-			Window.Title = Path.GetFileName(fi.FullPath);
+            Window.Title = mm.Name;
 			UpdateStatusBar();
 
 			if (informationPanel.IsVisible)
 			{
-				InformationController.SetFile(fi);
+				InformationController.SetFile(mm);
 			}
 		}
 
 		private void UpdateStatusBar()
 		{
-			if (directoryController.Count < 1)
+			if (mediaListController.Count < 1)
 			{
 				statusFilename.StringValue = statusTimestamp.StringValue = statusGps.StringValue = "";
 				statusIndex.StringValue = "No files";
 				return;
 			}
 
-			var fi = directoryController.Current;
+			var mm = mediaListController.Current;
 
-			statusFilename.StringValue = Path.GetFileName(fi.FullPath);
+            statusFilename.StringValue = mm.Name;
 
-			var timestamp = fi.Timestamp.ToString("yyyy/MM/dd HH:mm:ss");
-			if (fi.FileAndExifTimestampMatch)
+			var timestamp = mm.Timestamp.ToString("yyyy/MM/dd HH:mm:ss");
+			if (mm.FileAndExifTimestampMatch)
 			{
 				statusTimestamp.StringValue = timestamp;
 			}
@@ -166,10 +167,10 @@ namespace Radish
 			}
 			statusIndex.StringValue = String.Format(
 				"{0} of {1}", 
-				directoryController.CurrentIndex + 1, 
-				directoryController.Count);
+				mediaListController.CurrentIndex + 1, 
+				mediaListController.Count);
 
-			statusGps.StringValue = fi.ToDms();
+			statusGps.StringValue = mm.ToDms();
 		}
 
 		public bool OpenFolderOrFile(string path)
@@ -181,9 +182,15 @@ namespace Radish
 				path = Path.GetDirectoryName(path);
 			}
 
+            var dirController = mediaListController as DirectoryController;
+            if (dirController == null)
+            {
+                dirController = new DirectoryController(this, FileListUpdated);
+                mediaListController = dirController as MediaListController;
+            }
 			logger.Info("Open {0}", path);
-			directoryController.Scan(path);
-			directoryController.SelectFile(filename);
+			dirController.Scan(path);
+			mediaListController.SelectFile(filename);
 			ShowFile();
 
 			// That's gross - Mono exposes SharedDocumentController as NSObject rather than NSDocumentcontroller
@@ -194,7 +201,7 @@ namespace Radish
 
 		private void FileListUpdated()
 		{
-			directoryController.SelectFile(currentlyDisplayedFile);
+			mediaListController.SelectFile(currentlyDisplayedFile);
 			ShowFile();
 		}
 

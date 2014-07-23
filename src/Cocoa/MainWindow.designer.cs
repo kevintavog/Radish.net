@@ -28,6 +28,12 @@ namespace Radish
 		MonoMac.Foundation.NSObject notificationWindow { get; set; }
 
 		[Outlet]
+		MonoMac.Foundation.NSObject searchController { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSWindow searchWindow { get; set; }
+
+		[Outlet]
 		MonoMac.AppKit.NSTextField statusFilename { get; set; }
 
 		[Outlet]
@@ -57,6 +63,11 @@ namespace Radish
 			if (informationPanel != null) {
 				informationPanel.Dispose ();
 				informationPanel = null;
+			}
+
+			if (notificationImage != null) {
+				notificationImage.Dispose ();
+				notificationImage = null;
 			}
 
 			if (notificationWindow != null) {
@@ -89,9 +100,14 @@ namespace Radish
 				statusView = null;
 			}
 
-			if (notificationImage != null) {
-				notificationImage.Dispose ();
-				notificationImage = null;
+			if (searchController != null) {
+				searchController.Dispose ();
+				searchController = null;
+			}
+
+			if (searchWindow != null) {
+				searchWindow.Dispose ();
+				searchWindow = null;
 			}
 		}
 	}

@@ -85,6 +85,14 @@
                             <menuItem isSeparatorItem="YES" id="P1g-Bt-jTd">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
+                            <menuItem title="Search" tag="1" keyEquivalent="f" id="FTU-5s-1JG">
+                                <connections>
+                                    <action selector="search:" target="-1" id="65Q-Fv-sAf"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="eP4-XO-OmK">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
                             <menuItem title="Reveal in Finder" tag="2" id="hxw-Ms-q3a">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

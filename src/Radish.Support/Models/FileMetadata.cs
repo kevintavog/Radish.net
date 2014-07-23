@@ -8,15 +8,9 @@ using System.IO;
 
 namespace Radish.Models
 {
-	public class FileMetadata
+    public class FileMetadata : MediaMetadata
 	{
 		static private readonly Logger logger = LogManager.GetCurrentClassLogger();
-
-		public string FullPath { get; private set; }
-		public DateTime Timestamp { get; private set; }
-		public Location Location { get; private set; }
-		public bool FileAndExifTimestampMatch { get; private set; }
-
 
 		public void SetFileDateToExifDate()
 		{
@@ -26,52 +20,15 @@ namespace Radish.Models
 				File.SetLastWriteTime(FullPath, Timestamp);
 				UpdateTimestampMatch();
 
-				metadata = null;
+                ClearMetadata();
 			}
 		}
 
-		public string ToDms()
-		{
-			if (Location == null)
-			{
-				return "";
-			}
-
-			char latNS = Location.Latitude < 0 ? 'S' : 'N';
-			char longEW = Location.Longitude < 0 ? 'W' : 'E';
-			return String.Format("{0} {1}, {2} {3}", ToDms(Location.Latitude), latNS, ToDms(Location.Longitude), longEW);
-		}
-
-		private string ToDms(double l)
-		{
-			if (l < 0)
-			{
-				l *= -1f;
-			}
-			var degrees = Math.Truncate(l);
-			var minutes = (l - degrees) * 60f;
-			var seconds = (minutes - (int) minutes) * 60;
-			minutes = Math.Truncate(minutes);
-			return String.Format("{0:00}° {1:00}' {2:00}\"", degrees, minutes, seconds);
-		}
-
-		public IList<MetadataEntry> Metadata 
-		{
-			get
-			{
-				if (metadata == null)
-				{
-					metadata = GetAllMetadata();
-				}
-				return metadata;
-			}
-		}
-
-		private IList<MetadataEntry> metadata;
 
 		public FileMetadata(string fullPath)
 		{
 			FullPath = fullPath;
+            Name = Path.GetFileName(FullPath);
 			GetDetails();
 			UpdateTimestampMatch();
 		}
@@ -129,7 +86,7 @@ namespace Radish.Models
 			}
 		}
 
-		private IList<MetadataEntry> GetAllMetadata()
+        override protected IList<MetadataEntry> GetAllMetadata()
 		{
 			try
 			{
@@ -141,6 +98,12 @@ namespace Radish.Models
 				return new List<MetadataEntry>();
 			}
 		}
+
+        override public byte[] GetData()
+        {
+            return File.ReadAllBytes(FullPath);
+        }
+
 
 		static private double ConvertLocation(string geoRef, double[] val)
 		{
