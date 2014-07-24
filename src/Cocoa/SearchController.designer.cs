@@ -21,6 +21,9 @@ namespace Radish
 		MonoMac.AppKit.NSTextField hostName { get; set; }
 
 		[Outlet]
+		MonoMac.AppKit.NSProgressIndicator progressIndicator { get; set; }
+
+		[Outlet]
 		MonoMac.AppKit.NSButton searchButton { get; set; }
 
 		[Outlet]
@@ -40,9 +43,24 @@ namespace Radish
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (connectionImage != null) {
+				connectionImage.Dispose ();
+				connectionImage = null;
+			}
+
+			if (errorLabel != null) {
+				errorLabel.Dispose ();
+				errorLabel = null;
+			}
+
 			if (hostName != null) {
 				hostName.Dispose ();
 				hostName = null;
+			}
+
+			if (progressIndicator != null) {
+				progressIndicator.Dispose ();
+				progressIndicator = null;
 			}
 
 			if (searchButton != null) {
@@ -58,16 +76,6 @@ namespace Radish
 			if (testButton != null) {
 				testButton.Dispose ();
 				testButton = null;
-			}
-
-			if (errorLabel != null) {
-				errorLabel.Dispose ();
-				errorLabel = null;
-			}
-
-			if (connectionImage != null) {
-				connectionImage.Dispose ();
-				connectionImage = null;
 			}
 		}
 	}

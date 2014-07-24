@@ -5,6 +5,9 @@ using NLog;
 using Radish.Support;
 using System.Collections.Generic;
 using Radish.Models;
+using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Radish
 {
@@ -16,6 +19,8 @@ namespace Radish
         private FindAPhotoClient _client;
         private string _lastSavedHost;
         private bool _allowFocusChange;
+        private bool _isSearching;
+        private bool _cancelSearch;
 
         public IList<MediaMetadata> SearchResults { get; private set; }
 
@@ -35,13 +40,11 @@ namespace Radish
             _client = new FindAPhotoClient();
         }
 
-        public override void AwakeFromNib()
-        {
-            base.AwakeFromNib();
-        }
-
         private void SetUiToStart()
         {
+            _cancelSearch = false;
+            _isSearching = false;
+            progressIndicator.Hidden = true;
             errorLabel.StringValue = "";
             _lastSavedHost = hostName.StringValue = Preferences.Instance.FindAPhotoHost;
             connectionImage.Image = null;
@@ -62,24 +65,101 @@ namespace Radish
         partial void cancel(MonoMac.Foundation.NSObject sender)
         {
             logger.Info("Cancel");
-            SearchResults = null;
-
-            CloseSearch(sender);
+            if (IsSearching())
+            {
+                _cancelSearch = true;
+            }
+            else
+            {
+                SearchResults = null;
+                CloseSearch(sender);
+            }
         }
 
         partial void startSearch(MonoMac.Foundation.NSObject sender)
         {
             _client.Host = hostName.StringValue;
-            logger.Info("search '{0}' for '{1}'", _client.Host, searchText.StringValue);
+            var query = searchText.StringValue;
+            logger.Info("search '{0}' for '{1}'", _client.Host, query);
 
-            SearchResults = _client.Search(searchText.StringValue);
-            UpdateUiError();
-            UpdateHost();
-            if (!_client.HasError)
+            SearchResults = new List<MediaMetadata>();
+            SearchHasStarted();
+
+            Task.Run( () =>
             {
-                logger.Info("Found {0} matches", SearchResults.Count);
-                CloseSearch(sender);
-            }
+                try
+                {
+                    _client.ShouldCancel = () => !IsSearching();
+                    _client.Search(query, HandleMatch);
+                }
+                catch (Exception e)
+                {
+                    logger.Error("Search exception: {0}", e);
+                }
+
+                BeginInvokeOnMainThread( () => 
+                {
+                    var wasCanceled = _cancelSearch;
+                    SearchHasEnded();
+                    UpdateHost();
+
+                    if (wasCanceled)
+                    {
+                        errorLabel.StringValue = "Search was canceled";
+                        connectionImage.Image = NSImage.ImageNamed("FailedCheck.png");
+                    }
+                    else
+                    {
+                        UpdateUiError();
+
+                        if (!_client.HasError)
+                        {
+                            logger.Info("Found {0} matches", SearchResults.Count);
+                            CloseSearch(sender);
+                        }
+                    }
+                });
+            });
+        }
+
+        private void ShowProgressIndicator()
+        {
+            // To ensure 'SearchHasEnded' isn't called while we are setting up. And to do UI things, of course.
+            BeginInvokeOnMainThread( () =>
+            {
+                progressIndicator.Hidden = false;
+            });
+        }
+
+        private void SearchHasStarted()
+        {
+            _isSearching = true;
+            _cancelSearch = false;
+            progressIndicator.DoubleValue = 0;
+
+            var timer = new System.Timers.Timer(100) { AutoReset = false, Enabled = true, };
+            timer.Elapsed += (s, e) => ShowProgressIndicator();
+
+            searchButton.Enabled = false;
+            searchText.Enabled = false;
+            testButton.Enabled = false;
+            hostName.Enabled = false;
+        }
+
+        private void SearchHasEnded()
+        {
+            progressIndicator.Hidden = true;
+            _isSearching = false;
+
+            searchButton.Enabled = true;
+            searchText.Enabled = true;
+            testButton.Enabled = true;
+            hostName.Enabled = true;
+        }
+
+        private bool IsSearching()
+        {
+            return _isSearching && !_cancelSearch;
         }
 
         partial void testHost(MonoMac.Foundation.NSObject sender)
@@ -90,6 +170,37 @@ namespace Radish
             _client.TestConnection();
             UpdateUiError();
             UpdateHost();
+        }
+
+        private void HandleMatch(int totalMatches, int visiting, dynamic match)
+        {
+            if (!IsSearching())
+            {
+                return;
+            }
+
+            int percent = (100 * visiting) / totalMatches;
+            BeginInvokeOnMainThread( () =>
+            {
+                progressIndicator.DoubleValue = percent;
+            });
+
+            var mimeType = match["mimeType"].ToString();
+            if (mimeType != null && mimeType.StartsWith("image"))
+            {
+                Location location = null;
+                if (match["latitude"].Type == JTokenType.Float && match["longitude"].Type == JTokenType.Float)
+                {
+                    location = new Location((double) match["latitude"], (double) match["longitude"]);
+                }
+
+                DateTime createdDate = match["createdDate"];
+                var item = new FindAPhotoMetadata(
+                    _client.Host + "/" + match["fullUrl"].ToString(),
+                    createdDate,
+                    location);
+                SearchResults.Add(item);
+            }
         }
 
         private void CloseSearch(NSObject sender)

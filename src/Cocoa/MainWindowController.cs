@@ -105,7 +105,8 @@ namespace Radish
                     NSImage image;
                     if (cgImage == null)
                     {
-                        image = new NSImage(mm.FullPath);
+                        // It's not a JPEG, or at least can't be loaded that way.
+                        image = new NSImage(NSData.FromArray(data));
                     }
                     else
                     {
@@ -120,7 +121,6 @@ namespace Radish
     					var imageRep = image.BestRepresentationForDevice(null);
     					image.Size = new SizeF(imageRep.PixelsWide, imageRep.PixelsHigh);
     					imageView.Image = image;
-    					image.Release();
     				}
                 }
 			}

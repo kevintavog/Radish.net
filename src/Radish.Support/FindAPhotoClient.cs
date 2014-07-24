@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using NLog;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
-using Radish.Models;
 
 namespace Radish.Support
 {
@@ -12,6 +11,8 @@ namespace Radish.Support
         static private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public string Host { get; set; }
+
+        public Func<bool> ShouldCancel { get; set; }
 
         public bool HasError { get  { return !String.IsNullOrWhiteSpace(LastError); } }
         public string LastError { get; private set; }
@@ -56,16 +57,20 @@ namespace Radish.Support
             return false;
         }
 
-        public IList<MediaMetadata> Search(string query)
+        public bool Search(string query, Action<int,int,dynamic> handleMatch)
         {
             if (Host == null)
             {
                 LastError = "Host not set";
-                return null;
+                return false;
+            }
+
+            if (ShouldCancel == null)
+            {
+                ShouldCancel = () => false;
             }
 
             LastError = "";
-            var list = new List<MediaMetadata>();
             try
             {
                 using (var client = new HttpClient())
@@ -73,6 +78,7 @@ namespace Radish.Support
                     client.BaseAddress = new Uri(Host);
                     int first = 0;
                     int count = 100;
+                    int visiting = 0;
 
                     bool searchAgain = true;
                     do
@@ -84,30 +90,16 @@ namespace Radish.Support
                         {
                             var body = result.Content.ReadAsStringAsync().Result;
                             dynamic response = JObject.Parse(body);
+                            int totalMatches = response["totalMatches"];
 
                             if (response["matches"] != null)
                             {
                                 first += count;
                                 foreach (var m in response["matches"])
                                 {
+                                    visiting += 1;
                                     searchAgain = true;
-                                    var mimeType = m["mimeType"].ToString();
-                                    if (mimeType != null && mimeType.StartsWith("image"))
-                                    {
-                                        Location location = null;
-                                        if (m["latitude"].Type == JTokenType.Float && m["longitude"].Type == JTokenType.Float)
-                                        {
-                                            double latitude = m["latitude"];
-                                            double longitude = m["longitude"];
-                                            location = new Location(latitude, longitude);
-                                        }
-                                        DateTime createdDate = m["createdDate"];
-                                        var item = new FindAPhotoMetadata(
-                                            client.BaseAddress + m["fullUrl"].ToString(),
-                                            createdDate,
-                                            location);
-                                        list.Add(item);
-                                    }
+                                    handleMatch(totalMatches, visiting, m);
                                 }
                             }
                         }
@@ -119,9 +111,12 @@ namespace Radish.Support
                                 result.StatusCode, 
                                 result.ReasonPhrase, 
                                 result.Content.ReadAsStringAsync().Result);
-                            break;
+
+                            return false;
                         }
-                    } while (searchAgain);
+                    } while (searchAgain && !ShouldCancel());
+
+                    return true;
                 }
             }
             catch (Exception e)
@@ -134,9 +129,10 @@ namespace Radish.Support
                 }
 
                 LastError = message;
-                logger.Error("Error testing FindAPhoto connection to '{0}': {1}", Host, message);
+                logger.Error("Error searching FindAPhoto server '{0}': {1}: {2}", Host, message, e);
             }
-            return list;
+
+            return false;
         }
     }
 }

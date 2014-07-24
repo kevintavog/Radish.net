@@ -198,8 +198,8 @@
                 </subviews>
             </view>
         </window>
-        <window title="Search" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="Search" animationBehavior="default" id="nAg-yx-nmQ">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+        <window title="Search" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="Search" animationBehavior="default" id="nAg-yx-nmQ">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="537" height="206"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
@@ -296,6 +296,10 @@ Gw
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <progressIndicator maxValue="100" style="bar" id="TGN-O8-fAv">
+                        <rect key="frame" x="20" y="46" width="497" height="20"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    </progressIndicator>
                 </subviews>
             </view>
         </window>
@@ -304,8 +308,10 @@ Gw
                 <outlet property="connectionImage" destination="SmQ-pp-x4U" id="heT-ES-PNe"/>
                 <outlet property="errorLabel" destination="wqA-qc-ebp" id="NWf-fj-SvH"/>
                 <outlet property="hostName" destination="M9J-oA-jfw" id="rpr-HX-YUO"/>
+                <outlet property="progressIndicator" destination="TGN-O8-fAv" id="DwT-6H-eKA"/>
                 <outlet property="searchButton" destination="rId-HB-PFk" id="xtm-b9-k0t"/>
                 <outlet property="searchText" destination="Qiy-aW-XP8" id="3UT-pR-d7M"/>
+                <outlet property="testButton" destination="L0M-Gm-INc" id="TYW-Tl-3Sg"/>
             </connections>
         </viewController>
     </objects>
