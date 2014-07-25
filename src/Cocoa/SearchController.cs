@@ -198,7 +198,8 @@ namespace Radish
                 var item = new FindAPhotoMetadata(
                     _client.Host + "/" + match["fullUrl"].ToString(),
                     createdDate,
-                    location);
+                    location,
+                    match["keywords"].ToObject<string[]>());
                 SearchResults.Add(item);
             }
         }
