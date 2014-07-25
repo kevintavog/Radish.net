@@ -23,10 +23,12 @@ namespace Radish.Controllers
         public MediaMetadata Current { get { return MediaList[CurrentIndex]; } }
 
 
+        protected IComparer<MediaMetadata> comparer;
         protected IFileViewer fileViewer;
         protected MediaListController(IFileViewer fileViewer)
         {
             this.fileViewer = fileViewer;
+            comparer = new TimestampComparer();
             MediaList = new List<MediaMetadata>();
         }
 
@@ -157,6 +159,7 @@ namespace Radish.Controllers
         protected void SetList(IList<MediaMetadata> list)
         {
             MediaList = list as List<MediaMetadata>;
+            MediaList.Sort(new TimestampComparer());
             SetIndex(0);
         }
     }

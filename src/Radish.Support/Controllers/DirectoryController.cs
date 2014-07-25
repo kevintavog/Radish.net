@@ -14,7 +14,6 @@ namespace Radish.Controllers
 		static private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
 
-		private IComparer<MediaMetadata> comparer;
 		private FileSystemWatcher watcher;
 		private Action listUpdated;
 
@@ -22,8 +21,6 @@ namespace Radish.Controllers
             : base(fileViewer)
 		{
 			this.listUpdated = listUpdated;
-
-			comparer = new TimestampComparer();
 		}
 
 
@@ -62,7 +59,6 @@ namespace Radish.Controllers
 				}
 			}
 
-			list.Sort(new TimestampComparer());
             SetList(list);
 		}
 
