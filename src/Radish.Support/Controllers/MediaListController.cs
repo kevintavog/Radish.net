@@ -90,6 +90,11 @@ namespace Radish.Controllers
                 return true;
             }
 
+            // Do the best we can, ensure a valid file is selected
+            if (CurrentIndex >= Count)
+            {
+                SetIndex(Count - 1);
+            }
             return false;
         }
 
