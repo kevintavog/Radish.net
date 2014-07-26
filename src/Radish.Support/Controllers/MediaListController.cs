@@ -98,6 +98,16 @@ namespace Radish.Controllers
             return false;
         }
 
+        public void SelectFirst()
+        {
+            SetIndex(0);
+        }
+
+        public void SelectLast()
+        {
+            SetIndex(Count - 1);
+        }
+
         public int FindFile(string filename)
         {
             if (String.IsNullOrWhiteSpace(filename))

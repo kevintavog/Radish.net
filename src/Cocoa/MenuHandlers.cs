@@ -57,6 +57,20 @@ namespace Radish
             }
         }
 
+        [Export("firstImage:")]
+        public void FirstImage(NSObject sender)
+        {
+            mediaListController.SelectFirst();
+            ShowFile();
+        }
+
+        [Export("lastImage:")]
+        public void LastImage(NSObject sender)
+        {
+            mediaListController.SelectLast();
+            ShowFile();
+        }
+
 		[Export("nextImage:")]
 		public void NextImage(NSObject sender)
 		{
@@ -212,7 +226,6 @@ namespace Radish
 				if (evt.CharactersIgnoringModifiers.Length == 1)
 				{
 					NSKey key = (NSKey) evt.CharactersIgnoringModifiers[0];
-					logger.Info("char [{0}], key: {1:X} ({2})", evt.CharactersIgnoringModifiers[0], key, evt.Window.Title);
 					switch (evt.CharactersIgnoringModifiers[0])
 					{
 						case (char) NSKey.DownArrow:
@@ -222,6 +235,10 @@ namespace Radish
 						case (char) NSKey.UpArrow:
 							PreviousImage(null);
 							return;
+
+                        default:
+                            logger.Info("char [{0}], key: {1:X} ({2})", evt.CharactersIgnoringModifiers[0], key, evt.Window.Title);
+                            break;
 					}
 				}
 			}

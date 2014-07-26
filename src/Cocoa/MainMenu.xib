@@ -354,16 +354,28 @@ CA
                 <menuItem title="View" id="295">
                     <menu key="submenu" title="View" id="296">
                         <items>
-                            <menuItem title="Next" tag="2" keyEquivalent="" id="Xcw-nd-FEK">
+                            <menuItem title="Next" tag="2" keyEquivalent="" id="XX3-Tw-AwM">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="nextImage:" target="-1" id="IVp-M7-gyR"/>
+                                    <action selector="nextImage:" target="-1" id="jD5-L2-biz"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Previous" tag="2" keyEquivalent="" id="MiF-Ev-Qoa">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="previousImage:" target="-1" id="Uy3-0c-yAR"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="First Image" tag="2" keyEquivalent="" id="Xcw-nd-FEK">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="firstImage:" target="-1" id="9LZ-no-ORP"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Last Image" tag="2" keyEquivalent="" id="qhp-Oc-6dr">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="lastImage:" target="-1" id="1Vh-qZ-HvI"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="biH-pr-r4l"/>
