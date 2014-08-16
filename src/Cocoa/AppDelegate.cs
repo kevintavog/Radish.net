@@ -12,7 +12,8 @@ namespace Radish
 	public partial class AppDelegate : NSApplicationDelegate
 	{
 		private static Logger logger = LogManager.GetCurrentClassLogger();
-		MainWindowController controller;
+		private MainWindowController controller;
+        private string filename;
 
 		public AppDelegate()
 		{
@@ -26,24 +27,25 @@ namespace Radish
                 "Preferences",
                 "com.rangic.Radish.json"));
 
-            if (controller == null)
-			{
-				controller = new MainWindowController();
-				controller.Window.MakeKeyAndOrderFront(this);
-			}
+			controller = new MainWindowController();
+			controller.Window.MakeKeyAndOrderFront(this);
+
+            if (filename != null)
+            {
+                controller.OpenFolderOrFile(filename);
+            }
 		}
 
 		public override bool OpenFile(NSApplication sender, string filename)
 		{
-			logger.Info("OpenFile '{0}'", filename);
+            if (controller == null)
+            {
+                this.filename = filename;
+    			logger.Info("OpenFile '{0}'", filename);
+                return true;
+            }
 
-			if (controller == null)
-			{
-				controller = new MainWindowController();
-				controller.Window.MakeKeyAndOrderFront(this);
-			}
-
-			return controller.OpenFolderOrFile(filename);
+            return controller.OpenFolderOrFile(filename);
 		}
 	}
 }
