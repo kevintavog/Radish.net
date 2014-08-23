@@ -43,6 +43,9 @@ namespace Radish
 		MonoMac.AppKit.NSTextField statusIndex { get; set; }
 
 		[Outlet]
+		MonoMac.AppKit.NSTextField statusKeywords { get; set; }
+
+		[Outlet]
 		MonoMac.AppKit.NSTextField statusTimestamp { get; set; }
 
 		[Outlet]
@@ -75,6 +78,16 @@ namespace Radish
 				notificationWindow = null;
 			}
 
+			if (searchController != null) {
+				searchController.Dispose ();
+				searchController = null;
+			}
+
+			if (searchWindow != null) {
+				searchWindow.Dispose ();
+				searchWindow = null;
+			}
+
 			if (statusFilename != null) {
 				statusFilename.Dispose ();
 				statusFilename = null;
@@ -100,14 +113,9 @@ namespace Radish
 				statusView = null;
 			}
 
-			if (searchController != null) {
-				searchController.Dispose ();
-				searchController = null;
-			}
-
-			if (searchWindow != null) {
-				searchWindow.Dispose ();
-				searchWindow = null;
+			if (statusKeywords != null) {
+				statusKeywords.Dispose ();
+				statusKeywords = null;
 			}
 		}
 	}

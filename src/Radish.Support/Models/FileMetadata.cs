@@ -12,7 +12,19 @@ namespace Radish.Models
 	{
 		static private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-		public void SetFileDateToExifDate()
+        public override string Keywords
+        {
+            get
+            {
+                if (base.Keywords == null)
+                {
+                    Keywords = String.Join(", ", new XmpReader(FullPath).Keywords);
+                }
+                return base.Keywords;
+            }
+        }
+
+        public void SetFileDateToExifDate()
 		{
 			if (!FileAndExifTimestampMatch)
 			{

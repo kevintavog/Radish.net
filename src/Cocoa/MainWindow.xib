@@ -16,6 +16,7 @@
                 <outlet property="statusFilename" destination="i8a-gV-kru" id="n4i-Hp-fnu"/>
                 <outlet property="statusGps" destination="eRi-3Y-hjm" id="yuB-3z-h4I"/>
                 <outlet property="statusIndex" destination="ICF-YS-360" id="5SB-ET-12H"/>
+                <outlet property="statusKeywords" destination="d2p-tn-ez6" id="p91-Gr-9b0"/>
                 <outlet property="statusTimestamp" destination="xMz-R6-6X3" id="zed-xz-XXZ"/>
                 <outlet property="statusView" destination="bui-9H-HVL" id="AgG-L6-dRl"/>
                 <outlet property="window" destination="2" id="6"/>
@@ -51,25 +52,34 @@
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="xMz-R6-6X3">
                                             <rect key="frame" x="224" y="7" width="162" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" id="COK-xP-B5y">
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Timestamp" id="COK-xP-B5y">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="d2p-tn-ez6">
+                                            <rect key="frame" x="390" y="7" width="202" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Keywords" id="0Cx-U9-geF">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ICF-YS-360">
-                                            <rect key="frame" x="883" y="7" width="76" height="17"/>
+                                            <rect key="frame" x="872" y="7" width="87" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" id="PG8-01-FkF">
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Index" id="PG8-01-FkF">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="eRi-3Y-hjm">
-                                            <rect key="frame" x="422" y="7" width="336" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" id="hF1-tB-a0N">
+                                            <rect key="frame" x="596" y="7" width="272" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Gps" id="hF1-tB-a0N">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -78,7 +88,7 @@
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="i8a-gV-kru">
                                             <rect key="frame" x="4" y="7" width="221" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" id="uYM-KV-lJZ">
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Filename" id="uYM-KV-lJZ">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

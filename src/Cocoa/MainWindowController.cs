@@ -72,6 +72,12 @@ namespace Radish
 			};
 
 			imageView.ImageScaling = NSImageScale.ProportionallyDown;
+
+            statusGps.StringValue = "";
+            statusIndex.StringValue = "";
+            statusKeywords.StringValue = "";
+            statusTimestamp.StringValue = "";
+            statusFilename.StringValue = "";
 		}
 
         private void ShowFile(bool forceRefresh = false)
@@ -171,6 +177,7 @@ namespace Radish
 				mediaListController.Count);
 
 			statusGps.StringValue = mm.ToDms();
+            statusKeywords.StringValue = mm.Keywords;
 		}
 
 		public bool OpenFolderOrFile(string path)

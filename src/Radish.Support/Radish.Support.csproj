@@ -41,6 +41,8 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="Models\MediaMetadata.cs" />
     <Compile Include="Models\FIndAPhotoMetadata.cs" />
     <Compile Include="Controllers\FindAPhotoController.cs" />
+    <Compile Include="Models\XmpReader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

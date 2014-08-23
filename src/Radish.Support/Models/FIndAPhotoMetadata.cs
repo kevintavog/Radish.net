@@ -9,8 +9,6 @@ namespace Radish.Models
 {
     public class FindAPhotoMetadata : MediaMetadata
     {
-        public string Keywords { get; protected set; }
-
         protected override IList<MetadataEntry> GetAllMetadata()
         {
             var path = HttpUtility.UrlDecode(new Uri(FullPath).PathAndQuery);

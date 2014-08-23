@@ -81,6 +81,18 @@ namespace Radish.Controllers
             }
         }
 
+        public string StatusKeywords
+        {
+            get
+            {
+                if (MediaList.Count < 1)
+                {
+                    return "";
+                }
+                return Current.Keywords;
+            }
+        }
+
         public bool SelectFile(string filename)
         {
             var index = FindFile(filename);
@@ -169,6 +181,7 @@ namespace Radish.Controllers
             this.FirePropertyChanged<string>(PropertyChanged, () => StatusTimestamp);
             this.FirePropertyChanged<string>(PropertyChanged, () => StatusIndex);
             this.FirePropertyChanged<string>(PropertyChanged, () => StatusGps);
+            this.FirePropertyChanged<string>(PropertyChanged, () => StatusKeywords);
         }
 
         protected void SetList(IList<MediaMetadata> list)
