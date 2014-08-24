@@ -12,6 +12,18 @@ namespace Radish.Models
         public bool FileAndExifTimestampMatch { get; protected set; }
         public virtual string Keywords { get; protected set; }
 
+        public bool HasPlaceName { get { return placeName != null; } }
+        private string placeName;
+        public string ToPlaceName()
+        {
+            if (placeName == null)
+            {
+                placeName = ReverseLocator.ToPlaceName(Location, ReverseLocator.Filter.Standard);
+            }
+
+            return placeName;
+        }
+
         public string ToDms()
         {
             if (Location == null)

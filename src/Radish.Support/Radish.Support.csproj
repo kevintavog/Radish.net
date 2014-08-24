@@ -64,6 +64,7 @@
     <Compile Include="Models\FIndAPhotoMetadata.cs" />
     <Compile Include="Controllers\FindAPhotoController.cs" />
     <Compile Include="Models\XmpReader.cs" />
+    <Compile Include="Models\ReverseLocator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

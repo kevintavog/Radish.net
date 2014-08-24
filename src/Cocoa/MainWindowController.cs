@@ -12,6 +12,8 @@ using MonoMac.ImageIO;
 using NLog;
 using Radish.Controllers;
 using Radish.Models;
+using System.Threading.Tasks;
+using MonoMac.ObjCRuntime;
 
 namespace Radish
 {
@@ -144,7 +146,7 @@ namespace Radish
 		{
 			if (mediaListController.Count < 1)
 			{
-				statusFilename.StringValue = statusTimestamp.StringValue = statusGps.StringValue = "";
+                statusFilename.StringValue = statusTimestamp.StringValue = statusGps.StringValue = statusKeywords.StringValue = "";
 				statusIndex.StringValue = "No files";
 				return;
 			}
@@ -176,9 +178,37 @@ namespace Radish
 				mediaListController.CurrentIndex + 1, 
 				mediaListController.Count);
 
-			statusGps.StringValue = mm.ToDms();
             statusKeywords.StringValue = mm.Keywords;
+            statusGps.StringValue = "";
+
+            if (mm.HasPlaceName)
+            {
+                SetStatusGps(mm);
+            }
+            else
+            {
+                Task.Run( () =>
+                {
+                    mm.ToPlaceName();
+                    BeginInvokeOnMainThread( () => 
+                    {
+                        SetStatusGps(mm);
+                    });
+                });
+            }
 		}
+
+        private void SetStatusGps(MediaMetadata mm)
+        {
+            if (!String.IsNullOrEmpty(mm.ToPlaceName()))
+            {
+                statusGps.StringValue = mm.ToPlaceName();
+            }
+            else
+            {
+                statusGps.StringValue = mm.ToDms();
+            }
+        }
 
 		public bool OpenFolderOrFile(string path)
 		{
