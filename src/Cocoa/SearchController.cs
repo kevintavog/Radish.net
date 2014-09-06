@@ -137,6 +137,9 @@ namespace Radish
             _cancelSearch = false;
             progressIndicator.DoubleValue = 0;
 
+            errorLabel.StringValue = "";
+            connectionImage.Image = null;
+
             var timer = new System.Timers.Timer(100) { AutoReset = false, Enabled = true, };
             timer.Elapsed += (s, e) => ShowProgressIndicator();
 
