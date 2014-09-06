@@ -20,7 +20,7 @@ namespace Radish.Models
         static public string ToPlaceName(Location location, Filter filter)
         {
             var placeName = "";
-            if (location == Location.None)
+            if (Location.IsNullOrNone(location))
             {
                 return placeName;
             }

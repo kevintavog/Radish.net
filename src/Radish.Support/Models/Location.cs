@@ -8,6 +8,15 @@ namespace Radish.Models
 		public double Longitude { get; private set; }
 
 		static public Location None = new Location(1000, 1000);
+        static public bool IsNone(Location loc)
+        {
+            return loc == Location.None;
+        }
+
+        static public bool IsNullOrNone(Location loc)
+        {
+            return loc == null || loc == Location.None;
+        }
 
 		public Location(double latitude, double longitude)
 		{
