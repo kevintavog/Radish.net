@@ -210,13 +210,22 @@ namespace Radish
             }
         }
 
-		public bool OpenFolderOrFile(string path)
+        public bool OpenFolderOrFile(string path)
+        {
+            return OpenFolderOrFiles(new string[] { path } );
+        }
+
+		public bool OpenFolderOrFiles(string[] paths)
 		{
 			string filename = null;
-			if (File.Exists(path))
+			if (File.Exists(paths[0]))
 			{
-				filename = path;
-				path = Path.GetDirectoryName(path);
+				filename = paths[0];
+
+                if (paths.Length == 1)
+                {
+                    paths[0] = Path.GetDirectoryName(filename);
+                }
 			}
 
             var dirController = mediaListController as DirectoryController;
@@ -225,13 +234,14 @@ namespace Radish
                 dirController = new DirectoryController(this, FileListUpdated);
                 mediaListController = dirController as MediaListController;
             }
-			logger.Info("Open {0}", path);
-			dirController.Scan(path);
+
+            logger.Info("Open '{0}'", String.Join("', '", paths));
+			dirController.Scan(paths);
 			mediaListController.SelectFile(filename);
 			ShowFile();
 
 			// That's gross - Mono exposes SharedDocumentController as NSObject rather than NSDocumentcontroller
-			(NSDocumentController.SharedDocumentController as NSDocumentController).NoteNewRecentDocumentURL(new NSUrl(path, false));
+			(NSDocumentController.SharedDocumentController as NSDocumentController).NoteNewRecentDocumentURL(new NSUrl(paths[0], false));
 
 			return true;
 		}

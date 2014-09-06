@@ -6,6 +6,7 @@ using Radish.Utilities;
 using Radish.Controllers;
 using Radish.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Radish
 {
@@ -100,10 +101,11 @@ namespace Radish
 
 			var openPanel = new NSOpenPanel
 			{
-				ReleasedWhenClosed = true,
-				Prompt = "Select",
+                AllowsMultipleSelection = true,
 				CanChooseDirectories = true,
-				CanChooseFiles = true
+				CanChooseFiles = true,
+                Prompt = "Select",
+                ReleasedWhenClosed = true,
 			};
 
 			var result = (NsButtonId)openPanel.RunModal();
@@ -112,7 +114,8 @@ namespace Radish
 				return;
 			}
 
-			OpenFolderOrFile(openPanel.Url.Path);
+            string[] paths = openPanel.Urls.Select( u => u.Path ).ToArray();
+			OpenFolderOrFiles(paths);
 		}
 
         [Export("search:")]

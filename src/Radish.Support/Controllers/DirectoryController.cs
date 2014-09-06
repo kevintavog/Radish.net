@@ -14,7 +14,7 @@ namespace Radish.Controllers
 		static private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
 
-		private FileSystemWatcher watcher;
+        private List<FileSystemWatcher> watchers = new List<FileSystemWatcher>();
 		private Action listUpdated;
 
 		public DirectoryController(IFileViewer fileViewer, Action listUpdated)
@@ -24,42 +24,56 @@ namespace Radish.Controllers
 		}
 
 
-		public void Scan(string path)
+		public void Scan(string[] paths)
 		{
-			if (watcher != null)
+            foreach (var w in watchers)
 			{
-				watcher.Dispose();
+                w.Dispose();
 			}
+            watchers.Clear();
 
-			watcher = new FileSystemWatcher
-			{
-				Path = path,
-				NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size
-			};
-			watcher.Changed += OnWatcherChanged;
-			watcher.Created += OnWatcherChanged;
-			watcher.Deleted += OnWatcherChanged;
-			watcher.Renamed += OnWatcherChanged;
-			watcher.EnableRaisingEvents = true;
+            var list = new List<MediaMetadata>();
+            foreach (var p in paths)
+            {
+                if (Directory.Exists(p))
+                {
+                    var w = new FileSystemWatcher
+        			{
+        				Path = p,
+        				NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size
+        			};
+        			w.Changed += OnWatcherChanged;
+        			w.Created += OnWatcherChanged;
+        			w.Deleted += OnWatcherChanged;
+        			w.Renamed += OnWatcherChanged;
+        			w.EnableRaisingEvents = true;
+                    watchers.Add(w);
+                }
 
-			InternalScan(path);
+    			InternalScan(p, list);
+            }
+
+            SetList(list);
 			CurrentIndex = 0;
 
             FirePropertyChanges();
 		}
 
-		private void InternalScan(string path)
+        private void InternalScan(string path, List<MediaMetadata> list)
 		{
-			var list = new List<MediaMetadata>();
-			foreach (var f in Directory.EnumerateFiles(path))
-			{
-				if (fileViewer.IsFileSupported(f))
-				{
-					list.Add(new FileMetadata(f));
-				}
-			}
-
-            SetList(list);
+            if (Directory.Exists(path))
+            {
+    			foreach (var f in Directory.EnumerateFiles(path))
+    			{
+    				if (fileViewer.IsFileSupported(f))
+    					list.Add(new FileMetadata(f));
+    			}
+            }
+            else
+            {
+                if (fileViewer.IsFileSupported(path))
+                    list.Add(new FileMetadata(path));
+            }
 		}
 
 		private void OnWatcherChanged(object source, FileSystemEventArgs evt)
