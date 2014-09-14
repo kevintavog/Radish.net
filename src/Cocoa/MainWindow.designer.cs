@@ -50,6 +50,12 @@ namespace Radish
 
 		[Outlet]
 		MonoMac.AppKit.NSView statusView { get; set; }
+
+		[Outlet]
+		MonoMac.Foundation.NSObject thumbController { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSWindow thumbnailWindow { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -103,6 +109,11 @@ namespace Radish
 				statusIndex = null;
 			}
 
+			if (statusKeywords != null) {
+				statusKeywords.Dispose ();
+				statusKeywords = null;
+			}
+
 			if (statusTimestamp != null) {
 				statusTimestamp.Dispose ();
 				statusTimestamp = null;
@@ -113,9 +124,14 @@ namespace Radish
 				statusView = null;
 			}
 
-			if (statusKeywords != null) {
-				statusKeywords.Dispose ();
-				statusKeywords = null;
+			if (thumbController != null) {
+				thumbController.Dispose ();
+				thumbController = null;
+			}
+
+			if (thumbnailWindow != null) {
+				thumbnailWindow.Dispose ();
+				thumbnailWindow = null;
 			}
 		}
 	}

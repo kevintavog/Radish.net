@@ -135,6 +135,8 @@ namespace Radish
 
                 searchController.Set(SearchController.SearchResults);
                 ShowFile();
+
+                ThumbController.SetMediaListController(mediaListController);
             }
         }
 
@@ -151,6 +153,19 @@ namespace Radish
 				InformationController.SetFile(mediaListController.Current);
 			}
 		}
+
+        [Export("toggleThumbnails:")]
+        public void ToggleThumbnails(NSObject sender)
+        {
+            if (thumbnailWindow.IsVisible)
+            {
+                thumbnailWindow.OrderOut(sender);
+            }
+            else
+            {
+                thumbnailWindow.MakeKeyAndOrderFront(sender);
+            }
+        }
 
 		[Export("toggleMap:")]
 		public void ToggleMap(NSObject sender)

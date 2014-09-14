@@ -384,6 +384,11 @@ CA
                                     <action selector="toggleInformation:" target="-1" id="spE-wp-55S"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Thumbnails" tag="1" keyEquivalent="t" id="Ukv-ie-eW2">
+                                <connections>
+                                    <action selector="toggleThumbnails:" target="-1" id="wJp-ZK-AHf"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="eKd-Dv-ca6"/>
                             <menuItem title="Map" tag="2" keyEquivalent="m" id="pUs-g4-8Kg">
                                 <connections>

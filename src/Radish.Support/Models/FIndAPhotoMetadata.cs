@@ -48,13 +48,15 @@ namespace Radish.Models
             }
         }
 
-        public FindAPhotoMetadata(string fullPath, DateTime timestamp, Location location, string[] keywords)
+        public FindAPhotoMetadata(string fullPath, DateTime timestamp, Location location, string[] keywords, string thumbUrl)
         {
             FullPath = fullPath;
             Name = Path.GetFileName("/" + HttpUtility.UrlDecode(FullPath));
             Timestamp = timestamp;
             Location = location;
             FileAndExifTimestampMatch = true;
+            HasThumbnailPath = true;
+            ThumbnailPath = thumbUrl;
 
             Keywords = String.Join(", ", keywords);
         }

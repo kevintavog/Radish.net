@@ -99,6 +99,8 @@
     <Compile Include="SearchController.designer.cs">
       <DependentUpon>SearchController.cs</DependentUpon>
     </Compile>
+    <Compile Include="ThumbController.cs" />
+    <Compile Include="ThumbController.designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainMenu.xib" />

@@ -11,6 +11,9 @@ namespace Radish.Models
         public Location Location { get; protected set; }
         public bool FileAndExifTimestampMatch { get; protected set; }
         public virtual string Keywords { get; protected set; }
+        public virtual string ThumbnailPath { get; protected set; }
+
+        public virtual bool HasThumbnailPath { get; protected set; }
 
         public bool HasPlaceName { get { return placeName != null; } }
         private string placeName;

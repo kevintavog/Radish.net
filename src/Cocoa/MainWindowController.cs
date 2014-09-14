@@ -61,6 +61,7 @@ namespace Radish
 		public NSWindow NotificationWindow { get { return (NSWindow)notificationWindow; } }
 		public FileInformationController InformationController { get { return (FileInformationController)fileInformationController; } }
         public SearchController SearchController { get { return (SearchController)searchController; } }
+        public ThumbController ThumbController { get { return (ThumbController)thumbController; } }
 
 		public override void AwakeFromNib()
 		{
@@ -80,6 +81,8 @@ namespace Radish
             statusKeywords.StringValue = "";
             statusTimestamp.StringValue = "";
             statusFilename.StringValue = "";
+
+            ThumbController.SetMediaListController(mediaListController);
 		}
 
         private void ShowFile(bool forceRefresh = false)
@@ -239,6 +242,8 @@ namespace Radish
 			dirController.Scan(paths);
 			mediaListController.SelectFile(filename);
 			ShowFile();
+
+            ThumbController.SetMediaListController(mediaListController);
 
 			// That's gross - Mono exposes SharedDocumentController as NSObject rather than NSDocumentcontroller
 			(NSDocumentController.SharedDocumentController as NSDocumentController).NoteNewRecentDocumentURL(new NSUrl(paths[0], false));

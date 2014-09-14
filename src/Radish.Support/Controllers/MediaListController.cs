@@ -32,6 +32,14 @@ namespace Radish.Controllers
             MediaList = new List<MediaMetadata>();
         }
 
+        public void VisitAll(Action<MediaMetadata> visitAction)
+        {
+            foreach (var m in MediaList)
+            {
+                visitAction(m);
+            }
+        }
+
         // Status bar helpers
         public string StatusFilename
         {

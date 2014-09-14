@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+        <plugIn identifier="com.apple.imagekit.ibplugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController">
@@ -19,6 +20,9 @@
                 <outlet property="statusKeywords" destination="d2p-tn-ez6" id="p91-Gr-9b0"/>
                 <outlet property="statusTimestamp" destination="xMz-R6-6X3" id="zed-xz-XXZ"/>
                 <outlet property="statusView" destination="bui-9H-HVL" id="AgG-L6-dRl"/>
+                <outlet property="thumbController" destination="X8Q-ti-jwd" id="G99-gY-dZn"/>
+                <outlet property="thumbnailWindow" destination="8Sc-sz-EbV" id="EII-xT-U7H"/>
+                <outlet property="thumbsController" destination="X8Q-ti-jwd" id="e8v-Dr-Y6e"/>
                 <outlet property="window" destination="2" id="6"/>
             </connections>
         </customObject>
@@ -322,6 +326,62 @@ Gw
                 <outlet property="searchButton" destination="rId-HB-PFk" id="xtm-b9-k0t"/>
                 <outlet property="searchText" destination="Qiy-aW-XP8" id="3UT-pR-d7M"/>
                 <outlet property="testButton" destination="L0M-Gm-INc" id="TYW-Tl-3Sg"/>
+            </connections>
+        </viewController>
+        <window title="Thumbnails" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="RadishThumbs" animationBehavior="default" id="8Sc-sz-EbV">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="664" height="584"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
+            <view key="contentView" id="XRt-qI-Uzr">
+                <rect key="frame" x="0.0" y="0.0" width="664" height="584"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <slider verticalHuggingPriority="750" id="h5b-Iw-x5H">
+                        <rect key="frame" x="530" y="1" width="128" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="0.10000000000000001" maxValue="2" doubleValue="0.75" tickMarkPosition="above" numberOfTickMarks="10" sliderType="linear" id="bAF-Er-E4u"/>
+                        <connections>
+                            <action selector="UpdateThumbSize:" target="X8Q-ti-jwd" id="TNV-An-A98"/>
+                        </connections>
+                    </slider>
+                    <scrollView horizontalLineScroll="176" horizontalPageScroll="10" verticalLineScroll="176" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="oEA-jQ-xJT">
+                        <rect key="frame" x="-1" y="29" width="666" height="556"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <clipView key="contentView" copiesOnScroll="NO" id="82c-8V-mxK">
+                            <rect key="frame" x="1" y="1" width="664" height="554"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <ikImageBrowserView autoresizesSubviews="NO" zoomValue="0.4989350438117981" id="UfX-by-j7X">
+                                    <rect key="frame" x="0.0" y="0.0" width="664" height="554"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <ikCellsStyle key="cellsStyleMask" none="YES" shadowed="YES" outlined="YES"/>
+                                    <autoresizingMask key="contentResizingMask" heightSizable="YES"/>
+                                    <size key="cellSize" width="161" height="161"/>
+                                    <connections>
+                                        <outlet property="dataSource" destination="X8Q-ti-jwd" id="CDK-RC-qOA"/>
+                                        <outlet property="delegate" destination="X8Q-ti-jwd" id="uZ4-CG-57c"/>
+                                    </connections>
+                                </ikImageBrowserView>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="GtP-vq-6pA">
+                            <rect key="frame" x="1" y="539" width="664" height="16"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="IXW-RL-HXX">
+                            <rect key="frame" x="649" y="1" width="16" height="554"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                </subviews>
+            </view>
+        </window>
+        <viewController id="X8Q-ti-jwd" customClass="ThumbController">
+            <connections>
+                <outlet property="imageSizeSlider" destination="h5b-Iw-x5H" id="try-p7-EJ9"/>
+                <outlet property="imageView" destination="UfX-by-j7X" id="bnw-cr-FSO"/>
             </connections>
         </viewController>
     </objects>

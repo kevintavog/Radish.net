@@ -202,7 +202,8 @@ namespace Radish
                     _client.Host + "/" + match["fullUrl"].ToString(),
                     createdDate,
                     location,
-                    match["keywords"].ToObject<string[]>());
+                    match["keywords"].ToObject<string[]>(),
+                    _client.Host + "/" + match["thumbUrl"].ToString());
                 SearchResults.Add(item);
             }
         }
