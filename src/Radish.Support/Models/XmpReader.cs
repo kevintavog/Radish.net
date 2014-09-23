@@ -43,7 +43,7 @@ namespace Radish.Models
                             var signature = new String(reader.ReadChars(29));
                             if (signature.Equals("http://ns.adobe.com/xap/1.0/\0"))
                             {
-                                // Parse the file
+                                // Parse the XML
                                 var content = new String(reader.ReadChars(dataLength - signature.Length - 2));
                                 var firstLen = content.Length;
 
@@ -112,4 +112,3 @@ namespace Radish.Models
         }
     }
 }
-
