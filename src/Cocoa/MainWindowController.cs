@@ -14,6 +14,8 @@ using Radish.Controllers;
 using Radish.Models;
 using System.Threading.Tasks;
 using MonoMac.ObjCRuntime;
+using MonoMac.ImageKit;
+using MonoMac.CoreAnimation;
 
 namespace Radish
 {
@@ -74,7 +76,8 @@ namespace Radish
 				InvokeOnMainThread( () => HideNotification() );
 			};
 
-			imageView.ImageScaling = NSImageScale.ProportionallyDown;
+            imageView.CurrentToolMode = "IKToolModeNone";
+            Window.DidResize += (object sender, EventArgs e) => WindowDidResize();
 
             statusGps.StringValue = "";
             statusIndex.StringValue = "";
@@ -89,8 +92,9 @@ namespace Radish
 		{
 			if (mediaListController.Count < 1)
 			{
+logger.Info("Test this");
 				currentlyDisplayedFile = null;
-				imageView.Image = null;
+                imageView.SetImageWithURL(null);
 				Window.Title = "<No files>";
 				UpdateStatusBar();
 				return;
@@ -107,34 +111,39 @@ namespace Radish
 				logger.Info("ShowFile: {0}; {1}", mediaListController.CurrentIndex, mm.FullPath);
 				currentlyDisplayedFile = mm.FullPath;
 
+                NSUrl url;
+                if (File.Exists(mm.FullPath))
+                    url = NSUrl.FromFilename(mm.FullPath);
+                else
+                    url = NSUrl.FromString(mm.FullPath);
 
-                // In order to see the current orientation (to see if the image needs to be rotated), load the image 
-                // as a CGImage rather than directly via NSImage
-                var data = mm.GetData();
-                using (var cgImage = CGImage.FromJPEG(new CGDataProvider(data, 0, data.Length), null, false, CGColorRenderingIntent.Default))
+                imageView.SetImageWithURL(url);
+
+                var center = new PointF(imageView.Frame.GetMidX(), imageView.Frame.GetMidY());
+                NSNumber orientation = imageView.ImageProperties["Orientation"] as NSNumber;
+                if (orientation != null)
                 {
-                    NSImage image;
-                    if (cgImage == null)
+                    switch (orientation.IntValue)
                     {
-                        // It's not a JPEG, or at least can't be loaded that way.
-                        image = new NSImage(NSData.FromArray(data));
+                        case 1:
+                            break;
+                        case 3:
+                            imageView.SetRotation((float) Math.PI, center);
+                            break;
+                        case 6:
+                            imageView.SetRotation((float) (Math.PI * 0.5), center);
+                            break;
+                        case 8:
+                            imageView.SetRotation((float) (Math.PI * -0.5), center);
+                            break;
+                        default:
+                            logger.Info("Unknown orientation = {0}", orientation);
+                            break;
                     }
-                    else
-                    {
-                        image = new NSImage(cgImage, new SizeF(cgImage.Width, cgImage.Height));
-                    }
-
-                    using (image)
-    				{
-    					// By getting the image representation & setting the image size, the imageView has
-    					// good enough info to display a reasonable image. Otherwise, it may use way too
-    					// small of a representation, not filling out the area it could otherwise.
-    					var imageRep = image.BestRepresentationForDevice(null);
-    					image.Size = new SizeF(imageRep.PixelsWide, imageRep.PixelsHigh);
-    					imageView.Image = image;
-    				}
                 }
-			}
+
+                ZoomImage();
+            }
 
             Window.Title = mm.Name;
 			UpdateStatusBar();
@@ -243,6 +252,11 @@ namespace Radish
 			mediaListController.SelectFile(filename);
 			ShowFile();
 
+            // HACK: I don't understand the white band that shows below the image view and above the status view.
+            // Causing the window to resize or hiding/showing the view forces it to redo whatever is needed. ???
+            imageView.Hidden = true;
+            imageView.Hidden = false;
+
             ThumbController.SetMediaListController(mediaListController);
 
 			// That's gross - Mono exposes SharedDocumentController as NSObject rather than NSDocumentcontroller
@@ -278,7 +292,29 @@ namespace Radish
 			hideNotificationTimer.Stop();
 		}
 
+        private void WindowDidResize()
+        {
+            CATransaction.Begin();
+            CATransaction.AnimationDuration = 0;
+            ZoomImage();
+            CATransaction.Commit();
+        }
 
+        private void ZoomImage()
+        {
+            if (imageView.Image != null)
+            {
+                if (imageView.Image.Width < imageView.Frame.Size.Width &&
+                    imageView.Image.Height < imageView.Frame.Size.Height)
+                {
+                    imageView.ZoomImageToActualSize(this);
+                }
+                else
+                {
+                    imageView.ZoomImageToFit(this);
+                }
+            }
+        }
 
 		#region IFileViewer implementation
 

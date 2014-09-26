@@ -8,7 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController">
             <connections>
                 <outlet property="fileInformationController" destination="7PC-Vb-hiO" id="WMb-Ha-nVv"/>
-                <outlet property="imageView" destination="HEj-HW-hqs" id="qVf-1R-tFa"/>
+                <outlet property="imageView" destination="7qB-gb-KRF" id="JTO-l0-ZNr"/>
                 <outlet property="informationPanel" destination="XcY-Gj-53M" id="l1U-IQ-Ufb"/>
                 <outlet property="notificationImage" destination="jvR-0f-ENn" id="bTx-dW-3AX"/>
                 <outlet property="notificationWindow" destination="dSj-ey-L0L" id="3xf-ky-IbR"/>
@@ -38,10 +38,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="968" height="642"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView id="HEj-HW-hqs" customClass="NSImageView">
-                        <rect key="frame" x="0.0" y="0.0" width="968" height="642"/>
+                    <ikImageView wantsLayer="YES" zoomFactor="0.0" supportsDragAndDrop="NO" doubleClickOpensImageEditPanel="NO" id="7qB-gb-KRF">
+                        <rect key="frame" x="0.0" y="30" width="968" height="612"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </customView>
+                        <color key="backgroundColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
+                    </ikImageView>
                     <customView id="bui-9H-HVL">
                         <rect key="frame" x="0.0" y="0.0" width="968" height="34"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -353,12 +354,12 @@ Gw
                             <rect key="frame" x="1" y="1" width="664" height="554"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <ikImageBrowserView autoresizesSubviews="NO" zoomValue="0.4989350438117981" id="UfX-by-j7X">
+                                <ikImageBrowserView autoresizesSubviews="NO" zoomValue="0.4969293475151062" id="UfX-by-j7X">
                                     <rect key="frame" x="0.0" y="0.0" width="664" height="554"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <ikCellsStyle key="cellsStyleMask" none="YES" shadowed="YES" outlined="YES"/>
                                     <autoresizingMask key="contentResizingMask" heightSizable="YES"/>
-                                    <size key="cellSize" width="161" height="161"/>
+                                    <size key="cellSize" width="165" height="165"/>
                                     <connections>
                                         <outlet property="dataSource" destination="X8Q-ti-jwd" id="CDK-RC-qOA"/>
                                         <outlet property="delegate" destination="X8Q-ti-jwd" id="uZ4-CG-57c"/>
