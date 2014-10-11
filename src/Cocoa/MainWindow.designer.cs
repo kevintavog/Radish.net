@@ -16,7 +16,7 @@ namespace Radish
 		MonoMac.Foundation.NSObject fileInformationController { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSImageView imageView { get; set; }
+        MonoMac.AppKit.NSImageView imageView { get; set; }
 
 		[Outlet]
 		MonoMac.AppKit.NSPanel informationPanel { get; set; }
@@ -26,6 +26,9 @@ namespace Radish
 
 		[Outlet]
 		MonoMac.Foundation.NSObject notificationWindow { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSScrollView scrollView { get; set; }
 
 		[Outlet]
 		MonoMac.Foundation.NSObject searchController { get; set; }
@@ -82,6 +85,11 @@ namespace Radish
 			if (notificationWindow != null) {
 				notificationWindow.Dispose ();
 				notificationWindow = null;
+			}
+
+			if (scrollView != null) {
+				scrollView.Dispose ();
+				scrollView = null;
 			}
 
 			if (searchController != null) {

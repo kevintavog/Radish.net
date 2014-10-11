@@ -99,7 +99,8 @@ namespace Radish
         public ImageViewItem(MediaMetadata mm)
         {
             Name = mm.Name;
-            if (Uri.IsWellFormedUriString(mm.FullPath, UriKind.Absolute))
+            var uri = new Uri(mm.FullPath);
+            if (uri.IsAbsoluteUri && uri.Scheme != Uri.UriSchemeFile)
             {
                 ItemUrl = new NSUrl(mm.ThumbnailPath);
                 _imageRepresentationType = IKImageBrowserItem.NSURLRepresentationType;

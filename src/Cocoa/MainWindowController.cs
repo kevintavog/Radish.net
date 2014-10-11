@@ -27,6 +27,8 @@ namespace Radish
 		private MediaListController		mediaListController;
 		private string					currentlyDisplayedFile;
 		private Timer					hideNotificationTimer = new Timer(250);
+        private ZoomView                zoomView;
+
 
 
 #region Constructors
@@ -67,14 +69,13 @@ namespace Radish
 		{
 			base.AwakeFromNib();
 
+            zoomView = new ZoomView(imageView);
 			Window.BackgroundColor = NSColor.DarkGray;
 
 			hideNotificationTimer.Elapsed += (s, e) =>
 			{
 				InvokeOnMainThread( () => HideNotification() );
 			};
-
-			imageView.ImageScaling = NSImageScale.ProportionallyDown;
 
             statusGps.StringValue = "";
             statusIndex.StringValue = "";
@@ -124,15 +125,8 @@ namespace Radish
                         image = new NSImage(cgImage, new SizeF(cgImage.Width, cgImage.Height));
                     }
 
-                    using (image)
-    				{
-    					// By getting the image representation & setting the image size, the imageView has
-    					// good enough info to display a reasonable image. Otherwise, it may use way too
-    					// small of a representation, not filling out the area it could otherwise.
-    					var imageRep = image.BestRepresentationForDevice(null);
-    					image.Size = new SizeF(imageRep.PixelsWide, imageRep.PixelsHigh);
-    					imageView.Image = image;
-    				}
+					imageView.Image = image;
+                    logger.Info("view size: {0}; clipview size: {2} image size: {1}", imageView.Frame.Size, image.Size, scrollView.ContentView.Bounds.Size);
                 }
 			}
 

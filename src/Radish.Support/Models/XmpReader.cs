@@ -53,11 +53,6 @@ namespace Radish.Models
                                     content = content.Substring(0, pos + 2);
                                 }
 
-                                if (firstLen != content.Length)
-                                {
-                                    logger.Info("Content length changed from {0} to {1}", firstLen, content.Length);
-                                }
-
                                 var xmpDoc = XDocument.Parse(content);
 
                                 var namespaceManager = new XmlNamespaceManager(new NameTable());

@@ -7,6 +7,7 @@ using Radish.Controllers;
 using Radish.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 
 namespace Radish
 {
@@ -224,7 +225,33 @@ namespace Radish
             }
 		}
 
-		[Export("revealInFinder:")]
+        [Export("zoomIn:")]
+        public void ZoomIn(NSObject sender)
+        {
+            zoomView.ZoomIn();
+        }
+
+        [Export("zoomOut:")]
+        public void ZoomOut(NSObject sender)
+        {
+            zoomView.ZoomOut();
+        }
+
+        [Export("zoomToFit:")]
+        public void ZoomToFit(NSObject sender)
+        {
+            zoomView.ZoomToFit();
+        }
+
+        [Export("zoomToActualSize:")]
+        public void ZoomToActualSize(NSObject sender)
+        {
+            var rect = imageView.Frame;
+            rect.Size = imageView.Image.Size;
+            zoomView.ZoomViewToFitRect(rect);
+        }
+
+        [Export("revealInFinder:")]
 		public void RevealInFinder(NSObject sender)
 		{
 			var fullPath = mediaListController.Current.FullPath;

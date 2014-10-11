@@ -379,6 +379,29 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="biH-pr-r4l"/>
+                            <menuItem title="Zoom In" tag="2" keyEquivalent="=" id="EHc-xV-Heq">
+                                <connections>
+                                    <action selector="zoomIn:" target="-1" id="iG9-uy-ISv"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom Out" tag="2" keyEquivalent="-" id="ZhZ-3o-gml">
+                                <connections>
+                                    <action selector="zoomOut:" target="-1" id="Z6J-kq-i1Q"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom To Fit" tag="2" keyEquivalent="-" id="K9X-4n-uDH">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                <connections>
+                                    <action selector="zoomToFit:" target="-1" id="j0p-LF-qzf"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom To Actual Size" tag="2" keyEquivalent="=" id="KAF-M7-32H">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                <connections>
+                                    <action selector="zoomToActualSize:" target="-1" id="dIF-UM-WSE"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="9yq-zG-EoB"/>
                             <menuItem title="Information" tag="2" keyEquivalent="i" id="Gnv-QE-X2N">
                                 <connections>
                                     <action selector="toggleInformation:" target="-1" id="spE-wp-55S"/>
