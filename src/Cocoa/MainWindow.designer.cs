@@ -67,11 +67,6 @@ namespace Radish
 				fileInformationController = null;
 			}
 
-			if (imageView != null) {
-				imageView.Dispose ();
-				imageView = null;
-			}
-
 			if (informationPanel != null) {
 				informationPanel.Dispose ();
 				informationPanel = null;
@@ -140,6 +135,11 @@ namespace Radish
 			if (thumbnailWindow != null) {
 				thumbnailWindow.Dispose ();
 				thumbnailWindow = null;
+			}
+
+			if (imageView != null) {
+				imageView.Dispose ();
+				imageView = null;
 			}
 		}
 	}

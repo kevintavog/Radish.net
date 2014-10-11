@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -91,7 +91,7 @@ namespace Radish
 			if (mediaListController.Count < 1)
 			{
 				currentlyDisplayedFile = null;
-				imageView.Image = null;
+                imageView.Image = null;
 				Window.Title = "<No files>";
 				UpdateStatusBar();
 				return;
@@ -107,7 +107,6 @@ namespace Radish
 			{
 				logger.Info("ShowFile: {0}; {1}", mediaListController.CurrentIndex, mm.FullPath);
 				currentlyDisplayedFile = mm.FullPath;
-
 
                 // In order to see the current orientation (to see if the image needs to be rotated), load the image 
                 // as a CGImage rather than directly via NSImage
@@ -125,10 +124,9 @@ namespace Radish
                         image = new NSImage(cgImage, new SizeF(cgImage.Width, cgImage.Height));
                     }
 
-					imageView.Image = image;
-                    logger.Info("view size: {0}; clipview size: {2} image size: {1}", imageView.Frame.Size, image.Size, scrollView.ContentView.Bounds.Size);
+                    imageView.Image = image;
                 }
-			}
+            }
 
             Window.Title = mm.Name;
 			UpdateStatusBar();
@@ -237,6 +235,11 @@ namespace Radish
 			mediaListController.SelectFile(filename);
 			ShowFile();
 
+            // HACK: I don't understand the white band that shows below the image view and above the status view.
+            // Causing the window to resize or hiding/showing the view forces it to redo whatever is needed. ???
+            imageView.Hidden = true;
+            imageView.Hidden = false;
+
             ThumbController.SetMediaListController(mediaListController);
 
 			// That's gross - Mono exposes SharedDocumentController as NSObject rather than NSDocumentcontroller
@@ -271,8 +274,6 @@ namespace Radish
 			NotificationWindow.OrderOut(this);
 			hideNotificationTimer.Stop();
 		}
-
-
 
 		#region IFileViewer implementation
 
