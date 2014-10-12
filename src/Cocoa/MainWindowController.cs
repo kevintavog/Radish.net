@@ -71,6 +71,7 @@ namespace Radish
 
             zoomView = new ZoomView(imageView);
 			Window.BackgroundColor = NSColor.DarkGray;
+            NSApplication.CheckForIllegalCrossThreadCalls = false;
 
 			hideNotificationTimer.Elapsed += (s, e) =>
 			{
@@ -107,25 +108,43 @@ namespace Radish
 			{
 				logger.Info("ShowFile: {0}; {1}", mediaListController.CurrentIndex, mm.FullPath);
 				currentlyDisplayedFile = mm.FullPath;
+                var index = mediaListController.CurrentIndex;
 
-                // In order to see the current orientation (to see if the image needs to be rotated), load the image 
-                // as a CGImage rather than directly via NSImage
-                var data = mm.GetData();
-                using (var cgImage = CGImage.FromJPEG(new CGDataProvider(data, 0, data.Length), null, false, CGColorRenderingIntent.Default))
+                Task.Run( () =>
                 {
-                    NSImage image;
-                    if (cgImage == null)
+                    try
                     {
-                        // It's not a JPEG, or at least can't be loaded that way.
-                        image = new NSImage(NSData.FromArray(data));
-                    }
-                    else
-                    {
-                        image = new NSImage(cgImage, new SizeF(cgImage.Width, cgImage.Height));
-                    }
+                        // In order to see the current orientation (to see if the image needs to be rotated), load the image 
+                        // as a CGImage rather than directly via NSImage
+                        var data = mm.GetData();
 
-                    imageView.Image = image;
-                }
+                        if (index != mediaListController.CurrentIndex)
+                        {
+                            logger.Info("Ignoring load of outdated image: {0}", index);
+                            return;
+                        }
+
+                        using (var cgImage = CGImage.FromJPEG(new CGDataProvider(data, 0, data.Length), null, false, CGColorRenderingIntent.Default))
+                        {
+                            NSImage image;
+                            if (cgImage == null)
+                            {
+                                // It's not a JPEG, or at least can't be loaded that way.
+                                image = new NSImage(NSData.FromArray(data));
+                            }
+                            else
+                            {
+                                image = new NSImage(cgImage, new SizeF(cgImage.Width, cgImage.Height));
+                            }
+
+                            imageView.Image = image;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        logger.Error("Exception loading & displaying image: {0}", e);
+                    }
+                });
             }
 
             Window.Title = mm.Name;
