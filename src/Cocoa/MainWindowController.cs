@@ -14,6 +14,7 @@ using Radish.Controllers;
 using Radish.Models;
 using System.Threading.Tasks;
 using MonoMac.ObjCRuntime;
+using System.Threading;
 
 namespace Radish
 {
@@ -26,7 +27,7 @@ namespace Radish
 
 		private MediaListController		mediaListController;
 		private string					currentlyDisplayedFile;
-		private Timer					hideNotificationTimer = new Timer(250);
+		private System.Timers.Timer     hideNotificationTimer = new System.Timers.Timer(250);
         private ZoomView                zoomView;
 
 
@@ -61,6 +62,7 @@ namespace Radish
 
         public new MainWindow Window { get { return (MainWindow)base.Window; } }
 		public NSWindow NotificationWindow { get { return (NSWindow)notificationWindow; } }
+        public NSWindow BusyWindow { get { return (NSWindow)busyWindow; } }
 		public FileInformationController InformationController { get { return (FileInformationController)fileInformationController; } }
         public SearchController SearchController { get { return (SearchController)searchController; } }
         public ThumbController ThumbController { get { return (ThumbController)thumbController; } }
@@ -71,7 +73,10 @@ namespace Radish
 
             zoomView = new ZoomView(imageView);
 			Window.BackgroundColor = NSColor.DarkGray;
-            NSApplication.CheckForIllegalCrossThreadCalls = false;
+
+            busyProgressControl.StartAnimation(this);
+            ((KTRoundedView) busyWindow.ContentView).BackgroundColor = NSColor.Yellow;
+
 
 			hideNotificationTimer.Elapsed += (s, e) =>
 			{
@@ -89,6 +94,7 @@ namespace Radish
 
         private void ShowFile(bool forceRefresh = false)
 		{
+            NSCursor.SetHiddenUntilMouseMoves(true);
 			if (mediaListController.Count < 1)
 			{
 				currentlyDisplayedFile = null;
@@ -110,12 +116,14 @@ namespace Radish
 				currentlyDisplayedFile = mm.FullPath;
                 var index = mediaListController.CurrentIndex;
 
+                ShowBusy();
+
                 Task.Run( () =>
                 {
                     try
                     {
-                        // In order to see the current orientation (to see if the image needs to be rotated), load the image 
-                        // as a CGImage rather than directly via NSImage
+                        // In order to see the current orientation (to determine if the image needs to be rotated), 
+                        // load the image as a CGImage rather than directly via NSImage
                         var data = mm.GetData();
 
                         if (index != mediaListController.CurrentIndex)
@@ -124,21 +132,41 @@ namespace Radish
                             return;
                         }
 
-                        using (var cgImage = CGImage.FromJPEG(new CGDataProvider(data, 0, data.Length), null, false, CGColorRenderingIntent.Default))
+                        using (var dataProvider = new CGDataProvider(data, 0, data.Length))
                         {
-                            NSImage image;
-                            if (cgImage == null)
+                            using (var cgImage = CGImage.FromJPEG(dataProvider, null, false, CGColorRenderingIntent.Default))
                             {
-                                // It's not a JPEG, or at least can't be loaded that way.
-                                image = new NSImage(NSData.FromArray(data));
-                            }
-                            else
-                            {
-                                image = new NSImage(cgImage, new SizeF(cgImage.Width, cgImage.Height));
-                            }
+                                if (index != mediaListController.CurrentIndex)
+                                {
+                                    logger.Info("Bailing out of setting image");
+                                    return;
+                                }
 
-                            imageView.Image = image;
+                                base.InvokeOnMainThread( () => 
+                                {
+                                    NSImage image;
+                                    if (cgImage == null)
+                                    {
+                                        // It's not a JPEG, or at least can't be loaded that way.
+                                        using (var stream = new MemoryStream(data))
+                                        {
+                                            image = NSImage.FromStream(stream);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        image = new NSImage(cgImage, new SizeF(cgImage.Width, cgImage.Height));
+                                    }
+
+                                    imageView.Image = image;
+                                });
+                            }
                         }
+
+                        // To work around possible problems in Mono's NSImage dispose: https://bugzilla.xamarin.com/show_bug.cgi?id=15081
+                        System.GC.Collect();
+
+                        BeginInvokeOnMainThread( () => HideBusy() );
                     }
                     catch (Exception e)
                     {
@@ -242,6 +270,7 @@ namespace Radish
                 }
 			}
 
+            ShowBusy();
             var dirController = mediaListController as DirectoryController;
             if (dirController == null)
             {
@@ -293,6 +322,33 @@ namespace Radish
 			NotificationWindow.OrderOut(this);
 			hideNotificationTimer.Stop();
 		}
+
+        private void ShowBusy()
+        {
+            var mainFrame = Window.Frame;
+            var origin = new PointF(
+                mainFrame.X + ((mainFrame.Width - BusyWindow.Frame.Width) / 2),
+                mainFrame.Y + BusyWindow.Frame.Height);
+            BusyWindow.SetFrameOrigin(origin);
+            BusyWindow.MakeKeyAndOrderFront(this);
+        }
+
+        private void HideBusy()
+        {
+            BusyWindow.OrderOut(this);
+        }
+
+        public void CallWithDelay(NSAction action, int delay)
+        {
+            System.Threading.Timer timer = null;
+            var cb = new TimerCallback((state) =>
+            {
+                base.InvokeOnMainThread(action);
+                timer.Dispose();
+            });
+            timer = new System.Threading.Timer(cb, null, delay, Timeout.Infinite);
+        }
+
 
 		#region IFileViewer implementation
 

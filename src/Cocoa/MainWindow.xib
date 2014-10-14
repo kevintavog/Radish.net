@@ -7,6 +7,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController">
             <connections>
+                <outlet property="busyProgressControl" destination="lUI-P9-of3" id="xxN-gT-6bx"/>
+                <outlet property="busyWindow" destination="F9I-g9-uzC" id="sJv-Mh-csM"/>
                 <outlet property="fileInformationController" destination="7PC-Vb-hiO" id="WMb-Ha-nVv"/>
                 <outlet property="imageView" destination="HEj-HW-hqs" id="qVf-1R-tFa"/>
                 <outlet property="informationPanel" destination="XcY-Gj-53M" id="l1U-IQ-Ufb"/>
@@ -404,6 +406,30 @@ Gw
                 <outlet property="imageView" destination="UfX-by-j7X" id="bnw-cr-FSO"/>
             </connections>
         </viewController>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="F9I-g9-uzC" customClass="KTBorderlessWindow">
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="242" height="32"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
+            <view key="contentView" id="V9u-Je-JRb" customClass="KTRoundedView">
+                <rect key="frame" x="0.0" y="0.0" width="242" height="32"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" id="lUI-P9-of3">
+                        <rect key="frame" x="191" y="0.0" width="32" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </progressIndicator>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Ueh-XL-RCT">
+                        <rect key="frame" x="0.0" y="0.0" width="179" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Working ..." id="BsC-v3-Pts">
+                            <font key="font" metaFont="system" size="26"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+        </window>
     </objects>
     <resources>
         <image name="WrappedToStart" width="256" height="256"/>

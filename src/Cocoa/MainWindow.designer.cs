@@ -13,10 +13,19 @@ namespace Radish
 	partial class MainWindowController
 	{
 		[Outlet]
+		MonoMac.AppKit.NSProgressIndicator busyIndicator { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSProgressIndicator busyProgressControl { get; set; }
+
+		[Outlet]
+		Radish.KTBorderlessWindow busyWindow { get; set; }
+
+		[Outlet]
 		MonoMac.Foundation.NSObject fileInformationController { get; set; }
 
 		[Outlet]
-        MonoMac.AppKit.NSImageView imageView { get; set; }
+		MonoMac.AppKit.NSImageView imageView { get; set; }
 
 		[Outlet]
 		MonoMac.AppKit.NSPanel informationPanel { get; set; }
@@ -62,9 +71,24 @@ namespace Radish
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (busyIndicator != null) {
+				busyIndicator.Dispose ();
+				busyIndicator = null;
+			}
+
+			if (busyWindow != null) {
+				busyWindow.Dispose ();
+				busyWindow = null;
+			}
+
 			if (fileInformationController != null) {
 				fileInformationController.Dispose ();
 				fileInformationController = null;
+			}
+
+			if (imageView != null) {
+				imageView.Dispose ();
+				imageView = null;
 			}
 
 			if (informationPanel != null) {
@@ -137,9 +161,9 @@ namespace Radish
 				thumbnailWindow = null;
 			}
 
-			if (imageView != null) {
-				imageView.Dispose ();
-				imageView = null;
+			if (busyProgressControl != null) {
+				busyProgressControl.Dispose ();
+				busyProgressControl = null;
 			}
 		}
 	}
