@@ -21,7 +21,7 @@ namespace Radish.Models
         {
             if (placeName == null)
             {
-                placeName = ReverseLocator.ToPlaceName(Location, ReverseLocator.Filter.Standard);
+                placeName = Location.PlaceName(Location.PlaceNameFilter.Standard);
             }
 
             return placeName;
@@ -45,6 +45,17 @@ namespace Radish.Models
                 if (metadata == null)
                 {
                     metadata = GetAllMetadata();
+
+                    if (Location != null)
+                    {
+                        int index = 0;
+                        metadata.Insert(index++, new MetadataEntry("PlaceName", null, null));
+                        var pnc = Location.PlaceNameComponents;
+                        foreach (var key in pnc.Keys)
+                        {
+                            metadata.Insert(index++, new MetadataEntry(null, (string) key, (string) pnc[key]));
+                        }
+                    }
                 }
                 return metadata;
             }
@@ -57,7 +68,5 @@ namespace Radish.Models
 
         abstract protected IList<MetadataEntry> GetAllMetadata();
         abstract public byte[] GetData();
-
     }
 }
-

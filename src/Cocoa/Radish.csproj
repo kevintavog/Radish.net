@@ -127,7 +127,6 @@
     <BundleResource Include="Resources\WrappedToEnd.png" />
     <BundleResource Include="Resources\FailedCheck.png" />
     <BundleResource Include="Resources\SucceededCheck.png" />
-    <BundleResource Include="Resources\BusyIndicator.gif" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Radish.icns" />
