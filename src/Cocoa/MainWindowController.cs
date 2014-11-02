@@ -116,61 +116,33 @@ namespace Radish
 				currentlyDisplayedFile = mm.FullPath;
                 var index = mediaListController.CurrentIndex;
 
-                ShowBusy();
-
                 Task.Run( () =>
                 {
                     try
                     {
-                        // In order to see the current orientation (to determine if the image needs to be rotated), 
-                        // load the image as a CGImage rather than directly via NSImage
-                        var data = mm.GetData();
+                        NSUrl url;
+                        if (File.Exists(mm.FullPath))
+                            url = NSUrl.FromFilename(mm.FullPath);
+                        else
+                            url = NSUrl.FromString(mm.FullPath);
 
-                        if (index != mediaListController.CurrentIndex)
+                        using (var imageSource = CGImageSource.FromUrl(url))
                         {
-                            logger.Info("Ignoring load of outdated image: {0}", index);
-                            return;
-                        }
-
-                        using (var dataProvider = new CGDataProvider(data, 0, data.Length))
-                        {
-                            using (var cgImage = CGImage.FromJPEG(dataProvider, null, false, CGColorRenderingIntent.Default))
+                            using (var cgi = imageSource.CreateImage(0, null))
                             {
-                                if (index != mediaListController.CurrentIndex)
-                                {
-                                    logger.Info("Bailing out of setting image");
-                                    return;
-                                }
-
                                 base.InvokeOnMainThread( () => 
                                 {
-                                    NSImage image;
-                                    if (cgImage == null)
+                                    using (var image = new NSImage(cgi, new SizeF(cgi.Width, cgi.Height)))
                                     {
-                                        // It's not a JPEG, or at least can't be loaded that way.
-                                        using (var stream = new MemoryStream(data))
-                                        {
-                                            image = NSImage.FromStream(stream);
-                                        }
+                                        imageView.Image = image;
                                     }
-                                    else
-                                    {
-                                        image = new NSImage(cgImage, new SizeF(cgImage.Width, cgImage.Height));
-                                    }
-
-                                    imageView.Image = image;
                                 });
                             }
                         }
-
-                        // To work around possible problems in Mono's NSImage dispose: https://bugzilla.xamarin.com/show_bug.cgi?id=15081
-                        System.GC.Collect();
-
-                        BeginInvokeOnMainThread( () => HideBusy() );
                     }
                     catch (Exception e)
                     {
-                        logger.Error("Exception loading & displaying image: {0}", e);
+                        logger.Error("Exception loading & displaying image: " + e);
                     }
                 });
             }
@@ -229,6 +201,7 @@ namespace Radish
             }
             else
             {
+                ClearStatusGps();
                 Task.Run( () =>
                 {
                     mm.ToPlaceName();
@@ -239,6 +212,11 @@ namespace Radish
                 });
             }
 		}
+
+        private void ClearStatusGps()
+        {
+            statusGps.StringValue = "";
+        }
 
         private void SetStatusGps(MediaMetadata mm)
         {
@@ -293,6 +271,8 @@ namespace Radish
 			// That's gross - Mono exposes SharedDocumentController as NSObject rather than NSDocumentcontroller
 			(NSDocumentController.SharedDocumentController as NSDocumentController).NoteNewRecentDocumentURL(new NSUrl(paths[0], false));
 
+            HideBusy();
+
 			return true;
 		}
 
@@ -325,17 +305,19 @@ namespace Radish
 
         private void ShowBusy()
         {
-            var mainFrame = Window.Frame;
-            var origin = new PointF(
-                mainFrame.X + ((mainFrame.Width - BusyWindow.Frame.Width) / 2),
-                mainFrame.Y + BusyWindow.Frame.Height);
-            BusyWindow.SetFrameOrigin(origin);
-            BusyWindow.MakeKeyAndOrderFront(this);
+            // NOT READY FOR PRIME TIME
+//            var mainFrame = Window.Frame;
+//            var origin = new PointF(
+//                mainFrame.X + ((mainFrame.Width - BusyWindow.Frame.Width) / 2),
+//                mainFrame.Y + BusyWindow.Frame.Height);
+//            BusyWindow.SetFrameOrigin(origin);
+//            BusyWindow.MakeKeyAndOrderFront(this);
         }
 
         private void HideBusy()
         {
-            BusyWindow.OrderOut(this);
+            // NOT READY FOR PRIME TIME
+//            BusyWindow.OrderOut(this);
         }
 
         public void CallWithDelay(NSAction action, int delay)

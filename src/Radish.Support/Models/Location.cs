@@ -87,7 +87,8 @@ namespace Radish.Models
                         break;
 
                     case PlaceNameFilter.None:
-                        parts.Add((string) PlaceNameComponents[key]);
+                        if ("DisplayName" != (string) key)
+                            parts.Add((string) PlaceNameComponents[key]);
                         break;
 
                     case PlaceNameFilter.Minimal:
