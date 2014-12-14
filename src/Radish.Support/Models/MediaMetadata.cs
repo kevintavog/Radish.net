@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Rangic.Utilities.Geo;
 
 namespace Radish.Models
 {

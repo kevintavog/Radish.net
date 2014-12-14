@@ -8,6 +8,8 @@ using Radish.Models;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using Rangic.Utilities.Preferences;
+using Rangic.Utilities.Geo;
 
 namespace Radish
 {
@@ -46,7 +48,7 @@ namespace Radish
             _isSearching = false;
             progressIndicator.Hidden = true;
             errorLabel.StringValue = "";
-            _lastSavedHost = hostName.StringValue = Preferences.Instance.FindAPhotoHost;
+            _lastSavedHost = hostName.StringValue = Preferences<RadishPreferences>.Instance.FindAPhotoHost;
             connectionImage.Image = null;
             _allowFocusChange = true;
         }
@@ -225,8 +227,8 @@ namespace Radish
         {
             if (_lastSavedHost != _client.Host)
             {
-                Preferences.Instance.FindAPhotoHost = _client.Host;
-                Preferences.Instance.Save();
+                Preferences<RadishPreferences>.Instance.FindAPhotoHost = _client.Host;
+                Preferences<RadishPreferences>.Save();
 
                 _lastSavedHost = _client.Host;
             }

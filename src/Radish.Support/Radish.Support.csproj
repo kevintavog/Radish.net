@@ -29,9 +29,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="ExifLib">
-      <HintPath>..\ExternalDependencies\ExifLib.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,19 +40,22 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="ExifLib">
+      <HintPath>..\packages\ExifLib.1.6.3.0\lib\net45\ExifLib.dll</HintPath>
+    </Reference>
+    <Reference Include="RangicUtilities">
+      <HintPath>..\packages\Rangic.Utilities.1.0.0.5\lib\net45\RangicUtilities.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\ExifToolInvoker.cs" />
     <Compile Include="Utilities\NotifyPropertyChangedHelper.cs" />
     <Compile Include="Utilities\PropertyChangedExtensions.cs" />
     <Compile Include="Utilities\ReadExifMetadata.cs" />
     <Compile Include="Models\FileMetadata.cs" />
-    <Compile Include="Models\Location.cs" />
     <Compile Include="Models\MetadataEntry.cs" />
     <Compile Include="Controllers\DirectoryController.cs" />
     <Compile Include="Controllers\IFileViewer.cs" />
-    <Compile Include="Utilities\JheadInvoker.cs" />
     <Compile Include="Utilities\ProcessInvoker.cs" />
     <Compile Include="FindAPhotoClient.cs" />
     <Compile Include="Preferences.cs" />
@@ -63,7 +63,6 @@
     <Compile Include="Models\MediaMetadata.cs" />
     <Compile Include="Models\FIndAPhotoMetadata.cs" />
     <Compile Include="Controllers\FindAPhotoController.cs" />
-    <Compile Include="Models\XmpReader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

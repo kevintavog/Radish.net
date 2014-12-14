@@ -6,6 +6,7 @@ using MonoMac.ObjCRuntime;
 using NLog;
 using Radish.Support;
 using System.IO;
+using Rangic.Utilities.Preferences;
 
 namespace Radish
 {
@@ -22,10 +23,10 @@ namespace Radish
 		public override void FinishedLaunching(NSObject notification)
 		{
             var urlList = new NSFileManager().GetUrls(NSSearchPathDirectory.LibraryDirectory, NSSearchPathDomain.User);
-            Preferences.Load(Path.Combine(
+            Preferences<RadishPreferences>.Load(Path.Combine(
                 urlList[0].Path,
                 "Preferences",
-                "com.rangic.Radish.json"));
+                "Radish.rangic.json"));
 
 			controller = new MainWindowController();
 			controller.Window.MakeKeyAndOrderFront(this);
