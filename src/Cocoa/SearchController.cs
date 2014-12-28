@@ -1,6 +1,6 @@
 ﻿using System;
-using MonoMac.AppKit;
-using MonoMac.Foundation;
+using AppKit;
+using Foundation;
 using NLog;
 using Radish.Support;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using Rangic.Utilities.Geo;
 
 namespace Radish
 {
-    [MonoMac.Foundation.Register("SearchController")]
+    [Foundation.Register("SearchController")]
     public partial class SearchController : NSViewController
     {
         static private readonly Logger logger = LogManager.GetCurrentClassLogger();
@@ -64,7 +64,7 @@ namespace Radish
             NSApplication.SharedApplication.RunModalForWindow(window);
         }
 
-        partial void cancel(MonoMac.Foundation.NSObject sender)
+        partial void cancel(NSObject sender)
         {
             logger.Info("Cancel");
             if (IsSearching())
@@ -78,7 +78,7 @@ namespace Radish
             }
         }
 
-        partial void startSearch(MonoMac.Foundation.NSObject sender)
+        partial void startSearch(NSObject sender)
         {
             _client.Host = hostName.StringValue;
             var query = searchText.StringValue;
@@ -167,7 +167,7 @@ namespace Radish
             return _isSearching && !_cancelSearch;
         }
 
-        partial void testHost(MonoMac.Foundation.NSObject sender)
+        partial void testHost(NSObject sender)
         {
             _client.Host = hostName.StringValue;
             logger.Info("testHost: '{0}'", _client.Host);

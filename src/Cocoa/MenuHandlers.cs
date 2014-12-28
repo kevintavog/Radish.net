@@ -1,6 +1,6 @@
 ﻿using System;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
+using Foundation;
+using AppKit;
 using System.IO;
 using Radish.Utilities;
 using Radish.Controllers;
@@ -12,7 +12,7 @@ using Rangic.Utilities.Process;
 
 namespace Radish
 {
-	public partial class MainWindowController : MonoMac.AppKit.NSWindowController
+	public partial class MainWindowController : AppKit.NSWindowController
 	{
 		enum MenuTag
 		{
@@ -23,7 +23,7 @@ namespace Radish
 		[Export("validateMenuItem:")]
 		public bool ValidateMenuItem(NSMenuItem menuItem)
 		{
-			switch ((MenuTag) menuItem.Tag)
+            switch ((MenuTag) (int)menuItem.Tag)
 			{
 				case MenuTag.AlwaysEnable:
 					return true;
@@ -110,7 +110,7 @@ namespace Radish
                 ReleasedWhenClosed = true,
 			};
 
-			var result = (NsButtonId)openPanel.RunModal();
+            var result = (NsButtonId)(int)openPanel.RunModal();
 			if (result != NsButtonId.OK)
 			{
 				return;
@@ -190,7 +190,7 @@ namespace Radish
 			var fullPath = mediaListController.Current.FullPath;
 			logger.Info("MoveToTrash: '{0}'", fullPath);
 
-			int tag;
+			nint tag;
 			var succeeded = NSWorkspace.SharedWorkspace.PerformFileOperation(
 				NSWorkspace.OperationRecycle,
 				Path.GetDirectoryName(fullPath),

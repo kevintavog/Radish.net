@@ -4,7 +4,7 @@
 // actions made in the UI designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
-using MonoMac.Foundation;
+using Foundation;
 using System.CodeDom.Compiler;
 
 namespace Radish
@@ -12,13 +12,13 @@ namespace Radish
 	partial class ThumbController
 	{
 		[Outlet]
-		MonoMac.AppKit.NSSlider imageSizeSlider { get; set; }
+		AppKit.NSSlider imageSizeSlider { get; set; }
 
 		[Outlet]
-		MonoMac.ImageKit.IKImageBrowserView imageView { get; set; }
+		ImageKit.IKImageBrowserView imageView { get; set; }
 
 		[Action ("UpdateThumbSize:")]
-		partial void UpdateThumbSize (MonoMac.Foundation.NSObject sender);
+		partial void UpdateThumbSize (Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{

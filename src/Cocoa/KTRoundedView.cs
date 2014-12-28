@@ -1,10 +1,11 @@
 ﻿using System;
-using MonoMac.AppKit;
+using AppKit;
 using System.Drawing;
+using CoreGraphics;
 
 namespace Radish
 {
-	[MonoMac.Foundation.Register("KTRoundedView")]
+	[Foundation.Register("KTRoundedView")]
 	public class KTRoundedView : NSView
 	{
         public NSColor BackgroundColor { get; set; }
@@ -14,7 +15,7 @@ namespace Radish
             CommonInit();
         }
 
-        public KTRoundedView(RectangleF frameRect) : base(frameRect)
+        public KTRoundedView(CGRect frameRect) : base(frameRect)
 		{
             CommonInit();
 		}
@@ -24,7 +25,7 @@ namespace Radish
             BackgroundColor = NSColor.Black;
         }
 
-		public override void DrawRect(RectangleF dirtyRect)
+		public override void DrawRect(CGRect dirtyRect)
 		{
 			var path = NSBezierPath.FromRoundedRect(dirtyRect, 6.0f, 6.0f);
             BackgroundColor.Set();

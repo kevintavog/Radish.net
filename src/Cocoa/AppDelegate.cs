@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Drawing;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
-using MonoMac.ObjCRuntime;
 using NLog;
 using Radish.Support;
 using System.IO;
 using Rangic.Utilities.Preferences;
+using AppKit;
+using Foundation;
 
 namespace Radish
 {
@@ -20,8 +19,8 @@ namespace Radish
 		{
 		}
 
-		public override void FinishedLaunching(NSObject notification)
-		{
+        public override void DidFinishLaunching(NSNotification notification)
+        {
             var urlList = new NSFileManager().GetUrls(NSSearchPathDirectory.LibraryDirectory, NSSearchPathDomain.User);
             Preferences<RadishPreferences>.Load(Path.Combine(
                 urlList[0].Path,
