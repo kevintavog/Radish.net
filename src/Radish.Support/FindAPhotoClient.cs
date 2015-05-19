@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NLog;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
@@ -8,6 +7,8 @@ namespace Radish.Support
 {
     public class FindAPhotoClient
     {
+        const string DefaultFields = "id,keywords,thumbUrl,mimeType,latitude,longitude,createdDate,fullUrl";
+
         static private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public string Host { get; set; }
@@ -77,14 +78,14 @@ namespace Radish.Support
                 {
                     client.BaseAddress = new Uri(Host);
                     int first = 0;
-                    int count = 100;
+                    const int count = 50;
                     int visiting = 0;
 
                     bool searchAgain = true;
                     do
                     {
                         searchAgain = false;
-                        var requestUrl = string.Format("api/search?f={0}&c={1}&q={2}", first, count, query);
+                        var requestUrl = string.Format("api/search?g=n&f={0}&c={1}&q={2}&p={3}", first, count, query, DefaultFields);
                         var result = client.GetAsync(requestUrl).Result;
                         if (result.IsSuccessStatusCode)
                         {
@@ -92,10 +93,11 @@ namespace Radish.Support
                             dynamic response = JObject.Parse(body);
                             int totalMatches = response["totalMatches"];
 
-                            if (response["matches"] != null)
+                            if (response["groups"] != null)
                             {
+                                var firstGroup = response["groups"][0];
                                 first += count;
-                                foreach (var m in response["matches"])
+                                foreach (var m in firstGroup["images"])
                                 {
                                     visiting += 1;
                                     searchAgain = true;

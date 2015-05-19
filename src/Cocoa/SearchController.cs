@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using Radish.Models;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
-using System.Threading;
 using Rangic.Utilities.Preferences;
 using Rangic.Utilities.Geo;
 
@@ -142,7 +141,7 @@ namespace Radish
             errorLabel.StringValue = "";
             connectionImage.Image = null;
 
-            var timer = new System.Timers.Timer(100) { AutoReset = false, Enabled = true, };
+            var timer = new System.Timers.Timer(100) { AutoReset = false, Enabled = true };
             timer.Elapsed += (s, e) => ShowProgressIndicator();
 
             searchButton.Enabled = false;
@@ -194,7 +193,8 @@ namespace Radish
             if (mimeType != null && mimeType.StartsWith("image"))
             {
                 Location location = null;
-                if (match["latitude"].Type == JTokenType.Float && match["longitude"].Type == JTokenType.Float)
+                if (match["latitude"] != null && match["latitude"].Type == JTokenType.Float 
+                    && match["longitude"] != null && match["longitude"].Type == JTokenType.Float)
                 {
                     location = new Location((double) match["latitude"], (double) match["longitude"]);
                 }
