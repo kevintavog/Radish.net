@@ -4,7 +4,7 @@
 // actions made in the UI designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
-using MonoMac.Foundation;
+using Foundation;
 using System.CodeDom.Compiler;
 
 namespace Radish
@@ -13,61 +13,61 @@ namespace Radish
 	partial class MainWindowController
 	{
 		[Outlet]
-		MonoMac.AppKit.NSProgressIndicator busyIndicator { get; set; }
+		AppKit.NSProgressIndicator busyIndicator { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSProgressIndicator busyProgressControl { get; set; }
+		AppKit.NSProgressIndicator busyProgressControl { get; set; }
 
 		[Outlet]
 		Radish.KTBorderlessWindow busyWindow { get; set; }
 
 		[Outlet]
-		MonoMac.Foundation.NSObject fileInformationController { get; set; }
+		Foundation.NSObject fileInformationController { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSImageView imageView { get; set; }
+		AppKit.NSImageView imageView { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSPanel informationPanel { get; set; }
+		AppKit.NSPanel informationPanel { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSImageView notificationImage { get; set; }
+		AppKit.NSImageView notificationImage { get; set; }
 
 		[Outlet]
-		MonoMac.Foundation.NSObject notificationWindow { get; set; }
+		Foundation.NSObject notificationWindow { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSScrollView scrollView { get; set; }
+		AppKit.NSScrollView scrollView { get; set; }
 
 		[Outlet]
-		MonoMac.Foundation.NSObject searchController { get; set; }
+		Foundation.NSObject searchController { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSWindow searchWindow { get; set; }
+		AppKit.NSWindow searchWindow { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSTextField statusFilename { get; set; }
+		AppKit.NSTextField statusFilename { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSTextField statusGps { get; set; }
+		AppKit.NSTextField statusGps { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSTextField statusIndex { get; set; }
+		AppKit.NSTextField statusIndex { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSTextField statusKeywords { get; set; }
+		AppKit.NSTextField statusKeywords { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSTextField statusTimestamp { get; set; }
+		AppKit.NSTextField statusTimestamp { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSView statusView { get; set; }
+		AppKit.NSView statusView { get; set; }
 
 		[Outlet]
-		MonoMac.Foundation.NSObject thumbController { get; set; }
+		Foundation.NSObject thumbController { get; set; }
 
 		[Outlet]
-		MonoMac.AppKit.NSWindow thumbnailWindow { get; set; }
+		AppKit.NSWindow thumbnailWindow { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{

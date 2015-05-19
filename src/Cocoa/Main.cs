@@ -1,4 +1,4 @@
-﻿using MonoMac.AppKit;
+using MonoMac.AppKit;
 using System.Threading;
 
 namespace Radish

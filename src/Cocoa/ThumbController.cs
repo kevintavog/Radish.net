@@ -1,8 +1,8 @@
 ﻿using System;
-using MonoMac.AppKit;
-using MonoMac.Foundation;
+using AppKit;
+using Foundation;
 using NLog;
-using MonoMac.ImageKit;
+using ImageKit;
 using System.Collections.Generic;
 using System.IO;
 using Radish.Controllers;
@@ -10,7 +10,7 @@ using Radish.Models;
 
 namespace Radish
 {
-    [MonoMac.Foundation.Register("ThumbController")]
+    [Foundation.Register("ThumbController")]
     public partial class ThumbController : NSWindowController
     {
         static private readonly Logger logger = LogManager.GetCurrentClassLogger();
@@ -47,7 +47,7 @@ namespace Radish
             UpdateThumbSize(null);
         }
 
-        partial void UpdateThumbSize (MonoMac.Foundation.NSObject sender)
+        partial void UpdateThumbSize (Foundation.NSObject sender)
         {
             imageView.ZoomValue = imageSizeSlider.FloatValue;
         }

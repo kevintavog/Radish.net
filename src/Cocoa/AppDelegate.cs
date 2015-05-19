@@ -1,10 +1,9 @@
-﻿using MonoMac.Foundation;
-using MonoMac.AppKit;
+using System;
+using System.Drawing;
 using NLog;
 using Radish.Support;
 using System.IO;
 using Rangic.Utilities.Preferences;
-using System;
 
 namespace Radish
 {
@@ -14,8 +13,8 @@ namespace Radish
 		private MainWindowController controller;
         private string filename;
 
-		public override void FinishedLaunching(NSObject notification)
-		{
+        public override void DidFinishLaunching(NSNotification notification)
+        {
             Environment.SetEnvironmentVariable("MONO_MANAGED_WATCHER", "enabled");
             var urlList = new NSFileManager().GetUrls(NSSearchPathDirectory.LibraryDirectory, NSSearchPathDomain.User);
             Preferences<RadishPreferences>.Load(Path.Combine(

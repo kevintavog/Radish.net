@@ -14,7 +14,7 @@ using System.Threading;
 
 namespace Radish
 {
-	public partial class MainWindowController : MonoMac.AppKit.NSWindowController, IFileViewer
+	public partial class MainWindowController : AppKit.NSWindowController, IFileViewer
 	{
 		static private readonly Logger logger = LogManager.GetCurrentClassLogger();
 		private const string TrashSoundPath = @"/System/Library/Components/CoreAudio.component/Contents/SharedSupport/SystemSounds/dock/drag to trash.aif";
@@ -128,7 +128,7 @@ namespace Radish
                             {
                                 base.InvokeOnMainThread( () => 
                                 {
-                                    using (var image = new NSImage(cgi, new SizeF(cgi.Width, cgi.Height)))
+                                    using (var image = new NSImage(cgi, new CGSize(cgi.Width, cgi.Height)))
                                     {
                                         imageView.Image = image;
                                     }
@@ -283,7 +283,7 @@ namespace Radish
 			notificationImage.Image = NSImage.ImageNamed(graphic.ToString());
 
 			var mainFrame = Window.Frame;
-			var origin = new PointF(
+			var origin = new CGPoint(
 				mainFrame.X + ((mainFrame.Width - NotificationWindow.Frame.Width) / 2),
 				mainFrame.Y + ((mainFrame.Height - NotificationWindow.Frame.Height) / 2));
 			NotificationWindow.SetFrameOrigin(origin);
@@ -303,7 +303,7 @@ namespace Radish
         {
             // NOT READY FOR PRIME TIME
 //            var mainFrame = Window.Frame;
-//            var origin = new PointF(
+            //            var origin = new CGPoint(
 //                mainFrame.X + ((mainFrame.Width - BusyWindow.Frame.Width) / 2),
 //                mainFrame.Y + BusyWindow.Frame.Height);
 //            BusyWindow.SetFrameOrigin(origin);
@@ -316,7 +316,7 @@ namespace Radish
 //            BusyWindow.OrderOut(this);
         }
 
-        public void CallWithDelay(NSAction action, int delay)
+        public void CallWithDelay(Action action, int delay)
         {
             System.Threading.Timer timer = null;
             var cb = new TimerCallback((state) =>
@@ -329,11 +329,6 @@ namespace Radish
 
 
 		#region IFileViewer implementation
-
-		public void InvokeOnMainThread(Action action)
-		{
-			BeginInvokeOnMainThread( () => { action(); } );
-		}
 
 		public bool IsFileSupported(string filePath)
 		{

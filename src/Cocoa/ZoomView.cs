@@ -1,7 +1,8 @@
 ﻿using System;
-using MonoMac.AppKit;
+using AppKit;
 using System.Drawing;
 using NLog;
+using CoreGraphics;
 
 namespace Radish
 {
@@ -45,11 +46,11 @@ namespace Radish
             ZoomViewToFitRect(view.Superview.Frame);
         }
 
-        public void ZoomViewToFitRect(RectangleF rect)
+        public void ZoomViewToFitRect(CGRect rect)
         {
             var frame = view.Frame;
-            var factor = rect.Width / frame.Width;
-            factor = Math.Min(factor, rect.Height / frame.Height);
+            var factor = (float) (rect.Width / frame.Width);
+            factor = Math.Min((float)factor, (float) (rect.Height / frame.Height));
             ZoomViewByFactor(factor);
         }
 
@@ -58,7 +59,7 @@ namespace Radish
             ZoomViewByFactor(factor, DocumentCenterPoint());
         }
 
-        private void ZoomViewByFactor(float factor, PointF point)
+        private void ZoomViewByFactor(float factor, CGPoint point)
         {
             var scale = factor * viewScale;
             scale = Math.Max(scale, MinimumScale);
@@ -68,7 +69,7 @@ logger.Info("ZoomViewByFactor({0}); current scale = {1}, target scale = {2}", fa
             if (scale != viewScale)
             {
                 viewScale = scale;
-                view.ScaleUnitSquareToSize(new SizeF { Width = factor, Height = factor });
+                view.ScaleUnitSquareToSize(new CGSize { Width = factor, Height = factor });
 
                 var frame = view.Frame;
                 frame.Width *= factor;
@@ -80,20 +81,20 @@ logger.Info("ZoomViewByFactor({0}); current scale = {1}, target scale = {2}", fa
             }
         }
 
-        public PointF DocumentCenterPoint()
+        public CGPoint DocumentCenterPoint()
         {
             var frame = ((NSClipView)(view.Superview)).DocumentVisibleRect();
-            return new PointF
+            return new CGPoint
             {
                 X = frame.X + frame.Width / 2,
                 Y = frame.Y + frame.Height / 2,
             };
         }
 
-        public void ScrollPointToCenter(PointF point)
+        public void ScrollPointToCenter(CGPoint point)
         {
             var frame = ((NSClipView)(view.Superview)).DocumentVisibleRect();
-            view.ScrollPoint(new PointF
+            view.ScrollPoint(new CGPoint
             {
                 X = point.X - (frame.Width / 2),
                 Y = point.Y - (frame.Height / 2)
@@ -101,4 +102,3 @@ logger.Info("ZoomViewByFactor({0}); current scale = {1}, target scale = {2}", fa
         }
     }
 }
-

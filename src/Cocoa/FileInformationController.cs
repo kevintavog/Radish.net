@@ -1,11 +1,11 @@
 ﻿using System;
-using MonoMac.AppKit;
-using MonoMac.Foundation;
+using AppKit;
+using Foundation;
 using Radish.Models;
 
 namespace Radish
 {
-	[MonoMac.Foundation.Register("FileInformationController")]
+	[Foundation.Register("FileInformationController")]
 	public partial class FileInformationController : NSViewController
 	{
 		private MediaMetadata MediaMetadata;
@@ -42,7 +42,7 @@ namespace Radish
 				for (int row = 0; row < tableView.RowCount; ++row)
 				{
 					var cellWidth = tableView.GetCell(column, row).CellSize.Width;
-					biggestWidth = Math.Max(biggestWidth, cellWidth);
+                    biggestWidth = Math.Max(biggestWidth, (float)cellWidth);
 				}
 
 				var c = tableView.TableColumns()[column];
