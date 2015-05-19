@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using Radish.Models;
 using System.IO;
-using System.Collections;
 using NLog;
-using System.ComponentModel;
-using Radish.Support.Utilities;
 
 namespace Radish.Controllers
 {
@@ -15,7 +12,7 @@ namespace Radish.Controllers
 
 
         private List<FileSystemWatcher> watchers = new List<FileSystemWatcher>();
-		private Action listUpdated;
+		private readonly Action listUpdated;
 
 		public DirectoryController(IFileViewer fileViewer, Action listUpdated)
             : base(fileViewer)
@@ -49,8 +46,7 @@ namespace Radish.Controllers
         			w.EnableRaisingEvents = true;
                     watchers.Add(w);
                 }
-
-    			InternalScan(p, list);
+                InternalScan(p, list);
             }
 
             SetList(list);
