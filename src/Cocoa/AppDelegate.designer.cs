@@ -2,7 +2,7 @@
 namespace Radish
 {
 	// Should subclass MonoMac.AppKit.NSResponder
-	[Foundation.Register("AppDelegate")]
+    [MonoMac.Foundation.Register("AppDelegate")]
 	public partial class AppDelegate
 	{
 	}

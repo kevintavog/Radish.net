@@ -1,16 +1,16 @@
 ﻿using System;
-using AppKit;
+using MonoMac.AppKit;
 using System.Drawing;
-using Foundation;
-using CoreGraphics;
+using MonoMac.Foundation;
+using MonoMac.CoreGraphics;
 
 namespace Radish
 {
-	[Foundation.Register("KTBorderlessWindow")]
+    [MonoMac.Foundation.Register("KTBorderlessWindow")]
 	public class KTBorderlessWindow : NSWindow
 	{
 		[Export("initWithContentRect:styleMask:backing:defer:")]
-		public KTBorderlessWindow(CGRect contentRect, NSWindowStyle aStyle, NSBackingStore bufferingType, bool deferCreation)
+		public KTBorderlessWindow(RectangleF contentRect, NSWindowStyle aStyle, NSBackingStore bufferingType, bool deferCreation)
 			: base(contentRect, aStyle, bufferingType, deferCreation)
 		{
 			BackgroundColor = NSColor.Clear;

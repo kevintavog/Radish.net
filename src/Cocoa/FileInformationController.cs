@@ -1,11 +1,11 @@
 ﻿using System;
-using AppKit;
-using Foundation;
+using MonoMac.AppKit;
+using MonoMac.Foundation;
 using Radish.Models;
 
 namespace Radish
 {
-	[Foundation.Register("FileInformationController")]
+    [MonoMac.Foundation.Register("FileInformationController")]
 	public partial class FileInformationController : NSViewController
 	{
 		private MediaMetadata MediaMetadata;

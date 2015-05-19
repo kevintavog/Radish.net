@@ -1,6 +1,6 @@
 ﻿using System;
-using AppKit;
-using Foundation;
+using MonoMac.AppKit;
+using MonoMac.Foundation;
 using NLog;
 using Radish.Support;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using Rangic.Utilities.Geo;
 
 namespace Radish
 {
-    [Foundation.Register("SearchController")]
+    [MonoMac.Foundation.Register("SearchController")]
     public partial class SearchController : NSViewController
     {
         static private readonly Logger logger = LogManager.GetCurrentClassLogger();

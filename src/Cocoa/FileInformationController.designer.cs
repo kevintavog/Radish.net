@@ -4,7 +4,7 @@
 // actions made in the UI designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
-using Foundation;
+using MonoMac.Foundation;
 using System.CodeDom.Compiler;
 
 namespace Radish
@@ -12,7 +12,7 @@ namespace Radish
 	partial class FileInformationController
 	{
 		[Outlet]
-		AppKit.NSTableView tableView { get; set; }
+        MonoMac.AppKit.NSTableView tableView { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{

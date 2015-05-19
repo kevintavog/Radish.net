@@ -1,13 +1,14 @@
 using System;
-using System.Drawing;
 using NLog;
 using Radish.Support;
 using System.IO;
 using Rangic.Utilities.Preferences;
+using MonoMac.AppKit;
+using MonoMac.Foundation;
 
 namespace Radish
 {
-	public partial class AppDelegate : NSApplicationDelegate
+    public partial class AppDelegate : NSApplicationDelegate
 	{
 		private static Logger logger = LogManager.GetCurrentClassLogger();
 		private MainWindowController controller;

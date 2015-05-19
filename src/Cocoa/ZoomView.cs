@@ -1,8 +1,8 @@
 ﻿using System;
-using AppKit;
+using MonoMac.AppKit;
 using System.Drawing;
 using NLog;
-using CoreGraphics;
+using MonoMac.CoreGraphics;
 
 namespace Radish
 {
@@ -46,7 +46,7 @@ namespace Radish
             ZoomViewToFitRect(view.Superview.Frame);
         }
 
-        public void ZoomViewToFitRect(CGRect rect)
+        public void ZoomViewToFitRect(RectangleF rect)
         {
             var frame = view.Frame;
             var factor = (float) (rect.Width / frame.Width);
@@ -59,7 +59,7 @@ namespace Radish
             ZoomViewByFactor(factor, DocumentCenterPoint());
         }
 
-        private void ZoomViewByFactor(float factor, CGPoint point)
+        private void ZoomViewByFactor(float factor, PointF point)
         {
             var scale = factor * viewScale;
             scale = Math.Max(scale, MinimumScale);
@@ -69,7 +69,7 @@ logger.Info("ZoomViewByFactor({0}); current scale = {1}, target scale = {2}", fa
             if (scale != viewScale)
             {
                 viewScale = scale;
-                view.ScaleUnitSquareToSize(new CGSize { Width = factor, Height = factor });
+                view.ScaleUnitSquareToSize(new SizeF { Width = factor, Height = factor });
 
                 var frame = view.Frame;
                 frame.Width *= factor;
@@ -81,20 +81,20 @@ logger.Info("ZoomViewByFactor({0}); current scale = {1}, target scale = {2}", fa
             }
         }
 
-        public CGPoint DocumentCenterPoint()
+        public PointF DocumentCenterPoint()
         {
             var frame = ((NSClipView)(view.Superview)).DocumentVisibleRect();
-            return new CGPoint
+            return new PointF
             {
                 X = frame.X + frame.Width / 2,
                 Y = frame.Y + frame.Height / 2,
             };
         }
 
-        public void ScrollPointToCenter(CGPoint point)
+        public void ScrollPointToCenter(PointF point)
         {
             var frame = ((NSClipView)(view.Superview)).DocumentVisibleRect();
-            view.ScrollPoint(new CGPoint
+            view.ScrollPoint(new PointF
             {
                 X = point.X - (frame.Width / 2),
                 Y = point.Y - (frame.Height / 2)

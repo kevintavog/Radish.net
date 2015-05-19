@@ -14,7 +14,7 @@ using System.Threading;
 
 namespace Radish
 {
-	public partial class MainWindowController : AppKit.NSWindowController, IFileViewer
+	public partial class MainWindowController : NSWindowController, IFileViewer
 	{
 		static private readonly Logger logger = LogManager.GetCurrentClassLogger();
 		private const string TrashSoundPath = @"/System/Library/Components/CoreAudio.component/Contents/SharedSupport/SystemSounds/dock/drag to trash.aif";
@@ -128,7 +128,7 @@ namespace Radish
                             {
                                 base.InvokeOnMainThread( () => 
                                 {
-                                    using (var image = new NSImage(cgi, new CGSize(cgi.Width, cgi.Height)))
+                                    using (var image = new NSImage(cgi, new SizeF(cgi.Width, cgi.Height)))
                                     {
                                         imageView.Image = image;
                                     }
@@ -283,7 +283,7 @@ namespace Radish
 			notificationImage.Image = NSImage.ImageNamed(graphic.ToString());
 
 			var mainFrame = Window.Frame;
-			var origin = new CGPoint(
+            var origin = new PointF(
 				mainFrame.X + ((mainFrame.Width - NotificationWindow.Frame.Width) / 2),
 				mainFrame.Y + ((mainFrame.Height - NotificationWindow.Frame.Height) / 2));
 			NotificationWindow.SetFrameOrigin(origin);
@@ -321,7 +321,7 @@ namespace Radish
             System.Threading.Timer timer = null;
             var cb = new TimerCallback((state) =>
             {
-                base.InvokeOnMainThread(action);
+                InvokeOnMainThread(action);
                 timer.Dispose();
             });
             timer = new System.Threading.Timer(cb, null, delay, Timeout.Infinite);
@@ -336,6 +336,11 @@ namespace Radish
 			var fileType = NSWorkspace.SharedWorkspace.TypeOfFile(filePath, out error);
 			return SupportedFileTypes.Contains(fileType);
 		}
+
+        public void InvokeOnMainThread(Action action)
+        {
+            BeginInvokeOnMainThread( () => { action(); } );
+        }
 
 
 		#endregion

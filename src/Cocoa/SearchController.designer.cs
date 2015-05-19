@@ -4,7 +4,7 @@
 // actions made in the UI designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
-using Foundation;
+using MonoMac.Foundation;
 using System.CodeDom.Compiler;
 
 namespace Radish
@@ -12,34 +12,34 @@ namespace Radish
 	partial class SearchController
 	{
 		[Outlet]
-		AppKit.NSImageView connectionImage { get; set; }
+        MonoMac.AppKit.NSImageView connectionImage { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField errorLabel { get; set; }
+        MonoMac.AppKit.NSTextField errorLabel { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField hostName { get; set; }
+        MonoMac.AppKit.NSTextField hostName { get; set; }
 
 		[Outlet]
-		AppKit.NSProgressIndicator progressIndicator { get; set; }
+        MonoMac.AppKit.NSProgressIndicator progressIndicator { get; set; }
 
 		[Outlet]
-		AppKit.NSButton searchButton { get; set; }
+        MonoMac.AppKit.NSButton searchButton { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField searchText { get; set; }
+        MonoMac.AppKit.NSTextField searchText { get; set; }
 
 		[Outlet]
-		AppKit.NSButton testButton { get; set; }
+        MonoMac.AppKit.NSButton testButton { get; set; }
 
 		[Action ("cancel:")]
-		partial void cancel (Foundation.NSObject sender);
+        partial void cancel (MonoMac.Foundation.NSObject sender);
 
 		[Action ("startSearch:")]
-		partial void startSearch (Foundation.NSObject sender);
+        partial void startSearch (MonoMac.Foundation.NSObject sender);
 
 		[Action ("testHost:")]
-		partial void testHost (Foundation.NSObject sender);
+        partial void testHost (MonoMac.Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
