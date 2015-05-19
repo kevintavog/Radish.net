@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using NLog;
 using Rangic.Utilities.Process;
 
 namespace Radish.Utilities
@@ -12,6 +11,7 @@ namespace Radish.Utilities
 		{
 			"File.FileSize",
 			"File.FileModifyDate",
+            "File.Comment",
 			"EXIF.Make",
 			"EXIF.Model",
 			"EXIF.ExposureTime",

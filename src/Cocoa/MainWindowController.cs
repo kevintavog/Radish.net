@@ -2,18 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Timers;
 using MonoMac.AppKit;
 using MonoMac.CoreGraphics;
-using MonoMac.CoreText;
 using MonoMac.Foundation;
 using MonoMac.ImageIO;
 using NLog;
 using Radish.Controllers;
 using Radish.Models;
 using System.Threading.Tasks;
-using MonoMac.ObjCRuntime;
 using System.Threading;
 
 namespace Radish
@@ -220,7 +216,7 @@ namespace Radish
 
         private void SetStatusGps(MediaMetadata mm)
         {
-            if (!String.IsNullOrEmpty(mm.ToPlaceName()))
+            if (mm.HasPlaceName && !String.IsNullOrEmpty(mm.ToPlaceName()))
             {
                 statusGps.StringValue = mm.ToPlaceName();
             }

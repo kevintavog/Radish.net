@@ -1,9 +1,4 @@
-﻿using System;
-using NLog;
-using System.IO;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using Rangic.Utilities.Preferences;
+﻿using Rangic.Utilities.Preferences;
 
 namespace Radish.Support
 {
@@ -16,18 +11,21 @@ namespace Radish.Support
 
         //  Properties perisisted between sessions
         public string FindAPhotoHost { get; set; }
+        public string LastCopyToFolder { get; set; }
 
 
         public override void FromJson(dynamic json)
         {
             FindAPhotoHost = json.FindAPhotoHost;
+            LastCopyToFolder = json.LastCopyToFolder;
         }
 
         public override dynamic ToJson()
         {
             return new
             {
-                FindAPhotoHost = FindAPhotoHost
+                FindAPhotoHost = FindAPhotoHost,
+                LastCopyToFolder = LastCopyToFolder,
             };
         }
     }

@@ -2,13 +2,14 @@
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 using System.IO;
-using Radish.Utilities;
 using Radish.Controllers;
 using Radish.Models;
-using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 using Rangic.Utilities.Process;
+using Radish.Support.Utilities;
+using Radish.Support;
+using Rangic.Utilities.Preferences;
 
 namespace Radish
 {
@@ -142,6 +143,52 @@ namespace Radish
             }
         }
 
+        [Export("copyFile:")]
+        public void CopyFile(NSObject sender)
+        {
+            var fullPath = mediaListController.Current.FullPath;
+            var openPanel = new NSOpenPanel
+            {
+                AllowsMultipleSelection = false,
+                CanChooseDirectories = true,
+                CanChooseFiles = false,
+                Prompt = "Copy a file",
+                ReleasedWhenClosed = true,
+                Title = "Copy",
+            };
+
+            var lastCopyToFolder = Preferences<RadishPreferences>.Instance.LastCopyToFolder;
+            if (!String.IsNullOrWhiteSpace(lastCopyToFolder))
+            {
+                openPanel.DirectoryUrl = NSUrl.FromFilename(lastCopyToFolder);
+            }
+
+            var result = (NsButtonId)openPanel.RunModal();
+            if (result != NsButtonId.OK)
+            {
+                return;
+            }
+
+            Preferences<RadishPreferences>.Instance.LastCopyToFolder = openPanel.Url.Path;
+            var destination = Path.Combine(openPanel.Url.Path, Path.GetFileName(fullPath));
+
+            try
+            {
+                FileUtilities.Copy(fullPath, destination);
+            }
+            catch (Exception e)
+            {
+                logger.Warn("Failed copying: {0}; from '{1}' to '{2}'",
+                    e.Message,
+                    fullPath,
+                    destination);
+
+                var message = String.Format("Failed copying '{0}' to {1}.", fullPath, destination);
+                var alert = NSAlert.WithMessage(message, "Close", "", "", "");
+                alert.RunSheetModal(Window);
+            }
+        }
+
 		[Export("toggleInformation:")]
 		public void ToggleInformation(NSObject sender)
 		{
@@ -176,7 +223,6 @@ namespace Radish
 			var url = new NSUrl(
 				String.Format("http://maps.google.com/maps?q={0},{1}", fm.Location.Latitude, fm.Location.Longitude));
 			NSWorkspace.SharedWorkspace.OpenUrl(url);
-
 		}
 
 		[Export("moveToTrash:")]

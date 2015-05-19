@@ -34,17 +34,17 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="ExifLib">
       <HintPath>..\packages\ExifLib.1.6.3.0\lib\net45\ExifLib.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.2.1\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="RangicUtilities">
-      <HintPath>..\packages\Rangic.Utilities.1.0.0.6\lib\net45\RangicUtilities.dll</HintPath>
+      <HintPath>..\packages\Rangic.Utilities.1.0.0.9\lib\net45\RangicUtilities.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +63,7 @@
     <Compile Include="Models\MediaMetadata.cs" />
     <Compile Include="Models\FIndAPhotoMetadata.cs" />
     <Compile Include="Controllers\FindAPhotoController.cs" />
+    <Compile Include="Utilities\FileUtilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
