@@ -61,24 +61,24 @@ namespace Radish.Controllers
             {
     			foreach (var f in Directory.EnumerateFiles(path))
     			{
-    				if (fileViewer.IsFileSupported(f))
+    				if (FileViewer.IsFileSupported(f))
     					list.Add(new FileMetadata(f));
     			}
             }
             else
             {
-                if (fileViewer.IsFileSupported(path))
+                if (FileViewer.IsFileSupported(path))
                     list.Add(new FileMetadata(path));
             }
 		}
 
 		private void OnWatcherChanged(object source, FileSystemEventArgs evt)
 		{
-			fileViewer.InvokeOnMainThread( ()=>
+			FileViewer.InvokeOnMainThread( ()=>
 			{
 				logger.Info("Watcher: '{0}' - {1}", evt.FullPath, evt.ChangeType);
 
-				if (File.Exists(evt.FullPath) && !fileViewer.IsFileSupported(evt.FullPath))
+				if (File.Exists(evt.FullPath) && !FileViewer.IsFileSupported(evt.FullPath))
 				{
 					return;
 				}

@@ -30,12 +30,7 @@ namespace Radish.Models
 
         public string ToDms()
         {
-            if (Location == null)
-            {
-                return "";
-            }
-
-            return Location.ToDms();
+            return Location == null ? "" : Location.ToDms();
         }
 
         private IList<MetadataEntry> metadata;

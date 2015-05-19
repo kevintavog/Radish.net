@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Radish
+﻿namespace Radish
 {
 	public class MetadataEntry
 	{

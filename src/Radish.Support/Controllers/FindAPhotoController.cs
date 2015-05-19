@@ -1,5 +1,4 @@
-﻿using System;
-using Radish.Models;
+﻿using Radish.Models;
 using System.Collections.Generic;
 
 namespace Radish.Controllers

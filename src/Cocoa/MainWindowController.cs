@@ -58,7 +58,7 @@ namespace Radish
 
         public new MainWindow Window { get { return (MainWindow)base.Window; } }
 		public NSWindow NotificationWindow { get { return (NSWindow)notificationWindow; } }
-        public NSWindow BusyWindow { get { return (NSWindow)busyWindow; } }
+        public NSWindow BusyWindow { get { return busyWindow; } }
 		public FileInformationController InformationController { get { return (FileInformationController)fileInformationController; } }
         public SearchController SearchController { get { return (SearchController)searchController; } }
         public ThumbController ThumbController { get { return (ThumbController)thumbController; } }
@@ -110,7 +110,6 @@ namespace Radish
 			{
 				logger.Info("ShowFile: {0}; {1}", mediaListController.CurrentIndex, mm.FullPath);
 				currentlyDisplayedFile = mm.FullPath;
-                var index = mediaListController.CurrentIndex;
 
                 Task.Run( () =>
                 {
@@ -228,7 +227,7 @@ namespace Radish
 
         public bool OpenFolderOrFile(string path)
         {
-            return OpenFolderOrFiles(new string[] { path } );
+            return OpenFolderOrFiles(new [] { path } );
         }
 
 		public bool OpenFolderOrFiles(string[] paths)
@@ -249,7 +248,7 @@ namespace Radish
             if (dirController == null)
             {
                 dirController = new DirectoryController(this, FileListUpdated);
-                mediaListController = dirController as MediaListController;
+                mediaListController = dirController;
             }
 
             logger.Info("Open '{0}'", String.Join("', '", paths));
@@ -318,13 +317,13 @@ namespace Radish
 
         public void CallWithDelay(Action action, int delay)
         {
-            System.Threading.Timer timer = null;
-            var cb = new TimerCallback((state) =>
+            Timer timer = null;
+            var cb = new TimerCallback( state =>
             {
                 InvokeOnMainThread(action);
                 timer.Dispose();
             });
-            timer = new System.Threading.Timer(cb, null, delay, Timeout.Infinite);
+            timer = new Timer(cb, null, delay, Timeout.Infinite);
         }
 
 
@@ -339,7 +338,7 @@ namespace Radish
 
         public void InvokeOnMainThread(Action action)
         {
-            BeginInvokeOnMainThread( () => { action(); } );
+            BeginInvokeOnMainThread(() => action() );
         }
 
 

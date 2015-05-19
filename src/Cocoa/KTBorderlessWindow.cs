@@ -1,8 +1,6 @@
-﻿using System;
-using MonoMac.AppKit;
+﻿using MonoMac.AppKit;
 using System.Drawing;
 using MonoMac.Foundation;
-using MonoMac.CoreGraphics;
 
 namespace Radish
 {

@@ -2,10 +2,8 @@
 using NLog;
 using System.Collections.Generic;
 using Radish.Utilities;
-using System.Linq;
 using System.IO;
 using Rangic.Utilities.Image;
-using ExifLib;
 
 namespace Radish.Models
 {

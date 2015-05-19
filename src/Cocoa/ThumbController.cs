@@ -4,7 +4,6 @@ using MonoMac.Foundation;
 using NLog;
 using MonoMac.ImageKit;
 using System.Collections.Generic;
-using System.IO;
 using Radish.Controllers;
 using Radish.Models;
 
@@ -47,7 +46,7 @@ namespace Radish
             UpdateThumbSize(null);
         }
 
-        partial void UpdateThumbSize (MonoMac.Foundation.NSObject sender)
+        partial void UpdateThumbSize (NSObject sender)
         {
             imageView.ZoomValue = imageSizeSlider.FloatValue;
         }
@@ -56,11 +55,8 @@ namespace Radish
         {
             mediaListController = mlc;
             imageViewItems.Clear();
-
-            mediaListController.VisitAll( (m) =>
-            {
-                imageViewItems.Add(new ImageViewItem(m));
-            });
+            
+            mediaListController.VisitAll(m => imageViewItems.Add(new ImageViewItem(m)));
 
             imageView.ReloadData();
         }
@@ -136,7 +132,7 @@ namespace Radish
                 return dateCompare;
             }
 
-            return String.Compare(Name, Name);
+            return String.Compare(Name, Name, StringComparison.Ordinal);
         }
 
     }

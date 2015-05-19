@@ -42,7 +42,7 @@ namespace Radish
 				for (int row = 0; row < tableView.RowCount; ++row)
 				{
 					var cellWidth = tableView.GetCell(column, row).CellSize.Width;
-                    biggestWidth = Math.Max(biggestWidth, (float)cellWidth);
+                    biggestWidth = Math.Max(biggestWidth, cellWidth);
 				}
 
 				var c = tableView.TableColumns()[column];
@@ -51,7 +51,7 @@ namespace Radish
 		}
 
 		[Export("numberOfRowsInTableView:")]
-		public int numberOfRowsInTableView(NSTableView tv)
+		public int NumberOfRowsInTableView(NSTableView tv)
 		{
 			if (MediaMetadata == null)
 			{
@@ -61,7 +61,7 @@ namespace Radish
 		}
 
 		[Export("tableView:objectValueForTableColumn:row:")]
-		public string objectValueForTableColumn(NSTableView table, NSTableColumn column, int rowIndex)
+		public string ObjectValueForTableColumn(NSTableView table, NSTableColumn column, int rowIndex)
 		{
 			var info = MediaMetadata.Metadata[rowIndex];
 			switch (column.DataCell.Tag)
@@ -78,13 +78,13 @@ namespace Radish
 		}
 
 		[Export("tableView:isGroupRow:")]
-		public bool isGroupRow(NSTableView table, int row)
+		public bool IsGroupRow(NSTableView table, int row)
 		{
 			return MediaMetadata.Metadata[row].Category != null;
 		}
 
 		[Export("tableView:willDisplayCell:forTableColumn:row:")]
-		public void willDisplayCell(NSTableView table, NSObject cell, NSTableColumn column, int row)
+		public void WillDisplayCell(NSTableView table, NSObject cell, NSTableColumn column, int row)
 		{
 			var textCell = cell as NSTextFieldCell;
 			if (textCell != null)

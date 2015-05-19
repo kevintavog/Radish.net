@@ -1,10 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using NLog;
 using Radish.Support.Utilities;
 using System.Collections.Generic;
 using Radish.Models;
-using System.IO;
 
 namespace Radish.Controllers
 {
@@ -24,10 +22,10 @@ namespace Radish.Controllers
 
 
         protected IComparer<MediaMetadata> comparer;
-        protected IFileViewer fileViewer;
+        protected IFileViewer FileViewer;
         protected MediaListController(IFileViewer fileViewer)
         {
-            this.fileViewer = fileViewer;
+            FileViewer = fileViewer;
             comparer = new TimestampComparer();
             MediaList = new List<MediaMetadata>();
         }
@@ -61,7 +59,7 @@ namespace Radish.Controllers
                 {
                     return "";
                 }
-                return Current.Timestamp.ToString("yyyy/MM/dd HH:mm:ss"); ;
+                return Current.Timestamp.ToString("yyyy/MM/dd HH:mm:ss");
             }
         }
 

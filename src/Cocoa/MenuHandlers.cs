@@ -13,7 +13,7 @@ using Rangic.Utilities.Preferences;
 
 namespace Radish
 {
-    public partial class MainWindowController : MonoMac.AppKit.NSWindowController
+    public partial class MainWindowController
 	{
 		enum MenuTag
 		{
@@ -129,14 +129,14 @@ namespace Radish
 
             if (SearchController.SearchResults != null)
             {
-                var searchController = mediaListController as FindAPhotoController;
-                if (searchController == null)
+                var finder = mediaListController as FindAPhotoController;
+                if (finder == null)
                 {
-                    searchController = new FindAPhotoController(this);
-                    mediaListController = searchController as MediaListController;
+                    finder = new FindAPhotoController(this);
+                    mediaListController = finder;
                 }
 
-                searchController.Set(SearchController.SearchResults);
+                finder.Set(SearchController.SearchResults);
                 ShowFile();
 
                 ThumbController.SetMediaListController(mediaListController);
@@ -241,7 +241,7 @@ namespace Radish
 				NSWorkspace.OperationRecycle,
 				Path.GetDirectoryName(fullPath),
 				"",
-				new string[] { Path.GetFileName(fullPath) },
+				new [] { Path.GetFileName(fullPath) },
 				out tag);
 
 			if (tag != 0)
