@@ -1,1 +1,1 @@
-Radish, a Mac OS X image viewer
+Radish, an image viewer for Mac OS X & Windows
