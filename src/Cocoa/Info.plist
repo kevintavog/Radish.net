@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Radish</string>
+	<string>Radish.net</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.rangic.radish</string>
 	<key>CFBundleName</key>

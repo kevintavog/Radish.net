@@ -22,6 +22,9 @@ namespace Radish
                 urlList[0].Path,
                 "Preferences",
                 "Radish.rangic.json"));
+            
+            Rangic.Utilities.Geo.OpenStreetMapLookupProvider.UrlBaseAddress = Preferences<RadishPreferences>.Instance.BaseLocationLookup;
+            logger.Info("Resolving placenames via {0}", Rangic.Utilities.Geo.OpenStreetMapLookupProvider.UrlBaseAddress);
 
 			controller = new MainWindowController();
 			controller.Window.MakeKeyAndOrderFront(this);

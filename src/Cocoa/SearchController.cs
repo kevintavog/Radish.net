@@ -95,7 +95,7 @@ namespace Radish
                 }
                 catch (Exception e)
                 {
-                    logger.Error("Search exception: {0}", e);
+                    logger.Error("Search exception: {0}", e.ToString());
                 }
 
                 BeginInvokeOnMainThread( () => 

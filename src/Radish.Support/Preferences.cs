@@ -12,12 +12,14 @@ namespace Radish.Support
         //  Properties perisisted between sessions
         public string FindAPhotoHost { get; set; }
         public string LastCopyToFolder { get; set; }
+        public string BaseLocationLookup { get; set; }
 
 
         public override void FromJson(dynamic json)
         {
             FindAPhotoHost = json.FindAPhotoHost;
             LastCopyToFolder = json.LastCopyToFolder;
+            BaseLocationLookup = json.BaseLocationLookup;
         }
 
         public override dynamic ToJson()
@@ -26,6 +28,7 @@ namespace Radish.Support
             {
                 FindAPhotoHost = FindAPhotoHost,
                 LastCopyToFolder = LastCopyToFolder,
+                BaseLocationLookup = BaseLocationLookup
             };
         }
     }
